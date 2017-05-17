@@ -1,18 +1,6 @@
 <template>
   <div id="app">
-    <div class="main" v-if="login">
-        <div class="left fl">
-            <sidebar :list='list'></sidebar>
-        </div>
-        <div class="right fl">
-            <rightcontent></rightcontent>
-        </div>
-        <br>
-    </div>
-    <div v-else>
       <router-view></router-view>
-    </div>
-
   </div>
 </template>
 

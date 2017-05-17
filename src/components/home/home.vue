@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div class="main">
       <div class="left fl">
         <sidebar :list='list'></sidebar>
@@ -13,9 +13,8 @@
 </template>
 
 <script>
-  import sidebar from './components/sidebar/sidebar'
-  import rightcontent from './components/content/content'
-  import login from './components/user/login'
+  import sidebar from '../sidebar/sidebar'
+  import rightcontent from '../content/content'
   export default {
     name: 'app',
     data () {
@@ -26,8 +25,7 @@
     },
     components: {
       sidebar,
-      rightcontent,
-      login
+      rightcontent
     }
 
   }

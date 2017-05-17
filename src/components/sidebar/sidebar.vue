@@ -24,11 +24,6 @@
     import contact from '../contact/contact'
     export default {
       name: 'sidebar',
-      props: {
-        list: {
-          type: Boolean
-        }
-      },
       data () {
         return {
           list: false,

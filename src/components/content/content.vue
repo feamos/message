@@ -2,8 +2,8 @@
     <div class="rightcontent">
         <div class="head">
             <div class="title">
-                <span href="javascript:;" @click="list = !list">{{ chat.name }}<img src="./title.png" height="10" width="10" alt=""></span>
-                <div class="mobile" v-if="list">
+                <span href="javascript:;" @click="list1 = !list1">{{ chat.name }}<img src="./title.png" height="10" width="10" alt=""></span>
+                <div class="mobile" v-if="list1">
                   <img src="./add.png" alt=""><li v-for="mobile in chat.mobiles">{{mobile}}</li>
                 </div>
             </div>
@@ -32,7 +32,7 @@ export default {
   name: 'app',
   data () {
     return {
-      list: true,
+      list1: false,
       message: '',
       chat: {
         type: Object,
@@ -46,18 +46,10 @@ export default {
     this.$bus.on('chat', (msg) => {
       this.chat = msg
     })
-    document.onkeydown = function (e) {
-      // 当按下回车键，执行我们的代码
-      if (e.keyCode === 13) {
-        this.chat.messages.push(this.message)
-        this.message = ''
-        return false
-      }
-    }
   },
   methods: {
     checkMessage (msg) {
-      if (this.message) {
+      if (this.message && this.chat.mobiles[0] > 0) {
         this.sendMessage(msg)
       }
     },
@@ -65,6 +57,14 @@ export default {
       msg.push(this.message)
       this.message = ''
     }
+//    keySend () {
+//      console.log('1')
+//      document.onkeypress = function (event) {
+//        if (event.which === 13) {
+//          this.checkMessage(this.chat.messages)
+//        }
+//      }
+//    }
   }
 }
 </script>

@@ -51,14 +51,14 @@
           </label>
         </div>
         <div class="no-account">
-          <Button type="text" class="to-register" @click="gotoR">还没有账号？去注册</Button>
+          <Button type="text" class="to-register" @click="goto('register')">还没有账号？去注册</Button>
         </div>
         <div class="form-submit">
           <button
             class="submit"
             style="cursor:pointer"
             :disabled="isDisabled"
-            :class="{disabled: isDisabled}">
+            :class="{disabled: isDisabled}" @click="goto('home')">
             {{registerState}}
           </button>
         </div>
@@ -84,9 +84,9 @@
         this.isShow = this.isShow ? 0 : 1
         this.isShow ? this.passType = 'text' : this.passType = 'password'
       },
-      gotoR () {
+      goto (path) {
         this.$nextTick(() => {
-          this.$router.push('/register')
+          this.$router.push(path)
         })
       }
     }
