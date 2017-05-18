@@ -117,17 +117,33 @@ export default {
  .message-wrap {
    padding: 6px 5px;
    width: 100%;
+   right: 0;
+   min-height: 50px;
+   margin: 10px 0;
  }
  .middle .midd-message {
-   max-width:75%;
-   margin-right: 5%;
-   border:1px solid #d6d6d6;
-   padding:7px 7px;
-   border-radius: 5px;
-   font-size: 14px;
-   word-wrap: break-word;
-   word-break: normal;
+   /*max-width:75%;*/
+   /*margin-right: 5%;*/
+   /*border:1px solid #d6d6d6;*/
+   /*padding:7px 7px;*/
+   /*border-radius: 5px;*/
+   /*font-size: 14px;*/
+   /*word-wrap: break-word;*/
+   /*word-break: normal;*/
+   /*float: right;*/
+   display: inline-block;
+   /*position: relative;*/
+   padding: 0 10px;
+   max-width: calc(100% - 70px);
+   line-height: 2.5;
+   font-size: 12px;
+   text-align: left;
+   word-break: break-all;
+   /*自动换行，允许在单词内换行*/
+   background-color: #fafafa;
+   border-radius: 4px;
    float: right;
+   margin-right: 20px;
  }
  .bottom {
     width: 720px;

@@ -7,8 +7,9 @@
       </ul>
     </div>
     <div class="chat" id="chat1">
-        <ul>
-            <li v-for="(chat,index) in chats" @contextmenu.prevent="show(chat)" @click="beginChat(chat)">{{chat.name+index}}</li>
+        <ul class="list">
+            <li v-for="(chat,index) in chats" @contextmenu.prevent="show(chat)"
+                @click="beginChat(chat)">{{chat.name+index}}</li>
         </ul>
     </div>
   </div>
@@ -105,6 +106,18 @@ export default {
         {
           name: 'Chris',
           messages: ['Tracy']
+        },
+        {
+          name: 'Bill',
+          messages: ['Tracy']
+        },
+        {
+          name: 'Tracy',
+          messages: ['Tracy']
+        },
+        {
+          name: 'Chris',
+          messages: ['Tracy']
         }
       ]
     }
@@ -154,11 +167,25 @@ ul {list-style: none;}
     overflow-x: hidden;
     height: 647px;
 }
-.chat ul li {
-    padding: 18px 0px;
-    border-bottom: 1px solid #292c35;
-    text-align:center;
-    cursor: pointer;
+.list li {
+    /*padding: 18px 0px;*/
+    /*border-bottom: 1px solid #292c35;*/
+    /*text-align:center;*/
+    /*cursor: pointer;*/
+  padding: 12px 0;
+  border-bottom: 1px solid #292C33;
+  cursor: pointer;
+  transition: background-color .1s;
+  list-style-type: none;
+  /*background-color: #2e3238;*/
+  line-height: 30px;
+  display: inline-block;
+  /*margin: 0 0 0 15px;*/
+  width: 100%;
+  text-align: center;
+}
+.list li:hover {
+  background-color: #292C33;
 }
 #menu {
   position: absolute;
