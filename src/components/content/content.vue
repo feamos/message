@@ -57,14 +57,6 @@ export default {
       msg.push(this.message)
       this.message = ''
     }
-//    keySend () {
-//      console.log('1')
-//      document.onkeypress = function (event) {
-//        if (event.which === 13) {
-//          this.checkMessage(this.chat.messages)
-//        }
-//      }
-//    }
   }
 }
 </script>
