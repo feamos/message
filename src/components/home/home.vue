@@ -39,15 +39,18 @@
   br {clear:both;}
 
   .main {
-    max-width: 1000px;
-    min-width: 800px;
-    height: 100%;
+    width: 1024px;
     margin: 0 auto;
+    background: white;
+    border: 1px solid #979797;
+    border-radius: 5px;
+  }
+  .left {
+    width: 320px;
+    background: #596179;
   }
   .right {
-    width: 720px;
-    height: 767px;
-    background-color: #eeeeee;
+    width: 700px;
   }
   @media (max-height: 800px), (max-width: 1000px){
     #app {
@@ -57,11 +60,5 @@
     .right {
       height:617px;
     }
-  }
-  body {
-    background-image: url("../../images/background_vague.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
   }
 </style>

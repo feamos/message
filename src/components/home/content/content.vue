@@ -28,7 +28,7 @@
                   id="editArea"
                   v-model="message"
                   placeholder="发送前请先：1,导入Excel表格 2,编辑对话框内容
-注意：{1}表示Excel表格的第一列对应数据
+          注意：{1}表示Excel表格的第一列对应数据
          {2}表示Excel表格的第二列,以此类推"></textarea>
             </div>
             <div class="send">
@@ -76,7 +76,7 @@ export default {
  .rightcontent {
     display: block;
     color: #000000;
-    height: 617px;
+    height: 768px;
  }
  .clfl {
    clear:both;
@@ -89,7 +89,7 @@ export default {
     line-height: 30px;
     text-decoration: none;
     font-size: 13px;
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid rgba(89,97,121,0.38);
  }
  .head span {
     cursor: pointer;
@@ -125,7 +125,7 @@ export default {
    color: #A9CDCF;
  }
  .middle {
-    height: 516px;
+    height: 500px;
     border-bottom: 1px solid #d6d6d6;
     padding: 0 10px;
     padding-top: 20px;

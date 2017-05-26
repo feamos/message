@@ -1,7 +1,11 @@
 <template>
     <div class="sidebar">
         <div class="head">
-            <span>18716028979</span><a href="javascript:;" @click.stop="titleBt"><img src="./imgs/side-add.png" alt=""></a>
+          <img class="head-img" src="./imgs/cat.jpg" width="80px" height="80px">
+          <span>用户名</span>
+          <a href="javascript:;" @click.stop="titleBt">
+            <img class="set-img" src="./imgs/set.png">
+          </a>
         </div>
         <div class="head-bt" id="bt">
           <ul>
@@ -12,11 +16,18 @@
           </ul>
         </div>
         <div class="tab">
-            <div class="contact ">
-                <a href="javascript:;"><img src="./imgs/contact1.png" height="30" width="30"></a>
-            </div>
-            <br>
+          <div class="send-group">
+            <!--<Button type="text" size="large">群组发送</Button>-->
+            <input class="button-group" type="button" value="群组发送"/>
+          </div>
+          <div class="send-template">
+            <!--<Button type="text" size="large">模板群发</Button>-->
+            <input class="button-group" type="button" value="模板群发"/>
+          </div>
         </div>
+      <div class="search">
+        <input class="search-input" placeholder="搜索">
+      </div>
         <contact></contact>
     </div>
 </template>
@@ -55,36 +66,34 @@
     li {
       list-style: none;
     }
-    .fl {
-        float: left;
-    }
     .tab a {
         display: inline-block;
         width: 100%;
     }
     br {clear: both;}
-    img {
-        width: 30px;
-        height: 30px;
+
+    .head-img {
+      z-index: 999;
+      margin-left: 32px;
+      margin-right: 24px;
     }
     .sidebar {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         float: left;
-        width: 280px;
-        height: 767px;
-        background: #2e313a;
+        height: 100%;
         color: #fff;
     }
     .head {
-        padding: 18px 18px 36px 18px;
+      height: 157px;
     }
     .head span {
-        line-height: 30px;
-        padding-left: 30px;
+      line-height: 157px;
+      font-size: 20px;
+      margin-right: 44px;
     }
     .head img {
         vertical-align: middle;
-        padding-left: 30px;
+        line-height: 157px;
     }
     #bt {
       background-color: white;
@@ -94,6 +103,7 @@
       left: 590px;
       top: 150px;
       display: none;
+      z-index: 9999;
     }
     #bt li {
       padding: 2px 10px;
@@ -107,13 +117,39 @@
     #bt li:hover {
       background-color: #eeeeee;
     }
-    .tab {
-        border-bottom: 1px solid #292c35;
-        height: 34px;
+
+    .send-group {
+      float: left;
+      border-right: solid 1px #979797;
+      padding-right: 30px;
     }
-    .tab .contact {
-        width: 100%;
-        text-align: center;
+
+    .button-group {
+      border: 0;
+      cursor: pointer;
+      background: none;
+      color: white;
+      font-size: 20px;
+    }
+    .send-template {
+      padding-left: 30px;
+    }
+
+    .search {
+      display: flex;
+      justify-content: center;
+      margin: 20px;
+    }
+    .search-input {
+      height: 37px;
+      width: 256px;
+      background: #49526A;
+    }
+    .tab {
+      height: 34px;
+      color: white;
+      display: flex;
+      justify-content: center;
     }
 
     @media (max-height: 800px), (max-width: 1000px){

@@ -172,34 +172,24 @@ export default {
 <style scoped>
 * {padding: 0;margin: 0;}
 ul {list-style: none;}
-.fl {
-    float: left;
-}
 .chat {
     clear:both;
     overflow: hidden;
     overflow-x: hidden;
-    height: 647px;
 }
 .list li {
-    /*padding: 18px 0px;*/
-    /*border-bottom: 1px solid #292c35;*/
-    /*text-align:center;*/
-    /*cursor: pointer;*/
   padding: 12px 0;
-  border-bottom: 1px solid #292C33;
+  border: none;
   cursor: pointer;
-  transition: background-color .1s;
-  list-style-type: none;
-  /*background-color: #2e3238;*/
-  line-height: 30px;
+  height: 100px;
+  line-height: 100px;
   display: inline-block;
-  /*margin: 0 0 0 15px;*/
   width: 100%;
   text-align: center;
+  font-size: 20px;
 }
 .list li:hover {
-  background-color: #6f7073;
+  background-color: white;
   color: #000000;
 }
 #menu {

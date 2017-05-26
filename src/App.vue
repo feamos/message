@@ -36,7 +36,6 @@
   .app-container {
     background-image: url("../src/images/background_vague.png");
     background-repeat: no-repeat;
-    overflow: hidden;
     background-size: 100% 100%;
     position: fixed;
     z-index: 9998;
@@ -47,12 +46,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: scroll;
   }
 
 
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    height: 80%;
+    height: 768px;
     min-height: 600px;
   }
 
