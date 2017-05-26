@@ -89,7 +89,7 @@
   }
   @media (max-height: 800px), (max-width: 1000px){
     .chat {
-      height: 495px;
+      height: 340px;
     }
   }
   ul li {
