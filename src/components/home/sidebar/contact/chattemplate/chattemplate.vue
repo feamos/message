@@ -85,7 +85,7 @@
     clear:both;
     overflow: auto;
     overflow-x: hidden;
-    height: 647px;
+    height: 500px;
   }
   @media (max-height: 800px), (max-width: 1000px){
     .chat {
