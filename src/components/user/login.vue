@@ -330,7 +330,8 @@
     cursor: pointer;
     background-color: #bbe1e3;
     color: white;
-    margin-right: 30px;
+    margin-right: 20px;
+    margin-left: 100px;
   }
 
   .to-register, .forget-pwd {
