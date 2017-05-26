@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="head">
-            <span>18716028979</span><a href="javascript:;" @click.stop="titleBt"><img src="./side-add.png" alt=""></a>
+            <span>18716028979</span><a href="javascript:;" @click.stop="titleBt"><img src="./imgs/side-add.png" alt=""></a>
         </div>
         <div class="head-bt" id="bt">
           <ul>
@@ -13,7 +13,7 @@
         </div>
         <div class="tab">
             <div class="contact ">
-                <a href="javascript:;"><img src="./contact1.png" height="30" width="30"></a>
+                <a href="javascript:;"><img src="./imgs/contact1.png" height="30" width="30"></a>
             </div>
             <br>
         </div>
@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-    import contact from '../contact/contact'
+    import contact from './contact/contact'
     export default {
       name: 'sidebar',
       data () {

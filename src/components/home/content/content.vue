@@ -2,9 +2,9 @@
     <div class="rightcontent">
         <div class="head">
             <div class="title">
-                <span href="javascript:;" @click="list1 = !list1">{{ chat.name }}<img src="./title.png" height="10" width="10" alt=""></span>
+                <span href="javascript:;" @click="list1 = !list1">{{ chat.name }}<img src="title.png" height="10" width="10" alt=""></span>
                 <div class="mobile" v-if="list1">
-                  <img src="./add.png" alt=""><li v-for="mobile in chat.mobiles">{{mobile}}</li>
+                  <img src="add.png" alt=""><li v-for="mobile in chat.mobiles">{{mobile}}</li>
                 </div>
             </div>
         </div>

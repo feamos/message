@@ -13,8 +13,8 @@
 </template>
 
 <script>
-  import sidebar from '../sidebar/sidebar'
-  import rightcontent from '../content/content'
+  import sidebar from './sidebar/sidebar'
+  import rightcontent from './content/content'
   export default {
     name: 'app',
     data () {
