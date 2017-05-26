@@ -7,8 +7,8 @@
 </template>
 
 <script>
-  import sidebar from './components/sidebar/sidebar'
-  import rightContent from './components/content/content'
+  import sidebar from './components/home/sidebar/sidebar'
+  import rightContent from './components/home/content/content'
   import login from './components/user/login'
   export default {
     name: 'app',
@@ -51,7 +51,6 @@
 
 
   #app {
-    padding-top: 5%;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     height: 80%;
     min-height: 600px;
