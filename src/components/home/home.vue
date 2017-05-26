@@ -31,22 +31,13 @@
   }
 </script>
 
-<style >
+<style scoped>
   *{padding: 0;margin: 0;}
   .fl {
     float: left;
   }
   br {clear:both;}
 
-  #app {
-    padding-top: 100px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    height: 80%;
-    min-height: 600px;
-  }
-  .login {
-    width: 900px;
-  }
   .main {
     max-width: 1000px;
     min-width: 800px;
@@ -68,7 +59,8 @@
     }
   }
   body {
-    background: url(https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/2zrdI1g.jpg) no-repeat 50%;
+    background-image: url("../../images/background_vague.png");
+    background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
   }

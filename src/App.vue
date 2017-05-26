@@ -1,69 +1,68 @@
 <template>
-  <div id="app">
+  <div class="app-container">
+    <div id="app">
       <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import sidebar from './components/sidebar/sidebar'
-import rightcontent from './components/content/content'
-import login from './components/user/login'
-export default {
-  name: 'app',
-  data () {
-    return {
-      login: true,
-      list: false
+  import sidebar from './components/sidebar/sidebar'
+  import rightContent from './components/content/content'
+  import login from './components/user/login'
+  export default {
+    name: 'app',
+    data () {
+      return {
+        login: true,
+        list: false
+      }
+    },
+    components: {
+      sidebar,
+      rightContent,
+      login
     }
-  },
-  components: {
-    sidebar,
-    rightcontent,
-    login
-  }
 
-}
+  }
 </script>
 
-<style >
-*{padding: 0;margin: 0;}
-.fl {
-    float: left;
-}
-br {clear:both;}
+<style scoped>
+  * {
+    padding: 0;
+    margin: 0;
+  }
 
-#app {
-  padding-top: 100px;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  height: 80%;
-  min-height: 600px;
-}
-.login {
-  width: 900px;
-}
-.main {
-   max-width: 1000px;
-   min-width: 800px;
-   height: 100%;
-   margin: 0 auto;
-}
-.right {
-  width: 720px;
-  height: 767px;
-  background-color: #eeeeee;
-}
-@media (max-height: 800px), (max-width: 1000px){
-    #app {
-        padding-top: 10px;
-        height: 100%;
-    }
-    .right {
-      height:617px;
-    }
-}
-body {
-    background: url(https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/2zrdI1g.jpg) no-repeat 50%;
-    background-size: cover;
+  .app-container {
+    background-image: url("../src/images/background_vague.png");
+    background-repeat: no-repeat;
     overflow: hidden;
-}
+    background-size: 100% 100%;
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  #app {
+    padding-top: 5%;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    height: 80%;
+    min-height: 600px;
+  }
+
+  @media (max-height: 800px), (max-width: 1000px) {
+    #app {
+      padding-top: 10px;
+      height: 100%;
+    }
+
+  }
+
 </style>
