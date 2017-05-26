@@ -199,7 +199,7 @@
   @keyframes fade-in-left {
     from {
       opacity: 0;
-      transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-30%, 0, 0);
     }
 
     to {
@@ -211,7 +211,7 @@
   @-webkit-keyframes fade-in-left {
     from {
       opacity: 0;
-      transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-30%, 0, 0);
     }
 
     to {
@@ -245,11 +245,11 @@
 
   .first-words {
     opacity: 0; /*实先规定文字的状态是不显示的*/
-    animation: fade-in 2s ease 0s 1; /*调用名称为fade-in的动画，全程动画显示时间4S，进入方式为ease，延时0S进入，播放次数1次*/
-    -webkit-animation: fade-in 2s ease 0s 1;
-    -moz-animation: fade-in 2s ease 0s 1;
-    -o-animation: fade-in 2s ease 0s 1;
-    -ms-animation: fade-in 2s ease 0s 1;
+    animation: fade-in 1s ease 0s 1; /*调用名称为fade-in的动画，全程动画显示时间4S，进入方式为ease，延时0S进入，播放次数1次*/
+    -webkit-animation: fade-in 1s ease 0s 1;
+    -moz-animation: fade-in 1s ease 0s 1;
+    -o-animation: fade-in 1s ease 0s 1;
+    -ms-animation: fade-in 1s ease 0s 1;
 
     /*规定动画的最后状态为结束状态*/
     animation-fill-mode: forwards;
@@ -261,11 +261,11 @@
 
   .second-words {
     opacity: 0;
-    animation: fade-in-left 2s ease 2s 1;
-    -webkit-animation: fade-in-left 2s ease 0s 1;
-    -moz-animation: fade-in-left 2s ease 0s 1;
-    -o-animation: fade-in-left 2s ease 0s 1;
-    -ms-animation: fade-in-left 2s ease 0s 1;
+    animation: fade-in-left 1s ease .5s 1;
+    -webkit-animation: fade-in-left 1s ease .5s 1;
+    -moz-animation: fade-in-left 1s ease .5s 1;
+    -o-animation: fade-in-left 1s ease .5s 1;
+    -ms-animation: fade-in-left 1s ease .5s 1;
 
     /*规定动画的最后状态为结束状态*/
     animation-fill-mode: forwards;
@@ -277,11 +277,11 @@
 
   .third-words {
     opacity: 0;
-    animation: fade-in-up 2s ease 1s 1;
-    -webkit-animation: fade-in-up 2s ease 1s 1;
-    -moz-animation: fade-in-up 2s ease 1s 1;
-    -o-animation: fade-in-up 2s ease 1s 1;
-    -ms-animation: fade-in-up 2s ease 1s 1;
+    animation: fade-in-up 1s ease 1s 1;
+    -webkit-animation: fade-in-up 1s ease 1s 1;
+    -moz-animation: fade-in-up 1s ease 1s 1;
+    -o-animation: fade-in-up 1s ease 1s 1;
+    -ms-animation: fade-in-up 1s ease 1s 1;
 
     /*规定动画的最后状态为结束状态*/
     animation-fill-mode: forwards;
