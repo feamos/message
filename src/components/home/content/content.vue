@@ -2,9 +2,9 @@
     <div class="rightcontent">
         <div class="head">
             <div class="title">
-                <span href="javascript:;" @click="list1 = !list1">{{ chat.name }}<img src="title.png" height="10" width="10" alt=""></span>
+                <span href="javascript:;" @click="list1 = !list1">{{ chat.name }}</span>
                 <div class="mobile" v-if="list1">
-                  <img src="add.png" alt=""><li v-for="mobile in chat.mobiles">{{mobile}}</li>
+                  <img src="./imgs/add.png" alt=""><li v-for="mobile in chat.mobiles">{{mobile}}</li>
                 </div>
             </div>
         </div>
@@ -12,13 +12,24 @@
           <div class="message-wrap" v-for="message in chat.messages">
             <div class="midd-message">
               {{message}}
+              <img src="./imgs/user.jpg" width="80px" height="80px" alt="">
             </div>
             <br class="clfl">
           </div>
         </div>
         <div class="bottom">
+            <div class="bottom-btn">
+              <img src="./imgs/{}.png" alt="">
+              <img src="./imgs/table.png" alt="">
+              <img src="./imgs/format.png" style="width: 40px;height: 28px;" alt="">
+            </div>
             <div>
-                <textarea id="editArea" v-model="message"></textarea>
+                <textarea
+                  id="editArea"
+                  v-model="message"
+                  placeholder="发送前请先：1,导入Excel表格 2,编辑对话框内容
+注意：{1}表示Excel表格的第一列对应数据
+         {2}表示Excel表格的第二列,以此类推"></textarea>
             </div>
             <div class="send">
                 <span @click="checkMessage(chat.messages)">发送</span>
@@ -37,7 +48,7 @@ export default {
       chat: {
         type: Object,
         name: '发起聊天',
-        mobiles: [],
+        items: [],
         messages: []
       }
     }
@@ -49,7 +60,7 @@ export default {
   },
   methods: {
     checkMessage (msg) {
-      if (this.message && this.chat.mobiles[0] > 0) {
+      if (this.message) {
         this.sendMessage(msg)
       }
     },
@@ -108,6 +119,11 @@ export default {
    margin-left: 5px;
    margin-bottom: 5px;
  }
+ .head .title span {
+   font-family: PingFangSC-Regular;
+   font-size: 36px;
+   color: #A9CDCF;
+ }
  .middle {
     height: 516px;
     border-bottom: 1px solid #d6d6d6;
@@ -123,32 +139,40 @@ export default {
    margin: 10px 0;
  }
  .middle .midd-message {
-   /*max-width:75%;*/
-   /*margin-right: 5%;*/
-   /*border:1px solid #d6d6d6;*/
-   /*padding:7px 7px;*/
-   /*border-radius: 5px;*/
-   /*font-size: 14px;*/
-   /*word-wrap: break-word;*/
-   /*word-break: normal;*/
-   /*float: right;*/
    display: inline-block;
-   /*position: relative;*/
    padding: 0 10px;
-   max-width: calc(100% - 70px);
+   position: relative;
+   max-width: 360px;
    line-height: 2.5;
    font-size: 12px;
    text-align: left;
    word-break: break-all;
    /*自动换行，允许在单词内换行*/
    background-color: #fafafa;
-   border-radius: 4px;
    float: right;
-   margin-right: 20px;
+   margin-right: 23%;
+   background: #A9CDCF;
+   border-radius: 10px;
+ }
+ .middle .midd-message img {
+   position: absolute;
+   right: -100px;
+   top: 0px;
  }
  .bottom {
     width: 720px;
     height: 181px;
+ }
+ .bottom-btn {
+   padding-top: 4px;
+   padding-left: 5px;
+ }
+ .bottom-btn img {
+   width: 24px;
+   height: 24px;
+   margin-left: 5px;
+   vertical-align: middle;
+   cursor: pointer;
  }
  #editArea {
     resize: none;
@@ -180,7 +204,7 @@ export default {
     line-height: 30px;
     border: 1px solid #d6d6d6;
     margin-top: 5px;
-    background: #fff;
+    background: #A9CDCF;
     border-radius: 5px;
  }
  .send span:hover {
@@ -191,6 +215,9 @@ export default {
     .rightcontent {
         height: 617px;
     }
+     .head .title span {
+       font-size: 24px;
+     }
     .middle {
         height: 396px;
         /*border-bottom: 1px solid #d6d6d6;   */

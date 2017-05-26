@@ -318,6 +318,8 @@
     width: 400px;
     height: 50px;
     margin: 25px;
+    outline: none;
+    padding-left: 7px;
     border-radius: 3px;
   }
 
