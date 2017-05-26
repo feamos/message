@@ -82,6 +82,7 @@ export default {
  }
  .head span {
     cursor: pointer;
+    width:200px;
  }
  .head img {
     margin-left: 3px;
