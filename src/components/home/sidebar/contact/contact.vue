@@ -1,188 +1,91 @@
 <template>
-  <div>
+  <div class="sidebar-bottom">
     <div id="menu">
       <ul>
         <li >管理群组</li>
         <li @click="contactDelete()">删除群组</li>
       </ul>
     </div>
-    <div class="chat" id="chat1">
-        <ul class="list">
-            <li v-for="(chat,index) in chats" @contextmenu.prevent="show(chat)"
-                @click="beginChat(chat)">{{chat.name+index}}</li>
-        </ul>
+    <div class="tab">
+      <div class="send-group">
+        <!--<Button type="text" size="large">群组发送</Button>-->
+        <input class="button-group" type="button" value="群组发送" @click="change('Chatgroup')"/>
+      </div>
+      <div class="send-template">
+        <!--<Button type="text" size="large">模板群发</Button>-->
+        <input class="button-group" type="button" value="模板群发" @click="change('Chattemplate')"/>
+      </div>
     </div>
+    <div class="search">
+      <input class="search-input" placeholder="搜索">
+    </div>
+    <component v-bind:is="currentView"></component>
   </div>
 
 </template>
-
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      modalDelete: false,
-      chats: [
-        {
-          name: 'Tracy',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['1']
-        },
-        {
-          name: 'Chris',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['2']
-        },
-        {
-          name: 'Bill',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['3']
-        },
-        {
-          name: 'Tracy',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['4']
-        },
-        {
-          name: 'Chris',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['Tracy']
-        },
-        {
-          name: 'Bill',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['Tracy']
-        },
-        {
-          name: 'Tracy',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['Tracy']
-        },
-        {
-          name: 'Chris',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['Tracy']
-        },
-        {
-          name: 'Bill',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['Tracy']
-        },
-        {
-          name: 'Tracy',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['Tracy']
-        },
-        {
-          name: 'Chris',
-          items: [
-            {'张三': '18716028979'},
-            {'李四': '18716022345'},
-            {'王五': '18716023243'},
-            {'白起': '18716023226'}
-          ],
-          messages: ['Tracy']
-        }
-      ]
-    }
-  },
-  mounted: function () {
-    document.getElementsByTagName('body')[0].addEventListener('click', function () {
-      document.getElementById('menu').style.display = 'none'
-    })
-  },
-  methods: {
-    show: function (i, ev) {
-      ev = ev || window.event
-      var odiv1 = document.getElementById('menu')
-      odiv1.style.left = ev.clientX + 'px'
-      odiv1.style.top = ev.clientY + 'px'
-      odiv1.style.display = 'block'
-      this.clickindex = i
+  import chatgroup from './chatgroup/chat'
+  import chattemplate from './chattemplate/chattemplate'
+  export default {
+    name: 'app',
+    data () {
+      return {
+        modalDelete: false,
+        currentView: 'Chattemplate'
+      }
     },
-    DeleteItems (list, delItem) {
-      return list.filter((item) => {
-        return item !== delItem
+    components: {
+      Chatgroup: chatgroup,
+      Chattemplate: chattemplate
+    },
+    mounted: function () {
+      document.getElementsByTagName('body')[0].addEventListener('click', function () {
+        document.getElementById('menu').style.display = 'none'
       })
     },
-    contactDelete: function () {
-      let chats = this.chats
-      let clickindex = this.clickindex
-      this.chats = this.DeleteItems(chats, clickindex)
-      var odiv1 = document.getElementById('menu')
-      odiv1.style.display = 'none'
-    },
-    beginChat: function (i) {
-      this.$bus.$emit('chat', i)
+    methods: {
+      show: function (i, ev) {
+        ev = ev || window.event
+        var odiv1 = document.getElementById('menu')
+        odiv1.style.left = ev.clientX + 'px'
+        odiv1.style.top = ev.clientY + 'px'
+        odiv1.style.display = 'block'
+        this.clickindex = i
+      },
+      DeleteItems (list, delItem) {
+        return list.filter((item) => {
+          return item !== delItem
+        })
+      },
+      contactDelete: function () {
+        let chats = this.chats
+        let clickindex = this.clickindex
+        this.chats = this.DeleteItems(chats, clickindex)
+        var odiv1 = document.getElementById('menu')
+        odiv1.style.display = 'none'
+      },
+      beginChat: function (i) {
+        this.$bus.$emit('chat', i)
+      },
+      change: function (v) {
+        this.currentView = v
+      }
     }
   }
-}
 </script>
 
 <style scoped>
 * {padding: 0;margin: 0;}
 ul {list-style: none;}
-.chat {
-    clear:both;
-    overflow: hidden;
-    overflow-x: hidden;
+.sidebar-bottom {
+  padding-left: 10px;
 }
 .list li {
-  padding: 12px 0;
+  padding: 3px 0;
   border: none;
   cursor: pointer;
-  height: 100px;
-  line-height: 100px;
+  height: 50px;
+  line-height: 50px;
   display: inline-block;
   width: 100%;
   text-align: center;
@@ -211,9 +114,42 @@ ul {list-style: none;}
   background-color: #eeeeee;
   border-radius: 5px;
 }
+.send-group {
+  float: left;
+  border-right: solid 1px #979797;
+  padding-right: 30px;
+}
+
+.button-group {
+  border: 0;
+  cursor: pointer;
+  background: none;
+  color: white;
+  font-size: 20px;
+}
+.send-template {
+  padding-left: 30px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+.search-input {
+  height: 37px;
+  width: 256px;
+  background: #49526A;
+}
+.tab {
+  height: 34px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
 @media (max-height: 800px), (max-width: 1000px){
     .chat {
-      height: 495px;
+      height: 350px;
     }
 }
 ::-webkit-scrollbar{width:6px;height: 6px;

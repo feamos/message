@@ -15,19 +15,6 @@
             <li>退出</li>
           </ul>
         </div>
-        <div class="tab">
-          <div class="send-group">
-            <!--<Button type="text" size="large">群组发送</Button>-->
-            <input class="button-group" type="button" value="群组发送"/>
-          </div>
-          <div class="send-template">
-            <!--<Button type="text" size="large">模板群发</Button>-->
-            <input class="button-group" type="button" value="模板群发"/>
-          </div>
-        </div>
-      <div class="search">
-        <input class="search-input" placeholder="搜索">
-      </div>
         <contact></contact>
     </div>
 </template>
@@ -117,41 +104,6 @@
     #bt li:hover {
       background-color: #eeeeee;
     }
-
-    .send-group {
-      float: left;
-      border-right: solid 1px #979797;
-      padding-right: 30px;
-    }
-
-    .button-group {
-      border: 0;
-      cursor: pointer;
-      background: none;
-      color: white;
-      font-size: 20px;
-    }
-    .send-template {
-      padding-left: 30px;
-    }
-
-    .search {
-      display: flex;
-      justify-content: center;
-      margin: 20px;
-    }
-    .search-input {
-      height: 37px;
-      width: 256px;
-      background: #49526A;
-    }
-    .tab {
-      height: 34px;
-      color: white;
-      display: flex;
-      justify-content: center;
-    }
-
     @media (max-height: 800px), (max-width: 1000px){
       .sidebar {
         height: 617px;

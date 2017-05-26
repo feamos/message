@@ -85,7 +85,7 @@ export default {
     position: relative;
     text-align: center;
     margin: 0 19px;
-    padding: 10px 0px;
+    padding: 30px 0px;
     line-height: 30px;
     text-decoration: none;
     font-size: 13px;
@@ -125,7 +125,7 @@ export default {
    color: #A9CDCF;
  }
  .middle {
-    height: 500px;
+    height: 480px;
     border-bottom: 1px solid #d6d6d6;
     padding: 0 10px;
     padding-top: 20px;
@@ -182,7 +182,6 @@ export default {
     font-size: 14px;
     color: #333;
     overflow: auto;
-    background-color: #eeeeee;
     border: 0;
     overflow-y:auto;
     overflow-x:hidden;
@@ -215,6 +214,9 @@ export default {
     .rightcontent {
         height: 617px;
     }
+   .head {
+     padding: 10px 0;
+   }
      .head .title span {
        font-size: 24px;
      }
