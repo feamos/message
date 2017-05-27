@@ -41,7 +41,7 @@
             <button
               class="submit"
               style="cursor:pointer"
-              @click="goto('home')">
+              @click="signIn">
               登录
             </button>
           </div>
@@ -70,6 +70,11 @@
       goto () {
         this.$nextTick(() => {
           this.$router.push('register')
+        })
+      },
+      signIn () {
+        this.$nextTick(() => {
+          this.$router.push('home')
         })
       },
       forgotPassword () {

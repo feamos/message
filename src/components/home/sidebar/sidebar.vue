@@ -7,8 +7,8 @@
         </div>
         <div v-if="select" class="head-bt" id="bt">
           <ul>
-            <li>个人信息</li>
-            <li>注销登录</li>
+            <li @click="$emit('Personal');select=false">个人信息</li>
+            <li @click="signOut">注销登录</li>
           </ul>
         </div>
         <contact></contact>
@@ -30,6 +30,11 @@
       methods: {
         selectSet () {
           this.select = !this.select
+        },
+        signOut () {
+          this.$nextTick(() => {
+            this.$router.push('login')
+          })
         }
       },
       components: {
@@ -81,8 +86,8 @@
     }
     .head-bt {
       position: absolute;
-      margin-left: 50px;
-      margin-top: 50px;
+      margin-left: 10%;
+      margin-top: -2%;
       background: #FFFFFF;
       border: 1px solid #596179;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
@@ -102,7 +107,7 @@
     #bt li:hover {
       background-color: #eeeeee;
     }
-    @media (max-height: 800px), (max-width: 1000px){
+    @media (max-height: 768px), (max-width: 1024px){
       .sidebar {
         height: 617px;
       }
