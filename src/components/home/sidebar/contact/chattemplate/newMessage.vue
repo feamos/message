@@ -14,22 +14,27 @@
         <li v-for="tempName in tempNames" class="template-li">{{tempName}}</li>
       </ul>
       <div class="new-temp-container">
-        <button class="new-temp-button">新建模板</button>
+        <button class="new-temp-button" @click.stop="createTemplate">新建模板</button>
       </div>
+      <createtemp v-if="createTemp"></createtemp>
     </div>
   </div>
 </template>
 
 <script>
+  import createtemp from './createTemplate.vue'
   export default {
-    name: 'register',
     data () {
       return {
         pass: '',
         ensurepass: '',
         renameTemp: false,
+        createTemp: false,
         tempNames: ['模板一', '模板二', '模板三', '模板四', '模板五']
       }
+    },
+    components: {
+      createtemp
     },
     methods: {
       deleteTemp (index) {
@@ -37,6 +42,10 @@
       },
       renameTemplate () {
         this.renameTemp = true
+      },
+      createTemplate () {
+        this.createTemp = true
+        console.log('hello')
       }
     }
   }
@@ -54,7 +63,7 @@
     margin-top: 0;
     width: 100%;
     height: 100%;
-    z-index: 9998;
+    z-index: 98;
     display: flex;
     background-color: rgba(51, 51, 51, .5);
     justify-content: center;
@@ -63,7 +72,7 @@
   }
 
   .contain {
-    z-index: 9999;
+    z-index: 99;
     display: table-cell;
     vertical-align: middle;
     position: absolute;
@@ -79,7 +88,7 @@
     font-size: 20px;
     color: #596179;
     background: #FFFFFF;
-    border: 1px solid #596179;
+    border: .5px solid #596179;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
   }
 
@@ -96,7 +105,7 @@
     justify-content: space-between;
     height: 47px;
     line-height: 47px;
-    border-bottom: 1px solid #596179;
+    border-bottom: .5px solid #596179;
   }
   .rename, .delete-tmp{
     font-size: 14px;
@@ -122,7 +131,6 @@
     color: #596179;
     height: 47px;
     line-height: 47px;
-    border-top: 1px solid #596179;
     border-bottom: 1px solid #596179;
   }
 
@@ -131,7 +139,7 @@
     height: 49px;
     line-height: 49px;
     margin-top: 20px;
-    border-top: 1px solid #D8D8D8;;
+    border-top: 1px solid #D8D8D8;
   }
   .new-temp-button {
     font-family: PingFangSC-Regular;

@@ -1,7 +1,7 @@
 <template>
   <div class="chat" id="chat">
     <ul>
-      <li v-for="(chat,index) in chats">
+      <li v-for="(chat, index) in chats">
         <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}" @click="chat.checkFlag=!chat.checkFlag"></div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>
