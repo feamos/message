@@ -9,11 +9,12 @@
     </ul>
     <div class="newde" :class="{hide:!hideFlag}">
       <ul>
-        <li>新建消息</li>
+        <li @click="newMsg">新建消息</li>
         <li @click="hideFlag = false">删除消息</li>
         <br style="clear:both">
       </ul>
     </div>
+    <newmessage v-if="newMessage" @closeNewMsg="newMessage=false"></newmessage>
     <div class="newde" :class="{hide:hideFlag}">
       <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
       <ul>
@@ -26,12 +27,14 @@
 </template>
 
 <script>
+  import newmessage from './newMessage.vue'
   export default {
     name: 'app',
     data () {
       return {
         checkbtn: false,
         hideFlag: true,
+        newMessage: false,
         chats: [
           {
             name: '班会通知',
@@ -117,6 +120,9 @@
     methods: {
       deltemp: function () {
       },
+      newMsg () {
+        this.newMessage = !this.newMessage
+      },
       selectAll: function () {
         this.checkbtn = !this.checkbtn
         this.chats.forEach(function (item) {
@@ -132,6 +138,9 @@
           item.checkFlag = false
         })
       }
+    },
+    components: {
+      newmessage
     }
   }
 </script>

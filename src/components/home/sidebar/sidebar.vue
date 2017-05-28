@@ -95,6 +95,7 @@
       border-radius: 10px;
       width: 120px;
       color: black;
+      z-index: 999;
     }
     #bt li {
       padding: 2px 10px;

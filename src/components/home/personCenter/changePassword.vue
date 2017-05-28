@@ -42,18 +42,9 @@
 
 <script>
   export default {
-    name: 'register',
     data () {
       return {
-        pass: '',
-        ensurepass: ''
-      }
-    },
-    methods: {
-      toLogin () {
-        this.$nextTick(() => {
-          this.$router.push('/home')
-        })
+
       }
     }
   }
@@ -69,6 +60,7 @@
     z-index: 9998;
     top: 0;
     left: 0;
+    margin-top: 0;
     width: 100%;
     height: 100%;
     display: flex;
