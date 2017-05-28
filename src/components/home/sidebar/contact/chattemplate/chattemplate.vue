@@ -1,8 +1,8 @@
 <template>
   <div class="chat" id="chat">
     <ul>
-      <li v-for="(chat,index) in chats">
-        <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}" @click="chat.checkFlag=!chat.checkFlag"></div>
+      <li v-for="(chat,index) in chats" @click="chat.checkFlag=!chat.checkFlag">
+        <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"></div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>
       </li>
@@ -18,18 +18,21 @@
       <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
       <ul>
         <li @click="cancelAll()">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</li>
-        <li>&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</li>
+        <li @click="confirmDlete = true">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</li>
         <br style="clear:both">
+        <confirm v-if="confirmDlete" @cancel="closedel" @confirmDel="deltemp"></confirm>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+  import confirm from './comfirmdelete'
   export default {
     name: 'app',
     data () {
       return {
+        confirmDlete: false,
         checkbtn: false,
         hideFlag: true,
         chats: [
@@ -112,16 +115,35 @@
         ]
       }
     },
+    components: {
+      confirm
+    },
     created () {
     },
     methods: {
       deltemp: function () {
+        this.confirmDlete = false
+        let chats = this.chats
+        this.chats = chats.filter((item) => {
+          return item.checkFlag === false
+        })
       },
       selectAll: function () {
+        if (this.checkbtn) {
+          this.chats.forEach(function (item) {
+            item.checkFlag = false
+          })
+        } else {
+          this.chats.forEach(function (item) {
+            if (!item.checkFlag) {
+              item.checkFlag = true
+            }
+          })
+        }
         this.checkbtn = !this.checkbtn
         this.chats.forEach(function (item) {
-          if (item.checkFlag === false) {
-            item.checkFlag = true
+          if (!item.checkFlag) {
+            item.checkFlag = false
           }
         })
       },
@@ -131,6 +153,10 @@
         this.chats.forEach(function (item) {
           item.checkFlag = false
         })
+      },
+      closedel: function () {
+        this.confirmDlete = false
+        this.cancelAll()
       }
     }
   }
@@ -187,6 +213,7 @@
   }
   .checkAll {
     cursor: pointer;
+    background: #596179;
   }
   .checkAll span {
     line-height:28px;

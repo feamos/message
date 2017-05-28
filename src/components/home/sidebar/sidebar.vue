@@ -87,14 +87,15 @@
     }
     .head-bt {
       position: absolute;
-      margin-left: 10%;
-      margin-top: -2%;
+      margin-left: 15%;
+      margin-top: -4%;
       background: #FFFFFF;
       border: 1px solid #596179;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
       border-radius: 10px;
       width: 120px;
       color: black;
+      z-index: 999;
     }
     #bt li {
       padding: 2px 10px;
@@ -107,14 +108,11 @@
     }
     #bt li:hover {
       background-color: #eeeeee;
+      border-radius: 5px;
     }
     @media (max-height: 768px), (max-width: 1024px){
       .sidebar {
         height: 617px;
-      }
-      #bt {
-        left:310px;
-        top:65px;
       }
     }
 </style>

@@ -76,6 +76,7 @@
     justify-content: center;
     align-items: center;
     transition: opacity .3s ease;
+    margin-top: 0px;
   }
 
   .contain {
