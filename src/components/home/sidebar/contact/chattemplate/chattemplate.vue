@@ -1,8 +1,8 @@
 <template>
   <div class="chat" id="chat">
     <ul>
-      <li v-for="(chat,index) in chats" @click="chat.checkFlag=!chat.checkFlag">
-        <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"></div>
+      <li v-for="(chat,index) in chats" >
+        <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}" @click="chat.checkFlag=!chat.checkFlag"></div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>
       </li>
@@ -18,7 +18,7 @@
       <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
       <ul>
         <li @click="cancelAll()">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</li>
-        <li @click="confirmDlete = true">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</li>
+        <li @click="checkQuick()">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</li>
         <br style="clear:both">
         <confirm v-if="confirmDlete" @cancel="closedel" @confirmDel="deltemp"></confirm>
       </ul>
@@ -32,6 +32,7 @@
     name: 'app',
     data () {
       return {
+        quick: false,
         confirmDlete: false,
         checkbtn: false,
         hideFlag: true,
@@ -119,6 +120,9 @@
       confirm
     },
     created () {
+      this.$bus.$on('quickDel', (msg) => {
+        this.quick = msg
+      })
     },
     methods: {
       deltemp: function () {
@@ -127,6 +131,7 @@
         this.chats = chats.filter((item) => {
           return item.checkFlag === false
         })
+        this.cancelAll()
       },
       selectAll: function () {
         if (this.checkbtn) {
@@ -157,6 +162,13 @@
       closedel: function () {
         this.confirmDlete = false
         this.cancelAll()
+      },
+      checkQuick: function () {
+        if (!this.quick) {
+          this.confirmDlete = true
+        } else {
+          this.deltemp()
+        }
       }
     }
   }

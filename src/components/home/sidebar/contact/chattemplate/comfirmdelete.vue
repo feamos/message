@@ -3,7 +3,7 @@
     <div class="contain">
       <p>确认删除该模板吗？</p>
       <div class="select">
-        <input type="checkbox" id="btn"><label for="btn">以后不再提示</label>
+        <input type="checkbox" id="btn" v-model="checkBox"><label for="btn">以后不再提示</label>
       </div>
       <ul>
         <li @click="$emit('cancel')">取消</li>
@@ -19,9 +19,13 @@
     name: 'register',
     data () {
       return {
+        checkBox: false,
         pass: '',
         ensurepass: ''
       }
+    },
+    updated: function () {
+      this.$bus.$emit('quickDel', this.checkBox)
     },
     methods: {
       toLogin () {
