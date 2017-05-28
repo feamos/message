@@ -14,15 +14,14 @@
         <li v-for="tempName in tempNames" class="template-li">{{tempName}}</li>
       </ul>
       <div class="new-temp-container">
-        <button class="new-temp-button" @click.stop="createTemplate">新建模板</button>
+        <button class="new-temp-button" @click.stop="$emit('createTemplate')">新建模板</button>
+        <!--新建模板的事件定义在父组件chattemplate中-->
       </div>
-      <createtemp v-if="createTemp"></createtemp>
     </div>
   </div>
 </template>
 
 <script>
-  import createtemp from './createTemplate.vue'
   export default {
     data () {
       return {
@@ -33,19 +32,12 @@
         tempNames: ['模板一', '模板二', '模板三', '模板四', '模板五']
       }
     },
-    components: {
-      createtemp
-    },
     methods: {
       deleteTemp (index) {
         this.tempNames.splice(index, 1)
       },
       renameTemplate () {
         this.renameTemp = true
-      },
-      createTemplate () {
-        this.createTemp = true
-        console.log('hello')
       }
     }
   }

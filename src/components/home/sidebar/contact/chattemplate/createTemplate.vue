@@ -6,7 +6,7 @@
         <input class="create-input" type="text">
       </div>
       <div class="buttons">
-        <button class="cancel-change-button">
+        <button class="cancel-change-button" @click="$emit('closeCreate')">
           取消
         </button>
         <button class="ok-change-button">确定</button>

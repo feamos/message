@@ -14,7 +14,10 @@
         <br style="clear:both">
       </ul>
     </div>
-    <newmessage v-if="newMessage" @closeNewMsg="newMessage=false"></newmessage>
+    <newmessage v-if="newMessage" @closeNewMsg="newMessage=false"
+                @createTemplate="createTemplates"></newmessage>
+    <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"></createtemp>
+    <!--绑定子组件模板命名模态框的关闭-->
     <div class="newde" :class="{hide:hideFlag}">
       <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
       <ul>
@@ -30,6 +33,7 @@
 <script>
   import newmessage from './newMessage.vue'
   import confirm from './comfirmdelete'
+  import createtemp from './createTemplate.vue'
   export default {
     name: 'app',
     data () {
@@ -39,6 +43,7 @@
         checkbtn: false,
         hideFlag: true,
         newMessage: false,
+        createTemp: false,
         chats: [
           {
             name: '班会通知',
@@ -121,7 +126,8 @@
     },
     components: {
       confirm,
-      newmessage
+      newmessage,
+      createtemp
     },
     created () {
       this.$bus.$on('quickDel', (msg) => {
@@ -176,6 +182,16 @@
         } else {
           this.deltemp()
         }
+      },
+//      新建模板并关闭当前新建消息对话框
+      createTemplates () {
+        this.createTemp = true
+        this.newMessage = false
+      },
+//      取消新建模板的模态框
+      closeCreateTemp () {
+        this.createTemp = false
+        this.newMessage = true
       }
     }
   }
