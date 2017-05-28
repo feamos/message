@@ -17,19 +17,30 @@
       <span>邮箱：{{userEmail}}</span>
     </div>
     <div class="change-pass-container">
-      <button class="change-pass">修改密码</button>
+      <button class="change-pass" @click="openChangePass">修改密码</button>
     </div>
+    <changepass v-if="changePass" @closeChange="changePass=false"></changepass>
   </div>
 </template>
 
 <script>
+  import changepass from './changePassword.vue'
   export default {
     name: 'app',
     data () {
       return {
         userName: '1777627637@qq.com',
         userMobile: '1876732564165',
-        userEmail: 'hfakuiuvif@163.com'
+        userEmail: 'hfakuiuvif@163.com',
+        changePass: false
+      }
+    },
+    components: {
+      changepass
+    },
+    methods: {
+      openChangePass () {
+        this.changePass = true
       }
     }
   }

@@ -121,7 +121,8 @@ ul {list-style: none;}
 }
 
 .button-group {
-  border: 0;
+  border: none;
+  outline: none;
   cursor: pointer;
   background: none;
   color: white;

@@ -2,9 +2,18 @@
   <div class="login">
     <div class="contain">
       <div class="title">
-        <h1 class="first-words">便捷联系</h1>
-        <h1 class="second-words">纽扣群发帮你轻松简化一切，让生活更美好</h1>
-        <h1 class="third-words">让工作更省力</h1>
+        <transition name="custom-classes-transition"
+                    enter-active-class="animated fadeInDown">
+          <h1 v-if="show">便捷联系</h1>
+        </transition>
+        <transition name="custom-second-transition"
+                    enter-active-class="animated fadeInLeft">
+          <h1 v-if="show">纽扣群发帮你轻松简化一切，让生活更美好</h1>
+        </transition>
+        <transition name="custom-third-transition"
+                    enter-active-class="animated fadeInUp">
+          <h1 v-if="show">让工作更省力</h1>
+        </transition>
       </div>
       <form method="post" @submit.prevent="onSubmit()">
         <div class="input-container">
@@ -63,8 +72,13 @@
       return {
         mobile: '',
         pass: '',
-        show: true
+        show: false
       }
+    },
+    mounted () {
+      this.$nextTick(function () {
+        this.show = true
+      })
     },
     methods: {
       goto () {
@@ -95,10 +109,6 @@
   * {
     margin: 0px;
     padding: 0px;
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity 2s
   }
 
   .login {
@@ -141,160 +151,6 @@
     font-family: Microsoft YaHei;
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @-webkit-keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @-ms-keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @-o-keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @-moz-keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes fade-in-left {
-    from {
-      opacity: 0;
-      transform: translate3d(-30%, 0, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @-webkit-keyframes fade-in-left {
-    from {
-      opacity: 0;
-      transform: translate3d(-30%, 0, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translate3d(0, 100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-  @-webkit-keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translate3d(0, 100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  .first-words {
-    opacity: 0; /*实先规定文字的状态是不显示的*/
-    animation: fade-in 1s ease 0s 1; /*调用名称为fade-in的动画，全程动画显示时间4S，进入方式为ease，延时0S进入，播放次数1次*/
-    -webkit-animation: fade-in 1s ease 0s 1;
-    -moz-animation: fade-in 1s ease 0s 1;
-    -o-animation: fade-in 1s ease 0s 1;
-    -ms-animation: fade-in 1s ease 0s 1;
-
-    /*规定动画的最后状态为结束状态*/
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
-    -o-animation-fill-mode: forwards;
-    -ms-animation-fill-mode: forwards;
-    -moz-animation-fill-mode: forwards;
-  }
-
-  .second-words {
-    opacity: 0;
-    animation: fade-in-left 1s ease .5s 1;
-    -webkit-animation: fade-in-left 1s ease .5s 1;
-    -moz-animation: fade-in-left 1s ease .5s 1;
-    -o-animation: fade-in-left 1s ease .5s 1;
-    -ms-animation: fade-in-left 1s ease .5s 1;
-
-    /*规定动画的最后状态为结束状态*/
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
-    -o-animation-fill-mode: forwards;
-    -ms-animation-fill-mode: forwards;
-    -moz-animation-fill-mode: forwards;
-  }
-
-  .third-words {
-    opacity: 0;
-    animation: fade-in-up 1s ease 1s 1;
-    -webkit-animation: fade-in-up 1s ease 1s 1;
-    -moz-animation: fade-in-up 1s ease 1s 1;
-    -o-animation: fade-in-up 1s ease 1s 1;
-    -ms-animation: fade-in-up 1s ease 1s 1;
-
-    /*规定动画的最后状态为结束状态*/
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
-    -o-animation-fill-mode: forwards;
-    -ms-animation-fill-mode: forwards;
-    -moz-animation-fill-mode: forwards;
-  }
 
   form {
     font-size: larger;
