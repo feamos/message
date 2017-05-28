@@ -19,8 +19,9 @@
       <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
       <ul>
         <li @click="cancelAll()">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</li>
-        <li>&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</li>
+        <li @click="checkQuick()">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</li>
         <br style="clear:both">
+        <confirm v-if="confirmDlete" @cancel="closedel" @confirmDel="deltemp"></confirm>
       </ul>
     </div>
   </div>
@@ -28,10 +29,13 @@
 
 <script>
   import newmessage from './newMessage.vue'
+  import confirm from './comfirmdelete'
   export default {
     name: 'app',
     data () {
       return {
+        quick: false,
+        confirmDlete: false,
         checkbtn: false,
         hideFlag: true,
         newMessage: false,
@@ -115,19 +119,43 @@
         ]
       }
     },
+    components: {
+      confirm,
+      newmessage
+    },
     created () {
+      this.$bus.$on('quickDel', (msg) => {
+        this.quick = msg
+      })
     },
     methods: {
       deltemp: function () {
+        this.confirmDlete = false
+        let chats = this.chats
+        this.chats = chats.filter((item) => {
+          return item.checkFlag === false
+        })
+        this.cancelAll()
       },
       newMsg () {
         this.newMessage = !this.newMessage
       },
       selectAll: function () {
+        if (this.checkbtn) {
+          this.chats.forEach(function (item) {
+            item.checkFlag = false
+          })
+        } else {
+          this.chats.forEach(function (item) {
+            if (!item.checkFlag) {
+              item.checkFlag = true
+            }
+          })
+        }
         this.checkbtn = !this.checkbtn
         this.chats.forEach(function (item) {
-          if (item.checkFlag === false) {
-            item.checkFlag = true
+          if (!item.checkFlag) {
+            item.checkFlag = false
           }
         })
       },
@@ -137,10 +165,18 @@
         this.chats.forEach(function (item) {
           item.checkFlag = false
         })
+      },
+      closedel: function () {
+        this.confirmDlete = false
+        this.cancelAll()
+      },
+      checkQuick: function () {
+        if (!this.quick) {
+          this.confirmDlete = true
+        } else {
+          this.deltemp()
+        }
       }
-    },
-    components: {
-      newmessage
     }
   }
 </script>
@@ -196,6 +232,7 @@
   }
   .checkAll {
     cursor: pointer;
+    background: #596179;
   }
   .checkAll span {
     line-height:28px;
