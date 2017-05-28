@@ -2,10 +2,11 @@
   <div>
     <div class="main">
       <div class="left fl">
-        <sidebar :list='list'></sidebar>
+        <sidebar :list='list' @Personal="PersonalShow"></sidebar>
       </div>
       <div class="right fl">
-        <rightcontent></rightcontent>
+        <personal v-if="showPerson"></personal>
+        <rightcontent v-else></rightcontent>
       </div>
       <br>
     </div>
@@ -15,19 +16,26 @@
 <script>
   import sidebar from './sidebar/sidebar'
   import rightcontent from './content/content'
+  import personal from './personCenter/personCenter.vue'
   export default {
     name: 'app',
     data () {
       return {
         login: true,
-        list: false
+        list: false,
+        showPerson: false
       }
     },
     components: {
       sidebar,
-      rightcontent
+      rightcontent,
+      personal
+    },
+    methods: {
+      PersonalShow () {
+        this.showPerson = true
+      }
     }
-
   }
 </script>
 

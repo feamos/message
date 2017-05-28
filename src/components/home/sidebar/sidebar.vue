@@ -3,16 +3,12 @@
         <div class="head">
           <img class="head-img" src="./imgs/cat.jpg" width="80px" height="80px">
           <span>用户名</span>
-          <a href="javascript:;" @click.stop="titleBt">
-            <img class="set-img" src="./imgs/set.png">
-          </a>
+          <img class="set-img" src="./imgs/set.png" @click="selectSet">
         </div>
-        <div class="head-bt" id="bt">
+        <div v-if="select" class="head-bt" id="bt">
           <ul>
-            <li>个人中心</li>
-            <li>新建群组</li>
-            <li>管理群组</li>
-            <li>退出</li>
+            <li @click="$emit('Personal');select=false">个人信息</li>
+            <li @click="signOut">注销登录</li>
           </ul>
         </div>
         <contact></contact>
@@ -25,19 +21,20 @@
       data () {
         return {
           list: false,
+          select: false,
           chat: 'chat',
           contact: 'contact',
           currentview: 'chat'
         }
       },
-      mounted () {
-        document.addEventListener('click', function () {
-          document.getElementById('bt').style.display = 'none'
-        })
-      },
       methods: {
-        titleBt () {
-          document.getElementById('bt').style.display = 'block'
+        selectSet () {
+          this.select = !this.select
+        },
+        signOut () {
+          this.$nextTick(() => {
+            this.$router.push('login')
+          })
         }
       },
       components: {
@@ -50,9 +47,7 @@
       padding: 0;
       margin: 0;
     }
-    li {
-      list-style: none;
-    }
+
     .tab a {
         display: inline-block;
         width: 100%;
@@ -83,15 +78,23 @@
         vertical-align: middle;
         line-height: 157px;
     }
-    #bt {
-      background-color: white;
-      color: #000;
-      border-radius: 5px;
+
+    .set-img {
+      width: 36px;
+      height: 23px;
+      position: relative;
+      cursor: pointer;
+    }
+    .head-bt {
       position: absolute;
-      left: 590px;
-      top: 150px;
-      display: none;
-      z-index: 9999;
+      margin-left: 10%;
+      margin-top: -2%;
+      background: #FFFFFF;
+      border: 1px solid #596179;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+      border-radius: 10px;
+      width: 120px;
+      color: black;
     }
     #bt li {
       padding: 2px 10px;
@@ -105,7 +108,7 @@
     #bt li:hover {
       background-color: #eeeeee;
     }
-    @media (max-height: 800px), (max-width: 1000px){
+    @media (max-height: 768px), (max-width: 1024px){
       .sidebar {
         height: 617px;
       }
