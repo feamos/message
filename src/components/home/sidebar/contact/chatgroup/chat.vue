@@ -94,7 +94,7 @@ ul {list-style: none;}
 }
 ul li {
     padding: 18px 18px;
-    border-bottom: 1px solid #292c35;
+    border-bottom: 1px solid #979797;
     cursor: pointer;
 }
 ::-webkit-scrollbar{width:6px;height: 6px;

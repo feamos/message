@@ -30,28 +30,16 @@
     name: 'app',
     data () {
       return {
+        hidFlag: true,
         modalDelete: false,
-        currentView: 'Chattemplate'
+        currentView: 'Chatgroup'
       }
     },
     components: {
       Chatgroup: chatgroup,
       Chattemplate: chattemplate
     },
-    mounted: function () {
-      document.getElementsByTagName('body')[0].addEventListener('click', function () {
-        document.getElementById('menu').style.display = 'none'
-      })
-    },
     methods: {
-      show: function (i, ev) {
-        ev = ev || window.event
-        var odiv1 = document.getElementById('menu')
-        odiv1.style.left = ev.clientX + 'px'
-        odiv1.style.top = ev.clientY + 'px'
-        odiv1.style.display = 'block'
-        this.clickindex = i
-      },
       DeleteItems (list, delItem) {
         return list.filter((item) => {
           return item !== delItem
@@ -77,9 +65,6 @@
 <style scoped>
 * {padding: 0;margin: 0;}
 ul {list-style: none;}
-.sidebar-bottom {
-  padding-left: 10px;
-}
 .list li {
   padding: 3px 0;
   border: none;
@@ -94,6 +79,9 @@ ul {list-style: none;}
 .list li:hover {
   background-color: white;
   color: #000000;
+}
+.sidebar-bottom {
+  position: relative;
 }
 #menu {
   position: absolute;

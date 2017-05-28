@@ -65,6 +65,7 @@
       margin-right: 24px;
     }
     .sidebar {
+      width: 320px;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         float: left;
         height: 100%;
