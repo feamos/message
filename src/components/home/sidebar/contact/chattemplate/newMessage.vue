@@ -46,8 +46,6 @@
       },
       selectShowTemplate (tempName, index) {
         this.selectTemplate = tempName
-        console.log(tempName)
-        console.log(index)
         this.$emit('selectLi', index)
       }
     }

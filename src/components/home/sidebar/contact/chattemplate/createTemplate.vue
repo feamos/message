@@ -27,7 +27,7 @@
       sureRename () {
         console.log(this.templateName)
         this.$emit('addTemplate', this.templateName)
-//        将模板名称传值到另一个组件（非父子组件传值用eventbus）,在newMessage组件中监听该事件
+  //        将模板名称传值到父组件
         this.$emit('closeCreate')
       }
     }

@@ -1,14 +1,18 @@
 <template>
   <div class="chat" id="chat">
     <ul>
-      <li v-for="(chat, index) in chats">
-        <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"
-             @click="chat.checkFlag=!chat.checkFlag"></div>
+      <li v-for="(chat, index) in chats" @click="beginChat(chat)">
+        <div
+          id="select"
+          :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"
+          @click="chat.checkFlag=!chat.checkFlag">
+        /*hide:隐藏复选框  check/select:选中和非选中 */
+        </div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>
       </li>
     </ul>
-    <div class="newde" :class="{hide:!hideFlag}">
+    <div class="newde" :class="{hide:!hideFlag}" v-if="hideFlag">
       <ul>
         <li @click="newMsg">新建消息</li>
         <li @click="hideFlag = false">删除消息</li>
@@ -79,18 +83,66 @@
         chats: [
           {
             name: '班会通知',
+            template: '{1}同学请于5月13日到大学生会馆开会',
+            chengyuan: [
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'}
+            ],
             checkFlag: false
           },
           {
             name: '比赛通知',
+            template: '{1}同学请于6月14日到大学生会馆开会',
+            chengyuan: [
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'}
+            ],
             checkFlag: false
           },
           {
             name: '开会通知',
+            template: '{1}同学请于7月15日到大学生会馆开会',
+            chengyuan: [
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'}
+            ],
             checkFlag: false
           },
           {
             name: 'Chris',
+            template: '{1}同学请于8月16日到大学生会馆开会',
+            chengyuan: [
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'},
+              {'冯培栋': '18716028979'}
+            ],
             checkFlag: false
           },
           {
@@ -170,6 +222,9 @@
       this.addTemplate
     },
     methods: {
+      beginChat: function (i) {
+        this.$bus.$emit('responseChat', i)
+      },
       deltemp: function () {
         this.confirmDlete = false
         let chats = this.chats
@@ -229,7 +284,11 @@
         this.newMessage = true
       },
       addTemplate (templateName) {
-        this.tempNames.push(templateName)
+        this.tempNames.push({
+          isActive: false,
+          id: 1,
+          templa: templateName
+        })
         console.log(this.tempNames)
       },
       selectLi (index) {
@@ -250,6 +309,9 @@
   }
   #chat {
     width: 320px;
+  }
+  #chat ul {
+    padding-bottom: 50px;
   }
   .chat {
     width: 320px;
@@ -313,7 +375,7 @@
   .newde {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -50px;
   }
   .newde ul li {
     height: 50px;
