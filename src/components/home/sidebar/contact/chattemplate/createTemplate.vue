@@ -3,13 +3,14 @@
     <div class="contain">
       <div class="contain-head">
         模板名称
-        <input class="create-input" type="text">
+        <input class="create-input" type="text" v-model="templateName">
       </div>
       <div class="buttons">
         <button class="cancel-change-button" @click="$emit('closeCreate')">
+          <!--closeCreate方法定义在chattemplate组件中-->
           取消
         </button>
-        <button class="ok-change-button">确定</button>
+        <button class="ok-change-button" @click="sureRename">确定</button>
       </div>
     </div>
   </div>
@@ -19,7 +20,15 @@
   export default {
     data () {
       return {
-        pass: ''
+        templateName: ''
+      }
+    },
+    methods: {
+      sureRename () {
+        console.log(this.templateName)
+        this.$emit('addTemplate', this.templateName)
+//        将模板名称传值到另一个组件（非父子组件传值用eventbus）,在newMessage组件中监听该事件
+        this.$emit('closeCreate')
       }
     }
   }
@@ -74,6 +83,7 @@
   .create-input {
     width: 140px;
     border: none;
+    outline: none;
     border-bottom: 1px solid #596179;
   }
   .buttons {
