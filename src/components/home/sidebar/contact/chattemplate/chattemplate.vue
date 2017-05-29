@@ -6,7 +6,7 @@
           id="select"
           :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"
           @click="chat.checkFlag=!chat.checkFlag">
-        /*hide:隐藏复选框  check/select:选中和非选中 */
+        <!--hide:隐藏复选框  check/select:选中和非选中-->
         </div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>

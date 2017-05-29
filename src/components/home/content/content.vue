@@ -20,8 +20,17 @@
         <div class="bottom">
             <div class="bottom-btn">
               <img src="./imgs/{}.png" alt="">
-              <img src="./imgs/table.png" alt="">
-              <img src="./imgs/format.png" style="width: 40px;height: 28px;" alt="">
+              <img
+                src="./imgs/table.png"
+                @click="importExcel = true"
+                alt=""
+              >
+              <img
+                src="./imgs/format.png"
+                @click="tem = true"
+                style="width: 40px;height: 28px;"
+                alt=""
+              >
             </div>
             <div>
                 <textarea
@@ -29,46 +38,53 @@
                   v-model='chat.template'
                   >
                 </textarea>
-              <!--placeholder="发送前请先：1,导入Excel表格 2,编辑对话框内容-->
-              <!--注意：{1}表示Excel表格的第一列对应数据-->
-              <!--{2}表示Excel表格的第二列,以此类推"-->
             </div>
             <div class="send">
                 <span @click="checkMessage(chat.template)">发送</span>
             </div>
         </div>
+        <excel v-if="importExcel" @cancel="importExcel = false"></excel>
+        <tem v-if="tem" @cancel="tem = false"></tem>
     </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      list1: false,
-      message: '',
-      chat: {
-        name: '发起聊天'
-      }
-    }
-  },
-  mounted: function () {
-    this.$bus.on('responseChat', (i) => {
-      this.chat = i
-    })
-  },
-  methods: {
-    checkMessage (msg) {
-      if (this.message) {
-        this.sendMessage(msg)
+  import excel from './importExcel.vue'
+  import tem from './template.vue'
+  export default {
+    name: 'app',
+    data () {
+      return {
+        list1: false,
+        message: '',
+        importExcel: false,
+        tem: false,
+        chat: {
+          name: '发起聊天'
+        }
       }
     },
-    sendMessage (msg) {
-      msg.push(this.message)
-      this.message = ''
+    components: {
+      excel,
+      tem
+    },
+    mounted: function () {
+      this.$bus.on('responseChat', (i) => {
+        this.chat = i
+      })
+    },
+    methods: {
+      checkMessage (msg) {
+        if (this.message) {
+          this.sendMessage(msg)
+        }
+      },
+      sendMessage (msg) {
+        msg.push(this.message)
+        this.message = ''
+      }
     }
   }
-}
 </script>
 
 <style scoped>
