@@ -284,14 +284,18 @@
         this.newMessage = true
       },
       addTemplate (templateName) {
-        this.tempNames.push(templateName)
+        this.tempNames.push({
+          isActive: false,
+          id: 1,
+          templa: templateName
+        })
         console.log(this.tempNames)
       },
       selectLi (index) {
         this.tempNames.forEach((value, index) => {
           value.isActive = false
         })
-        this.tempNames[index].isActive = !this.tempNames[index].isActive
+        this.tempNames[index].isActive = true
       }
     }
   }
