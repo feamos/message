@@ -26,13 +26,15 @@
             <div>
                 <textarea
                   id="editArea"
-                  v-model="message"
-                  placeholder="发送前请先：1,导入Excel表格 2,编辑对话框内容
-          注意：{1}表示Excel表格的第一列对应数据
-         {2}表示Excel表格的第二列,以此类推"></textarea>
+                  v-model='chat.template'
+                  >
+                </textarea>
+              <!--placeholder="发送前请先：1,导入Excel表格 2,编辑对话框内容-->
+              <!--注意：{1}表示Excel表格的第一列对应数据-->
+              <!--{2}表示Excel表格的第二列,以此类推"-->
             </div>
             <div class="send">
-                <span @click="checkMessage(chat.messages)">发送</span>
+                <span @click="checkMessage(chat.template)">发送</span>
             </div>
         </div>
     </div>
@@ -46,16 +48,13 @@ export default {
       list1: false,
       message: '',
       chat: {
-        type: Object,
-        name: '发起聊天',
-        items: [],
-        messages: []
+        name: '发起聊天'
       }
     }
   },
   mounted: function () {
-    this.$bus.on('chat', (msg) => {
-      this.chat = msg
+    this.$bus.on('responseChat', (i) => {
+      this.chat = i
     })
   },
   methods: {
