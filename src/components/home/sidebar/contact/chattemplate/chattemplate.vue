@@ -7,7 +7,7 @@
         <p>(蔡珩,罗洪涛,刘明……)</p>
       </li>
     </ul>
-    <div class="newde" :class="{hide:!hideFlag}">
+    <div class="newde" :class="{hide:!hideFlag}" v-if="hideFlag">
       <ul>
         <li>新建消息</li>
         <li @click="hideFlag = false">删除消息</li>
@@ -183,6 +183,9 @@
   #chat {
     width: 320px;
   }
+  #chat ul {
+    padding-bottom: 50px;
+  }
   .chat {
     width: 320px;
     clear:both;
@@ -245,7 +248,7 @@
   .newde {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -50px;
   }
   .newde ul li {
     height: 50px;
