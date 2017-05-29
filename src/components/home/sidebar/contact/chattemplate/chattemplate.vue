@@ -1,7 +1,7 @@
 <template>
   <div class="chat" id="chat">
     <ul>
-      <li v-for="(chat,index) in chats" >
+      <li v-for="(chat, index) in chats">
         <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}" @click="chat.checkFlag=!chat.checkFlag"></div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>
@@ -9,11 +9,15 @@
     </ul>
     <div class="newde" :class="{hide:!hideFlag}" v-if="hideFlag">
       <ul>
-        <li>新建消息</li>
+        <li @click="newMsg">新建消息</li>
         <li @click="hideFlag = false">删除消息</li>
         <br style="clear:both">
       </ul>
     </div>
+    <newmessage v-if="newMessage" @closeNewMsg="newMessage=false"
+                @createTemplate="createTemplates"></newmessage>
+    <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"></createtemp>
+    <!--绑定子组件模板命名模态框的关闭-->
     <div class="newde" :class="{hide:hideFlag}">
       <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
       <ul>
@@ -27,7 +31,9 @@
 </template>
 
 <script>
+  import newmessage from './newMessage.vue'
   import confirm from './comfirmdelete'
+  import createtemp from './createTemplate.vue'
   export default {
     name: 'app',
     data () {
@@ -36,6 +42,8 @@
         confirmDlete: false,
         checkbtn: false,
         hideFlag: true,
+        newMessage: false,
+        createTemp: false,
         chats: [
           {
             name: '班会通知',
@@ -117,7 +125,9 @@
       }
     },
     components: {
-      confirm
+      confirm,
+      newmessage,
+      createtemp
     },
     created () {
       this.$bus.$on('quickDel', (msg) => {
@@ -132,6 +142,9 @@
           return item.checkFlag === false
         })
         this.cancelAll()
+      },
+      newMsg () {
+        this.newMessage = !this.newMessage
       },
       selectAll: function () {
         if (this.checkbtn) {
@@ -169,6 +182,16 @@
         } else {
           this.deltemp()
         }
+      },
+//      新建模板并关闭当前新建消息对话框
+      createTemplates () {
+        this.createTemp = true
+        this.newMessage = false
+      },
+//      取消新建模板的模态框
+      closeCreateTemp () {
+        this.createTemp = false
+        this.newMessage = true
       }
     }
   }
