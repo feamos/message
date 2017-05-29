@@ -12,8 +12,8 @@
       </div>
       <ul class="template-ul">
         <li v-for="(tempName, index) in tempNames" class="template-li"
-            :class="{ active: isActive }"
-            @click.stop="selectShowTemplate(tempName, index)">{{tempName}}
+            :class="{ active: tempName.isActive }"
+            @click.stop="selectShowTemplate(tempName.templa, index)">{{tempName.templa}}
         </li>
       </ul>
       <div class="new-temp-container">
@@ -46,7 +46,9 @@
       },
       selectShowTemplate (tempName, index) {
         this.selectTemplate = tempName
+        console.log(tempName)
         console.log(index)
+        this.$emit('selectLi', index)
       }
     }
   }
@@ -121,7 +123,7 @@
     font-family: PingFangSC-Regular;
   }
 
-  .rename:hover, .delete-tmp:hover {
+  .rename:hover, .delete-tmp:hover{
     color: #CDE7E9;
   }
 
@@ -141,15 +143,7 @@
     cursor: pointer;
   }
 
-  .active {
-    color: red;
-  }
-
-  .unactive {
-    color: #000;
-  }
-
-  .template-li:hover, .template-li:target {
+  .template-li:hover, .template-li:target, .active {
     background: #CDE7E9;
   }
 

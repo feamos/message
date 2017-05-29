@@ -2,7 +2,8 @@
   <div class="chat" id="chat">
     <ul>
       <li v-for="(chat, index) in chats">
-        <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}" @click="chat.checkFlag=!chat.checkFlag"></div>
+        <div id="select" :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"
+             @click="chat.checkFlag=!chat.checkFlag"></div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>
       </li>
@@ -16,6 +17,7 @@
     </div>
     <newmessage v-if="newMessage" @closeNewMsg="newMessage=false"
                 @createTemplate="createTemplates"
+                @selectLi="selectLi"
                 :temp-names="tempNames"></newmessage>
     <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"
                 @addTemplate="addTemplate"></createtemp>
@@ -46,32 +48,34 @@
         hideFlag: true,
         newMessage: false,
         createTemp: false,
-        tempNames: ['模板一', '模板二', '模板三', '模板四', '模板五'],
-//        tempNames: [
-//          {
-//            isActive: false,
-//            id: 1,
-//            templa: '模板一'
-//          },
-//          {
-//            isActive: false,
-//            id: 2,
-//            templa: '模板二'
-//          },
-//          {
-//            isActive: false,
-//            id: 3,
-//            templa: '模板三'
-//          },
-//          {
-//            id: 4,
-//            templa: '模板四'
-//          },
-//          {
-//            id: 5,
-//            templa: '模板五'
-//          }
-//        ],
+//        tempNames: ['模板一', '模板二', '模板三', '模板四', '模板五'],
+        tempNames: [
+          {
+            isActive: false,
+            id: 1,
+            templa: '模板一'
+          },
+          {
+            isActive: false,
+            id: 2,
+            templa: '模板二'
+          },
+          {
+            isActive: false,
+            id: 3,
+            templa: '模板三'
+          },
+          {
+            isActive: false,
+            id: 4,
+            templa: '模板四'
+          },
+          {
+            isActive: false,
+            id: 5,
+            templa: '模板五'
+          }
+        ],
         chats: [
           {
             name: '班会通知',
@@ -227,6 +231,12 @@
       addTemplate (templateName) {
         this.tempNames.push(templateName)
         console.log(this.tempNames)
+      },
+      selectLi (index) {
+        this.tempNames.forEach((value, index) => {
+          value.isActive = false
+        })
+        this.tempNames[index].isActive = !this.tempNames[index].isActive
       }
     }
   }
