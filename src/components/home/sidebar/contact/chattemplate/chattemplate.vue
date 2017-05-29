@@ -22,7 +22,10 @@
     <newmessage v-if="newMessage" @closeNewMsg="newMessage=false"
                 @createTemplate="createTemplates"
                 @selectLi="selectLi"
+                @changeTempName="changeTempName"
+                @deleteTempName="deleteTempName"
                 :temp-names="tempNames"></newmessage>
+    <!--绑定修改名称事件changeTemplate,删除模板事件deleteTempName-->
     <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"
                 @addTemplate="addTemplate"></createtemp>
     <!--绑定子组件模板命名模态框的关闭-->
@@ -292,10 +295,27 @@
         console.log(this.tempNames)
       },
       selectLi (index) {
-        this.tempNames.forEach((value, index) => {
+        this.tempNames.forEach((value) => {
           value.isActive = false
         })
         this.tempNames[index].isActive = true
+      },
+      changeTempName (changeTemplateName) {
+        console.log(changeTemplateName)
+        this.tempNames.forEach((value) => {
+          if (value.isActive === true) {
+            value.templa = changeTemplateName
+//            遍历li中的列表，如果被选中，则改变该模板值
+          }
+        })
+      },
+//      删除选中的模板
+      deleteTempName () {
+        this.tempNames.forEach((value, index) => {
+          if (value.isActive === true) {
+            this.tempNames.splice(index, 1)
+          }
+        })
       }
     }
   }
