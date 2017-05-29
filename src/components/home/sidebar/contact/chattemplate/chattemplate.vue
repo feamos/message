@@ -20,8 +20,11 @@
       </ul>
     </div>
     <newmessage v-if="newMessage" @closeNewMsg="newMessage=false"
-                @createTemplate="createTemplates"></newmessage>
-    <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"></createtemp>
+                @createTemplate="createTemplates"
+                @selectLi="selectLi"
+                :temp-names="tempNames"></newmessage>
+    <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"
+                @addTemplate="addTemplate"></createtemp>
     <!--绑定子组件模板命名模态框的关闭-->
     <div class="newde" :class="{hide:hideFlag}">
       <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
@@ -49,6 +52,34 @@
         hideFlag: true,
         newMessage: false,
         createTemp: false,
+//        tempNames: ['模板一', '模板二', '模板三', '模板四', '模板五'],
+        tempNames: [
+          {
+            isActive: false,
+            id: 1,
+            templa: '模板一'
+          },
+          {
+            isActive: false,
+            id: 2,
+            templa: '模板二'
+          },
+          {
+            isActive: false,
+            id: 3,
+            templa: '模板三'
+          },
+          {
+            isActive: false,
+            id: 4,
+            templa: '模板四'
+          },
+          {
+            isActive: false,
+            id: 5,
+            templa: '模板五'
+          }
+        ],
         chats: [
           {
             name: '班会通知',
@@ -187,6 +218,9 @@
         this.quick = msg
       })
     },
+    mounted () {
+      this.addTemplate
+    },
     methods: {
       beginChat: function (i) {
         this.$bus.$emit('responseChat', i)
@@ -248,6 +282,16 @@
       closeCreateTemp () {
         this.createTemp = false
         this.newMessage = true
+      },
+      addTemplate (templateName) {
+        this.tempNames.push(templateName)
+        console.log(this.tempNames)
+      },
+      selectLi (index) {
+        this.tempNames.forEach((value, index) => {
+          value.isActive = false
+        })
+        this.tempNames[index].isActive = !this.tempNames[index].isActive
       }
     }
   }
