@@ -236,7 +236,7 @@
         this.tempNames.forEach((value, index) => {
           value.isActive = false
         })
-        this.tempNames[index].isActive = !this.tempNames[index].isActive
+        this.tempNames[index].isActive = true
       }
     }
   }
