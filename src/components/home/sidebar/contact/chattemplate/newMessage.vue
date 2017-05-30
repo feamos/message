@@ -22,15 +22,20 @@
         <li v-for="(tempName, index) in tempNames" class="template-li"
             :class="{ active: tempName.isActive }"
             @click.stop="selectShowTemplate(tempName.templa, index, tempName)"
-            @mouseenter="$emit('hoverIntemplate', index)" @mouseleave="$emit('hoverOuttemplate')">{{tempName.templa}}
+            @mouseenter="$emit('hoverIntemplate', index)">
           <transition name="fade">
-            <button v-if="tempName.renameButton" class="rename" @click.stop="renameTemplate">重命名</button>
+            <button v-show="tempName.renameButton" class="rename"
+                    @click.stop="$emit('renameInput',index)">重命名</button>
           </transition>
-          <input class="rename-input" v-if="renameTemp" @click.stop=""
-                 type="text" placeholder="修改模板"
+          <input class="rename-input" v-if="tempName.renameTemp" @click.stop=""
+                 type="text" placeholder="修改"
                  v-model="changeTemplateName"
-                 @keyup.enter="changeTemplate"/>
+                 @keyup.enter="changeTemplate(index)"/>
           <!--绑定回车事件修改模板名称-->
+          <span v-else>{{tempName.templa}}</span>
+          <transition name="fade">
+            <button v-show="tempName.renameButton" class="delete-tmp" @click.stop="deleteTemp">删除</button>
+          </transition>
         </li>
       </ul>
       <div class="new-temp-container">
@@ -54,8 +59,6 @@
         createTemp: false,
         showDeleteTemp: false,
 //        显示二次确定删除模板
-        selectTemplate: '模板一',
-//        初始化模板显示的名称
         changeTemplateName: ''
 //        修改模板名称
       }
@@ -74,19 +77,15 @@
         this.showDeleteTemp = false
         this.$emit('deleteTempName')
       },
-      renameTemplate () {
-        this.renameTemp = true
-      },
-      selectShowTemplate (tempName, index, temp) {
-        this.selectTemplate = tempName
-        this.$emit('selectLi', index)
-        this.sendTemp(temp)
-      },
+//      selectShowTemplate (tempName, index, temp) {
+//        this.selectTemplate = tempName
+//        this.$emit('selectLi', index)
+//        this.sendTemp(temp)
+//      },
 //      修改模板名称
-      changeTemplate () {
-        this.renameTemp = false
-        this.selectTemplate = this.changeTemplateName
-        this.$emit('changeTempName', this.changeTemplateName)
+      changeTemplate (index) {
+        console.log(index)
+        this.$emit('changeTempName', this.changeTemplateName, index)
       },
       sendTemp (i) {
         this.$bus.$emit('sendTemp', i)

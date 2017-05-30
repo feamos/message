@@ -27,7 +27,8 @@
                 :temp-names="tempNames"
                 @addTemplate="addTemp"
                 @hoverIntemplate="hoverInTemplate"
-                @hoverOuttemplate="hoverOutTemplate"></newmessage>
+                @hoverOuttemplate="hoverOutTemplate"
+                @renameInput="renameInput"></newmessage>
     <!--绑定修改名称事件changeTemplate,删除模板事件deleteTempName-->
     <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"
                 @addTemplate="addTemplate"></createtemp>
@@ -65,6 +66,8 @@
             isActive: false,
             renameButton: false,
             //        控制重命名按钮的显示
+            renameTemp: false,
+//            控制按下重命名按钮的显示隐藏
             id: 1,
             templa: '班会通知',
             tempStr: '{1}同学,请于5月12日下午2点到工学馆集合'
@@ -72,6 +75,7 @@
           {
             isActive: false,
             renameButton: false,
+            renameTemp: false,
             id: 2,
             templa: '比赛通知',
             tempStr: '{1}同学,请于6月12日下午2点到工学馆集合'
@@ -79,6 +83,7 @@
           {
             isActive: false,
             renameButton: false,
+            renameTemp: false,
             id: 3,
             templa: '运动会通知',
             tempStr: '{1}同学,请于7月12日下午2点到工学馆集合'
@@ -177,14 +182,12 @@
         })
         this.tempNames[index].isActive = true
       },
-      changeTempName (changeTemplateName) {
+      changeTempName (changeTemplateName, index) {
         console.log(changeTemplateName)
         this.tempNames.forEach((value) => {
-          if (value.isActive === true) {
-            value.templa = changeTemplateName
-//            遍历li中的列表，如果被选中，则改变该模板值
-          }
+          value.renameTemp = false
         })
+        this.tempNames[index].templa = changeTemplateName
       },
 //      删除选中的模板
       deleteTempName () {
@@ -212,13 +215,18 @@
           value.renameButton = false
         })
         this.tempNames[index].renameButton = true
-        console.log('hello')
       },
 //      鼠标离开隐藏重命名和删除事件
       hoverOutTemplate () {
         this.tempNames.forEach((value) => {
           value.renameButton = false
         })
+      },
+      renameInput (index) {
+        this.tempNames.forEach((value) => {
+          value.renameTemp = false
+        })
+        this.tempNames[index].renameTemp = true
       }
     }
   }
