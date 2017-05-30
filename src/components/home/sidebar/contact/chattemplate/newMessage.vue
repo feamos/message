@@ -3,18 +3,8 @@
     <!--在遮罩层定义点击事件，关闭模态框-->
     <div class="contain" @click.stop="">
       <!--修饰符.stop阻止事件冒泡-->
-      <div class="temp-head">
-        <button class="rename" @click.stop="renameTemplate">重命名</button>
-        <input class="rename-input" v-if="renameTemp" @click.stop=""
-               type="text" placeholder="修改模板"
-               v-model="changeTemplateName"
-               @keyup.enter="changeTemplate"/>
-        <!--绑定回车事件修改模板名称-->
-        <span v-else>{{selectTemplate}}</span>
-        <button class="delete-tmp" @click.stop="deleteTemp">删除</button>
-      </div>
-      <!--删除模板确定模态框显示-->
       <div class="sure-delete-temp" v-if="showDeleteTemp">
+        <!--删除模板确定模态框显示-->
         <div class="sure-delete-contain">
           <div class="warn-text-contain">
             <span class="warn-text">确定删除该模板吗？</span>
@@ -32,6 +22,14 @@
         <li v-for="(tempName, index) in tempNames" class="template-li"
             :class="{ active: tempName.isActive }"
             @click.stop="selectShowTemplate(tempName.templa, index)">{{tempName.templa}}
+          <button class="rename" @click.stop="renameTemplate">重命名</button>
+          <input class="rename-input" v-if="renameTemp" @click.stop=""
+                 type="text" placeholder="修改模板"
+                 v-model="changeTemplateName"
+                 @keyup.enter="changeTemplate"/>
+          <!--绑定回车事件修改模板名称-->
+          <!--<span v-else>{{selectTemplate}}</span>-->
+          <button class="delete-tmp" @click.stop="deleteTemp">删除</button>
         </li>
       </ul>
       <div class="new-temp-container">
@@ -184,7 +182,7 @@
 
   .template-ul {
     overflow: auto;
-    height: 150px;
+    height: 200px;
   }
 
   .template-li, .template-li:link {

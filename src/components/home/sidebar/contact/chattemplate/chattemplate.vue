@@ -55,7 +55,6 @@
         hideFlag: true,
         newMessage: false,
         createTemp: false,
-//        tempNames: ['模板一', '模板二', '模板三', '模板四', '模板五'],
         tempNames: [
           {
             isActive: false,
