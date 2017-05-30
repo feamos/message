@@ -30,6 +30,7 @@
           <!--绑定回车事件修改模板名称-->
           <!--<span v-else>{{selectTemplate}}</span>-->
           <button class="delete-tmp" @click.stop="deleteTemp">删除</button>
+            @click.stop="selectShowTemplate(tempName.templa, index,tempName)">{{tempName.templa}}
         </li>
       </ul>
       <div class="new-temp-container">
@@ -37,15 +38,18 @@
         <!--新建模板的事件定义在父组件chattemplate中-->
       </div>
     </div>
+    <addtemp v-if="addTemp" @confirmAdd="$emit('addTemplate');addTemp = false"></addtemp>
   </div>
 </template>
 
 <script>
+  import addtemp from './addtemp.vue'
   export default {
     data () {
       return {
         pass: '',
         ensurepass: '',
+        addTemp: false,
         renameTemp: false,
         createTemp: false,
         showDeleteTemp: false,
@@ -55,6 +59,9 @@
         changeTemplateName: ''
 //        修改模板名称
       }
+    },
+    components: {
+      addtemp
     },
     props: ['tempNames'],
     methods: {
@@ -70,15 +77,20 @@
       renameTemplate () {
         this.renameTemp = true
       },
-      selectShowTemplate (tempName, index) {
+      selectShowTemplate (tempName, index, temp) {
         this.selectTemplate = tempName
         this.$emit('selectLi', index)
+        this.sendTemp(temp)
       },
 //      修改模板名称
       changeTemplate () {
         this.renameTemp = false
         this.selectTemplate = this.changeTemplateName
         this.$emit('changeTempName', this.changeTemplateName)
+      },
+      sendTemp (i) {
+        this.$bus.$emit('sendTemp', i)
+        this.addTemp = true
       }
     }
   }
