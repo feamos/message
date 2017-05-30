@@ -172,7 +172,7 @@
       addTemplate (templateName) {
         this.tempNames.push({
           isActive: false,
-          id: 1,
+          id: this.tempNames.length + 1,
           templa: templateName
         })
       },
@@ -182,6 +182,7 @@
         })
         this.tempNames[index].isActive = true
       },
+//      修改模板名称
       changeTempName (changeTemplateName, index) {
         console.log(changeTemplateName)
         this.tempNames.forEach((value) => {
@@ -190,9 +191,9 @@
         this.tempNames[index].templa = changeTemplateName
       },
 //      删除选中的模板
-      deleteTempName () {
-        this.tempNames.forEach((value, index) => {
-          if (value.isActive === true) {
+      deleteTempName (index) {
+        this.tempNames.forEach((value, i) => {
+          if (i === index) {
             this.tempNames.splice(index, 1)
           }
         })

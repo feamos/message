@@ -3,26 +3,12 @@
     <!--在遮罩层定义点击事件，关闭模态框-->
     <div class="contain" @click.stop="">
       <!--修饰符.stop阻止事件冒泡-->
-      <div class="sure-delete-temp" v-if="showDeleteTemp">
-        <!--删除模板确定模态框显示-->
-        <div class="sure-delete-contain">
-          <div class="warn-text-contain">
-            <span class="warn-text">确定删除该模板吗？</span>
-          </div>
-          <Checkbox class="no-mention" v-model="single">以后不再提示</Checkbox>
-          <div class="buttons">
-            <button class="cancel-change-button" @click="showDeleteTemp=false">
-              取消
-            </button>
-            <button class="ok-change-button" @click="sureDelete">确定</button>
-          </div>
-        </div>
-      </div>
       <ul class="template-ul" @click.stop="">
         <li v-for="(tempName, index) in tempNames" class="template-li"
             :class="{ active: tempName.isActive }"
             @click.stop="selectShowTemplate(tempName.templa, index, tempName)"
-            @mouseenter="$emit('hoverIntemplate', index)">
+            @mouseenter="$emit('hoverIntemplate', index)"
+            @mouseleave="$emit('hoverOuttemplate', index)">
           <transition name="fade">
             <button v-show="tempName.renameButton" class="rename"
                     @click.stop="$emit('renameInput',index)">重命名</button>
@@ -34,8 +20,24 @@
           <!--绑定回车事件修改模板名称-->
           <span v-else>{{tempName.templa}}</span>
           <transition name="fade">
-            <button v-show="tempName.renameButton" class="delete-tmp" @click.stop="deleteTemp">删除</button>
+            <button v-show="tempName.renameButton" class="delete-tmp"
+                    @click.stop="deleteTemp(index)">删除</button>
           </transition>
+          <div class="sure-delete-temp" v-if="showDeleteTemp" @click.stop="">
+            <!--删除模板确定模态框显示-->
+            <div class="sure-delete-contain">
+              <div class="warn-text-contain">
+                <span class="warn-text">确定删除该模板吗？</span>
+              </div>
+              <Checkbox class="no-mention" v-model="single">以后不再提示</Checkbox>
+              <div class="buttons">
+                <button class="cancel-change-button" @click="showDeleteTemp=false">
+                  取消
+                </button>
+                <button class="ok-change-button" @click="sureDelete(index)">确定</button>
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
       <div class="new-temp-container">
@@ -69,24 +71,25 @@
     props: ['tempNames'],
     methods: {
 //      删除弹出二次确定框
-      deleteTemp () {
-//        this.tempNames.splice(index, 1)
+      deleteTemp (index) {
         this.showDeleteTemp = true
+        console.log(index)
       },
-      sureDelete () {
+      sureDelete (index) {
+        console.log(index)
         this.showDeleteTemp = false
-        this.$emit('deleteTempName')
+        this.$emit('deleteTempName', index)
       },
-//      selectShowTemplate (tempName, index, temp) {
-//        this.selectTemplate = tempName
-//        this.$emit('selectLi', index)
-//        this.sendTemp(temp)
-//      },
-//      修改模板名称
+      selectShowTemplate (tempName, index, temp) {
+        this.selectTemplate = tempName
+        this.$emit('selectLi', index)
+        this.sendTemp(temp)
+      },
       changeTemplate (index) {
         console.log(index)
         this.$emit('changeTempName', this.changeTemplateName, index)
       },
+      //      修改模板名称
       sendTemp (i) {
         this.$bus.$emit('sendTemp', i)
         this.addTemp = true
@@ -148,17 +151,44 @@
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: rgba(51, 51, 51, .1);
+    background-color: rgba(51, 51, 51, .2);
     justify-content: center;
     align-items: center;
   }
   .sure-delete-contain {
+    position: fixed;
+    z-index: 121;
     width: 320px;
     height: 160px;
     background: #FFFFFF;
     border: 1px solid #979797;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
     border-radius: 10px;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  .cancel-change-button, .ok-change-button {
+    border: none;
+    cursor: pointer;
+    font-family: PingFangSC-Regular;
+    font-size: 24px;
+    color: #596179;
+    background: none;
+    outline: none;
+  }
+  .cancel-change-button:hover, .ok-change-button:hover {
+    color: #A9CDCF;
+  }
+  .cancel-change-button {
+    border-right: 1px solid rgba(89,97,121,0.38);
+    width: 160px;
+    margin-left: 10px;
+  }
+  .ok-change-button {
+    width: 160px;
+    padding-right: 50px;
   }
   .rename-input {
     width: 54px;
@@ -210,6 +240,9 @@
   .template-li:hover, .template-li:target, .active {
     background: #CDE7E9;
   }
+  .active {
+    background: #A9CDCF;
+  }
 
   .new-temp-container {
     text-align: center;
@@ -229,7 +262,7 @@
     cursor: pointer;
   }
   .warn-text-contain {
-    margin-top: 26px;
+    margin-top: 10px;
   }
   .warn-text {
     font-family: PingFangSC-Regular;
@@ -245,33 +278,6 @@
   .warn-text .no-mention {
     position: absolute;
     margin-left: 0;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-  }
-  .cancel-change-button, .ok-change-button {
-    border: none;
-    cursor: pointer;
-    font-family: PingFangSC-Regular;
-    font-size: 24px;
-    color: #596179;
-    background: none;
-    outline: none;
-  }
-  .cancel-change-button:hover, .ok-change-button:hover {
-    color: #A9CDCF;
-  }
-  .cancel-change-button {
-    border-right: 1px solid rgba(89,97,121,0.38);
-    width: 160px;
-    margin-left: 10px;
-  }
-  .ok-change-button {
-    width: 160px;
-    padding-right: 50px;
   }
 
   .fade-enter-active, .fade-leave-active {
