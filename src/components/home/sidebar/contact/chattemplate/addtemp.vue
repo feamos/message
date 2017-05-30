@@ -6,7 +6,7 @@
         <input type="checkbox" id="btn" v-model="checkBox"><label for="btn">以后不再提示</label>
       </div>
       <ul>
-        <li>取消</li>
+        <li @click="$emit('cancelAdd')">取消</li>
         <span><br></span>
         <li @click="$emit('confirmAdd')">确定</li>
       </ul>

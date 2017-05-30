@@ -21,7 +21,7 @@
       <ul class="template-ul" @click.stop="">
         <li v-for="(tempName, index) in tempNames" class="template-li"
             :class="{ active: tempName.isActive }"
-            @click.stop="selectShowTemplate(tempName.templa, index)"
+            @click.stop="selectShowTemplate(tempName.templa, index, tempName)"
             @mouseenter="$emit('hoverIntemplate', index)" @mouseleave="$emit('hoverOuttemplate')">{{tempName.templa}}
           <transition name="fade">
             <button v-if="tempName.renameButton" class="rename" @click.stop="renameTemplate">重命名</button>
@@ -31,9 +31,6 @@
                  v-model="changeTemplateName"
                  @keyup.enter="changeTemplate"/>
           <!--绑定回车事件修改模板名称-->
-          <!--<span v-else>{{selectTemplate}}</span>-->
-          <!--<button class="delete-tmp" @click.stop="deleteTemp">删除</button>-->
-          <!--@click.stop="selectShowTemplate(tempName.templa, index,tempName)">{{tempName.templa}}-->
         </li>
       </ul>
       <div class="new-temp-container">
@@ -41,7 +38,7 @@
         <!--新建模板的事件定义在父组件chattemplate中-->
       </div>
     </div>
-    <addtemp v-if="addTemp" @confirmAdd="$emit('addTemplate');addTemp = false"></addtemp>
+    <addtemp v-if="addTemp" @confirmAdd="$emit('addTemplate');addTemp = false" @cancelAdd="addTemp = false"></addtemp>
   </div>
 </template>
 
