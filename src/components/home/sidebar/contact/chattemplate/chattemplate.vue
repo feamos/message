@@ -24,7 +24,8 @@
                 @selectLi="selectLi"
                 @changeTempName="changeTempName"
                 @deleteTempName="deleteTempName"
-                :temp-names="tempNames"></newmessage>
+                :temp-names="tempNames"
+                @addTemplate="addTemp"></newmessage>
     <!--绑定修改名称事件changeTemplate,删除模板事件deleteTempName-->
     <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"
                 @addTemplate="addTemplate"></createtemp>
@@ -55,160 +56,29 @@
         hideFlag: true,
         newMessage: false,
         createTemp: false,
+        sendTemp: Object,
 //        tempNames: ['模板一', '模板二', '模板三', '模板四', '模板五'],
         tempNames: [
           {
             isActive: false,
             id: 1,
-            templa: '模板一'
+            templa: '班会通知',
+            tempStr: '{1}同学,请于5月12日下午2点到工学馆集合'
           },
           {
             isActive: false,
             id: 2,
-            templa: '模板二'
+            templa: '比赛通知',
+            tempStr: '{1}同学,请于6月12日下午2点到工学馆集合'
           },
           {
             isActive: false,
             id: 3,
-            templa: '模板三'
-          },
-          {
-            isActive: false,
-            id: 4,
-            templa: '模板四'
-          },
-          {
-            isActive: false,
-            id: 5,
-            templa: '模板五'
+            templa: '运动会通知',
+            tempStr: '{1}同学,请于7月12日下午2点到工学馆集合'
           }
         ],
-        chats: [
-          {
-            name: '班会通知',
-            template: '{1}同学请于5月13日到大学生会馆开会',
-            chengyuan: [
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'}
-            ],
-            checkFlag: false
-          },
-          {
-            name: '比赛通知',
-            template: '{1}同学请于6月14日到大学生会馆开会',
-            chengyuan: [
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'}
-            ],
-            checkFlag: false
-          },
-          {
-            name: '开会通知',
-            template: '{1}同学请于7月15日到大学生会馆开会',
-            chengyuan: [
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'}
-            ],
-            checkFlag: false
-          },
-          {
-            name: 'Chris',
-            template: '{1}同学请于8月16日到大学生会馆开会',
-            chengyuan: [
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'},
-              {'冯培栋': '18716028979'}
-            ],
-            checkFlag: false
-          },
-          {
-            name: 'Bill',
-            checkFlag: false
-          },
-          {
-            name: 'Tracy',
-            checkFlag: false
-          },
-          {
-            name: 'Chris',
-            checkFlag: false
-          },
-          {
-            name: 'Bill',
-            checkFlag: false
-          },
-          {
-            name: 'Tracy',
-            checkFlag: false
-          },
-          {
-            name: 'Chris',
-            checkFlag: false
-          },
-          {
-            name: 'Bill',
-            checkFlag: false
-          },
-          {
-            name: 'Tracy',
-            checkFlag: false
-          },
-          {
-            name: 'Chris',
-            checkFlag: false
-          },
-          {
-            name: 'Bill',
-            checkFlag: false
-          },
-          {
-            name: 'Tracy',
-            checkFlag: false
-          },
-          {
-            name: 'Chris',
-            checkFlag: false
-          },
-          {
-            name: 'Bill',
-            checkFlag: false
-          },
-          {
-            name: 'Tracy',
-            checkFlag: false
-          },
-          {
-            name: 'Chris',
-            checkFlag: false
-          }
-        ]
+        chats: []
       }
     },
     components: {
@@ -220,9 +90,11 @@
       this.$bus.$on('quickDel', (msg) => {
         this.quick = msg
       })
+      this.$bus.$on('sendTemp', (msg) => {
+        this.sendTemp = msg
+      })
     },
     mounted () {
-      this.addTemplate
     },
     methods: {
       beginChat: function (i) {
@@ -292,7 +164,6 @@
           id: 1,
           templa: templateName
         })
-        console.log(this.tempNames)
       },
       selectLi (index) {
         this.tempNames.forEach((value) => {
@@ -316,6 +187,18 @@
             this.tempNames.splice(index, 1)
           }
         })
+      },
+      //      添加模板
+      addTemp () {
+        var obj = {
+          name: this.sendTemp.templa,
+          template: this.sendTemp.tempStr,
+          chengyuan: [],
+          checkFlag: false
+        }
+        console.log(obj.name)
+        this.chats.unshift(obj)
+        this.newMessage = false
       }
     }
   }
