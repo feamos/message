@@ -6,7 +6,7 @@
           id="select"
           :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"
           @click="chat.checkFlag=!chat.checkFlag">
-        <!--hide:隐藏复选框  check/select:选中和非选中-->
+          <!--hide:隐藏复选框  check/select:选中和非选中-->
         </div>
         <p class="title">{{chat.name}}</p>
         <p>(蔡珩,罗洪涛,刘明……)</p>
@@ -25,13 +25,17 @@
                 @changeTempName="changeTempName"
                 @deleteTempName="deleteTempName"
                 :temp-names="tempNames"
-                @addTemplate="addTemp"></newmessage>
+                @addTemplate="addTemp"
+                @hoverIntemplate="hoverInTemplate"
+                @hoverOuttemplate="hoverOutTemplate"></newmessage>
     <!--绑定修改名称事件changeTemplate,删除模板事件deleteTempName-->
     <createtemp v-if="createTemp" @closeCreate="closeCreateTemp"
                 @addTemplate="addTemplate"></createtemp>
     <!--绑定子组件模板命名模态框的关闭-->
     <div class="newde" :class="{hide:hideFlag}">
-      <div class="checkAll" @click="selectAll()"><label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span >全选</span></div>
+      <div class="checkAll" @click="selectAll()"><label class="All"
+                                                        :class="{check:checkbtn,select:!checkbtn}"></label><span>全选</span>
+      </div>
       <ul>
         <li @click="cancelAll()">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</li>
         <li @click="checkQuick()">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</li>
@@ -59,18 +63,22 @@
         tempNames: [
           {
             isActive: false,
+            renameButton: false,
+            //        控制重命名按钮的显示
             id: 1,
             templa: '班会通知',
             tempStr: '{1}同学,请于5月12日下午2点到工学馆集合'
           },
           {
             isActive: false,
+            renameButton: false,
             id: 2,
             templa: '比赛通知',
             tempStr: '{1}同学,请于6月12日下午2点到工学馆集合'
           },
           {
             isActive: false,
+            renameButton: false,
             id: 3,
             templa: '运动会通知',
             tempStr: '{1}同学,请于7月12日下午2点到工学馆集合'
@@ -197,44 +205,73 @@
         console.log(obj.name)
         this.chats.unshift(obj)
         this.newMessage = false
+      },
+      //      鼠标悬停触发显示重命名事件
+      hoverInTemplate (index) {
+        this.tempNames.forEach((value) => {
+          value.renameButton = false
+        })
+        this.tempNames[index].renameButton = true
+        console.log('hello')
+      },
+//      鼠标离开隐藏重命名和删除事件
+      hoverOutTemplate () {
+        this.tempNames.forEach((value) => {
+          value.renameButton = false
+        })
       }
     }
   }
 </script>
 
 <style scoped>
-  * {padding: 0;margin: 0;}
-  ul {list-style: none;}
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+  }
+
   .fl {
     float: left;
   }
+
   #chat {
     width: 320px;
   }
+
   #chat ul {
     padding-bottom: 50px;
   }
+
   .chat {
     width: 320px;
-    clear:both;
+    clear: both;
     overflow: auto;
     overflow-x: hidden;
     height: 500px;
   }
+
   .chat li {
     height: 80px;
     text-align: center;
     position: relative;
   }
+
   .check {
     background: #A9CDCF;
   }
+
   .select {
     background: #fff;
   }
+
   .hide {
     display: none;
   }
+
   .chat li #select {
     width: 16px;
     height: 16px;
@@ -244,40 +281,47 @@
     cursor: pointer;
     border: 1px solid #000;
   }
+
   .chat .title {
     font-size: 24px;
     padding: 15px 0 0 0;
     line-height: 36px;
     vertical-align: top;
   }
+
   .chat li:hover {
     background: #fff;
     color: #596179;
   }
+
   .checkAll {
     cursor: pointer;
     background: #596179;
   }
+
   .checkAll span {
-    line-height:28px;
+    line-height: 28px;
     color: #000;
     margin-left: 3px;
     vertical-align: middle;
   }
+
   .All {
     width: 15px;
     height: 15px;
     margin-left: 10px;
-    line-height:24px;
-    border:1px solid #000;
+    line-height: 24px;
+    border: 1px solid #000;
     vertical-align: middle;
     display: inline-block;
   }
+
   .newde {
     position: absolute;
     left: 0;
     bottom: -50px;
   }
+
   .newde ul li {
     height: 50px;
     padding: 0 42px;
@@ -288,26 +332,44 @@
     color: #fff;
     background: #596179;
   }
+
   .newde ul li:hover {
     color: #A9CDCF;
     background: #596179;
   }
+
   .newde ul li:first-child {
     border-right: solid 2px #979797;
   }
-  @media (max-height: 800px), (max-width: 1000px){
+
+  @media (max-height: 800px), (max-width: 1000px) {
     .chat {
       height: 349px;
     }
   }
+
   ul li {
     border-bottom: 1px solid #979797;
     cursor: pointer;
   }
-  ::-webkit-scrollbar{width:6px;height: 6px;
-    -webkit-border-radius: 50%;}
-  ::-webkit-scrollbar-track{background-color:#9e9fa1;}
-  ::-webkit-scrollbar-thumb{-webkit-border-radius: 3px;background-color: #58595e;}
-  ::-webkit-scrollbar-thumb:hover {background-color:#58595e}
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    -webkit-border-radius: 50%;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #9e9fa1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 3px;
+    background-color: #58595e;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #58595e
+  }
 
 </style>

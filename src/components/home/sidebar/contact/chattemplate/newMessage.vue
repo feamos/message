@@ -21,16 +21,19 @@
       <ul class="template-ul" @click.stop="">
         <li v-for="(tempName, index) in tempNames" class="template-li"
             :class="{ active: tempName.isActive }"
-            @click.stop="selectShowTemplate(tempName.templa, index)">{{tempName.templa}}
-          <button class="rename" @click.stop="renameTemplate">重命名</button>
+            @click.stop="selectShowTemplate(tempName.templa, index)"
+            @mouseenter="$emit('hoverIntemplate', index)" @mouseleave="$emit('hoverOuttemplate')">{{tempName.templa}}
+          <transition name="fade">
+            <button v-if="tempName.renameButton" class="rename" @click.stop="renameTemplate">重命名</button>
+          </transition>
           <input class="rename-input" v-if="renameTemp" @click.stop=""
                  type="text" placeholder="修改模板"
                  v-model="changeTemplateName"
                  @keyup.enter="changeTemplate"/>
           <!--绑定回车事件修改模板名称-->
           <!--<span v-else>{{selectTemplate}}</span>-->
-          <button class="delete-tmp" @click.stop="deleteTemp">删除</button>
-            @click.stop="selectShowTemplate(tempName.templa, index,tempName)">{{tempName.templa}}
+          <!--<button class="delete-tmp" @click.stop="deleteTemp">删除</button>-->
+          <!--@click.stop="selectShowTemplate(tempName.templa, index,tempName)">{{tempName.templa}}-->
         </li>
       </ul>
       <div class="new-temp-container">
@@ -273,5 +276,13 @@
   .ok-change-button {
     width: 160px;
     padding-right: 50px;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0
   }
 </style>
