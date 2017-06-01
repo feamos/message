@@ -29,12 +29,12 @@
               <div class="warn-text-contain">
                 <span class="warn-text">确定删除该模板吗？</span>
               </div>
-              <Checkbox class="no-mention" v-model="single">以后不再提示</Checkbox>
+              <Checkbox class="no-mention">以后不再提示</Checkbox>
               <div class="buttons">
                 <button class="cancel-change-button" @click="showDeleteTemp=false">
                   取消
                 </button>
-                <button class="ok-change-button" @click="sureDelete(index)">确定</button>
+                <button class="ok-change-button" @click="sureDelete(item)">确定</button>
               </div>
             </div>
           </div>
@@ -60,6 +60,7 @@
         renameTemp: false,
         createTemp: false,
         showDeleteTemp: false,
+        item: Number,
 //        显示二次确定删除模板
         changeTemplateName: ''
 //        修改模板名称
@@ -73,10 +74,9 @@
 //      删除弹出二次确定框
       deleteTemp (index) {
         this.showDeleteTemp = true
-        console.log(index)
+        this.item = index
       },
       sureDelete (index) {
-        console.log(index)
         this.showDeleteTemp = false
         this.$emit('deleteTempName', index)
       },
