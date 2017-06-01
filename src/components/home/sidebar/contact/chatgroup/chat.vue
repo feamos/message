@@ -1,118 +1,209 @@
 <template>
-    <div class="chat">
-        <ul class="chat-list">
-            <li v-for="(chat,index) in chats" @click="addclass()">{{chat.name}}</li>
-        </ul>
-      <div class="chat-footer">
-
-      </div>
+  <div class="chat">
+    <ul>
+      <li v-for="(chat,index) in chats">
+        <div class="checkbox" v-if="select" v-on:click="selectThis(index)"
+             v-bind:class="{'class-b':chat.isSelected }"></div>
+        <span v-on:click="getThis(index)">{{chat.name}}</span>
+      </li>
+    </ul>
+    <div class="chat-footer">
+      <span v-on:click="confirms">{{createName}}</span><span class="second-span">|</span><span v-on:click="deleteItem">{{deleteName}}</span>
     </div>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      chats: [
-        {
-          name: 'Jack'
-        },
-        {
-          name: 'Bill'
-        },
-        {
-          name: 'Tracy'
-        },
-        {
-          name: 'Chris'
-        },
-        {
-          name: 'Bill'
-        },
-        {
-          name: 'Tracy'
-        },
-        {
-          name: 'Chris'
-        },
-        {
-          name: 'Bill'
-        },
-        {
-          name: 'Tracy'
-        },
-        {
-          name: 'Chris'
-        },
-        {
-          name: 'Bill'
-        },
-        {
-          name: 'Tracy'
-        },
-        {
-          name: 'Chris'
-        },
-        {
-          name: 'Bill'
-        },
-        {
-          name: 'Tracy'
-        },
-        {
-          name: 'Chris'
-        },
-        {
-          name: 'Bill'
-        },
-        {
-          name: 'Tracy'
-        },
-        {
-          name: 'Chris'
+  export default {
+    name: 'app',
+    data () {
+      return {
+        select: false,
+        isSelected: false,
+        deleteName: '删除群',
+        createName: '新建群',
+        chats: [
+          {
+            name: 'Jack',
+            isSelected: false
+          },
+          {
+            name: 'Jack',
+            isSelected: false
+          },
+          {
+            name: 'Jack',
+            isSelected: false
+          },
+          {
+            name: 'Jack',
+            isSelected: false
+          },
+          {
+            name: 'Jack',
+            isSelected: false
+          },
+          {
+            name: 'Jack',
+            isSelected: false
+          },
+          {
+            name: 'Jack',
+            isSelected: false
+          },
+          {
+            name: 'Jack',
+            isSelected: false
+          }
+        ]
+      }
+    },
+    methods: {
+      deleteItem: function () {
+        if (this.select === false) {
+          this.select = true
+          this.deleteName = '取消'
+          this.createName = '确定'
+        } else {
+          this.select = false
+          this.deleteName = '删除群'
+          this.createName = '新建群'
         }
-      ]
+      },
+      selectThis: function (index) {
+        if (this.chats[index].isSelected === false) {
+          this.chats[index].isSelected = true
+        } else {
+          this.chats[index].isSelected = false
+        }
+      },
+      hasSelected: function (arrObject) {
+        for (let index = 0; index <= arrObject.length - 1; index++) {
+          if (arrObject[index].isSelected === true) {
+            return true
+          }
+        }
+      },
+      confirms: function () {
+        var arrObject = this.chats
+        if (this.createName === '确定') {
+          if (this.hasSelected(arrObject)) {
+            for (let index = 0; index <= arrObject.length - 1; index++) {
+              if (arrObject[index].isSelected === true) {
+                arrObject.splice(index, 1)
+              }
+            }
+          }
+        }
+        if (this.createName === '新建群') {
+          if (this.showOrHide === false) {
+            this.showOrHide = true
+          } else {
+            this.showOrHide = false
+          }
+        }
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-* {padding: 0;margin: 0;}
-ul {
-  list-style: none;
-  height:300px;
-  background-color: yellow;
-  overflow-y: scroll;
-}
-.fl {
-    float: left;
-}
-.chat {
-    clear:both;
-    /*overflow: auto;*/
-    /*overflow-x: hidden;*/
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    height: 300px;
+    /*background-color: yellow;*/
+    overflow-y: scroll;
+  }
+
+  ul li {
+    height: 50px;
+    /*background-color: red;*/
+    text-align: center;
+    line-height: 50px;
+    border-bottom: 1px solid #979797;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  ul li:hover {
+    background-color: white;
+    color: #333;
+  }
+
+  .chat {
+    clear: both;
     height: 500px;
-}
-@media (max-height: 800px), (max-width: 1000px){
+  }
+
+  @media (max-height: 800px), (max-width: 1000px) {
     .chat {
       height: 340px;
     }
-}
-ul li {
-    padding: 18px 18px;
-    border-bottom: 1px solid #979797;
-    cursor: pointer;
-}
-::-webkit-scrollbar{width:6px;height: 6px;
--webkit-border-radius: 50%;}
-::-webkit-scrollbar-track{background-color:#9e9fa1;}
-::-webkit-scrollbar-thumb{-webkit-border-radius: 3px;background-color: #58595e;}
-::-webkit-scrollbar-thumb:hover {background-color:#58595e}
+  }
 
-  .chat-footer{
-    height:50px;
-    background-color: red;
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    -webkit-border-radius: 50%;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #9e9fa1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 3px;
+    background-color: #58595e;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #58595e
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    left: 30px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+  }
+
+  .class-b {
+    width: 20px;
+    height: 20px;
+    background-color: #A9CDCF;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    left: 30px;
+    cursor: pointer;
+  }
+
+  .chat-footer {
+    height: 50px;
+    /*background-color: red;*/
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
+    color: white;
+  }
+
+  .chat-footer span {
+    cursor: pointer;
+  }
+
+  .second-span {
+    margin: 0 55px;
   }
 </style>
