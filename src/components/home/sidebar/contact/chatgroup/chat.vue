@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -38,7 +38,7 @@
         isSelected: false,
         deleteName: '删除群',
         createName: '新建群',
-        showOrHide: true,
+        showOrHide: false,
         formItem: {
           newGroupName: ''
         },
@@ -284,9 +284,14 @@
     cursor: pointer;
   }
 
+  .chat-footer span:hover {
+    color: #A9CDCF
+  }
+
   .second-span {
     margin: 0 55px;
   }
+
   .create-modal {
     width: 320px;
     height: 150px;
@@ -301,6 +306,7 @@
     z-index: 10;
     border-radius: 5px;
   }
+
   .input-groupName {
     height: 70px;
     /*background-color: khaki;*/
@@ -320,6 +326,7 @@
   .input-groupName-input {
     width: 260px;
   }
+
   .confirm-giveUp {
     height: 80px;
     /*background-color: saddlebrown;*/
@@ -334,7 +341,9 @@
   .confirm-giveUp span {
     cursor: pointer;
   }
-
+  .confirm-giveUp span:hover{
+    color: #A9CDCF
+  }
   .second-span {
     margin: 0 30px;
   }
