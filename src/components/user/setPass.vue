@@ -33,6 +33,7 @@
 </template>
 
 <script>
+//  import API from '@/common/API/api'
   export default {
     name: 'register',
     data () {
@@ -43,9 +44,30 @@
     },
     methods: {
       toLogin () {
-        this.$nextTick(() => {
-          this.$router.push('/home')
-        })
+        this.$router.push('/home')
+//        this.$nextTick(() => {
+//          if (this.pass !== this.ensurepass) {
+//            alert('两次输入密码不一致')
+//          } else {
+//            fetch(API.pwd, {
+//              method: 'post',
+//              headers: {
+//                'Content-Type': 'application/json'
+//              },
+//              body: JSON.stringify({
+//                pass: this.pass,
+//                ensurepass: this.ensurepass
+//              })
+//            }).then((res) => res.json())
+//              .then((json) => {
+//                if (json.code === code) {
+//                  console.log('注册成功')
+//                  this.$router.push('/login')
+//                }
+//              })
+//          }
+//          this.$router.push('/home')
+//        })
       }
     }
   }
