@@ -2,7 +2,7 @@
   <div class="register">
     <div class="contain">
       <h1 class="title">设 置 新 密 码</h1>
-      <form method="post" @submit.prevent="onSubmit()">
+      <form method="post" @submit.prevent="">
         <!--@submit.prevent中的.prevent修饰符表示提交事件不再重载页面-->
         <div class="form-password">
           <label>

@@ -2,7 +2,7 @@
   <div class="register">
     <div class="contain">
       <h1 class="title">忘 记 密 码</h1>
-      <form method="post" @submit.prevent="onSubmit()">
+      <form method="post" @submit.prevent="">
         <!--@submit.prevent中的.prevent修饰符表示提交事件不再重载页面-->
         <div class="form-mobile">
           <label>
@@ -29,24 +29,28 @@
           </button>
         </div>
       </form>
+      <setnewpass v-if="setNewPass"></setnewpass>
     </div>
   </div>
 </template>
 
 <script>
+  import setnewpass from './setNewPass.vue'
   export default {
     name: 'register',
     data () {
       return {
         mobile: '',
-        identify: ''
+        identify: '',
+        setNewPass: ''//  设置新密码的组件
       }
+    },
+    components: {
+      setnewpass
     },
     methods: {
       NextSet () {
-        this.$nextTick(() => {
-          this.$router.push('/setNewpass')
-        })
+        this.setNewPass = true
       }
     }
   }
