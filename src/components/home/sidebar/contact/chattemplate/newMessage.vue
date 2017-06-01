@@ -128,7 +128,7 @@
     left: 30%;
     margin: 0 auto;
     width: 200px;
-    height: 260px;
+    height: 250px;
     border-radius: 10px;
     justify-content: center;
     align-items: center;
@@ -248,7 +248,6 @@
     text-align: center;
     height: 49px;
     line-height: 49px;
-    margin-top: 20px;
     border-top: 1px solid #D8D8D8;
   }
 

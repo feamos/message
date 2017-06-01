@@ -87,8 +87,8 @@
     }
     .head-bt {
       position: absolute;
-      margin-left: 15%;
-      margin-top: -4%;
+      margin-left: 10%;
+      margin-top: -3%;
       background: #FFFFFF;
       border: 1px solid #596179;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
@@ -103,16 +103,19 @@
       text-align:center;
       font-size: 14px;
       line-height: 30px;
-      border-bottom: 1px solid #d6d6d6;
+      border-radius: 10px;
       cursor: pointer;
     }
     #bt li:hover {
-      background-color: #eeeeee;
-      border-radius: 5px;
+      color: #A9CDCF;
     }
     @media (max-height: 768px), (max-width: 1024px){
       .sidebar {
         height: 617px;
+      }
+      .head-bt {
+        margin-left: 14%;
+        margin-top: -4%;
       }
     }
 </style>

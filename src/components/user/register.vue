@@ -34,6 +34,7 @@
 </template>
 
 <script>
+//  import API from '@/common/API/api'
   export default {
     name: 'register',
     data () {
@@ -44,9 +45,32 @@
     },
     methods: {
       goNext () {
-        this.$nextTick(() => {
-          this.$router.push('/setpass')
-        })
+//        fetch(API.register, {
+//          method: 'POST',
+//          headers: {
+//            'Content-Type': 'application/json'
+//          },
+//          body: JSON.stringify({
+//            mobile: this.mobile
+//          })
+//        }).then((res) => res.json())
+//          .then((json) => {
+//            console.log(json)
+//            if (json.code === SUCCESS) {
+//              this.$Message.info('登录成功')
+//              this.$router.push('/home')
+//            }
+//            if (json.code === PASSWD_ERR) {
+//              this.$Message.info('用户名或密码错误')
+//              this.pass = ''
+//            }
+//            if (json.code === MOBILE_ERR) {
+//              this.$Message.info('用户名不存在')
+//              this.mobile = ''
+//              this.pass = ''
+//            }
+//          })
+        this.$router.push('/setpass')
       }
     }
   }

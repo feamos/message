@@ -129,6 +129,12 @@ ul {list-style: none;}
   height: 37px;
   width: 256px;
   background: #49526A;
+  border: 1px solid #d6d6d6;
+  outline: none;
+  padding: 3px 0 3px 5px;
+  line-height: 37px;
+  font-size: 18px;
+  color: #fff;
 }
 .tab {
   height: 34px;
