@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Register from '@/components/user/register'
 import Login from '@/components/user/login'
 import Home from '@/components/home/home'
-import Setpass from '@/components/user/setPass'
 import SetNewpass from '@/components/user/setNewPass'
 import Forgotpass from '@/components/user/forgotPass'
 Vue.use(Router)
@@ -19,11 +18,6 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
-    },
-    {
-      path: '/setpass',
-      name: 'Setpass',
-      component: Setpass
     },
     {
       path: '/setNewpass',

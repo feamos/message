@@ -198,6 +198,7 @@
       },
 //      删除选中的模板
       deleteTempName (index) {
+        console.log(index + 'index')
         this.tempNames.forEach((value, i) => {
           if (i === index) {
             this.tempNames.splice(index, 1)

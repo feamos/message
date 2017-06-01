@@ -29,7 +29,7 @@
               <div class="warn-text-contain">
                 <span class="warn-text">确定删除该模板吗？</span>
               </div>
-              <Checkbox class="no-mention" v-model="single">以后不再提示</Checkbox>
+              <Checkbox class="no-mention">以后不再提示</Checkbox>
               <div class="buttons">
                 <button class="cancel-change-button" @click="showDeleteTemp=false">
                   取消
@@ -77,7 +77,7 @@
       },
       sureDelete (index) {
         console.log(index)
-        this.showDeleteTemp = false
+//        this.showDeleteTemp = false
         this.$emit('deleteTempName', index)
       },
       selectShowTemplate (tempName, index, temp) {

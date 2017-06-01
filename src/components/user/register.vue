@@ -2,7 +2,7 @@
   <div class="register">
     <div class="contain">
       <h1 class="title">快 速 注 册</h1>
-      <form method="post" @submit.prevent="onSubmit()">
+      <form method="post" @submit.prevent="">
         <!--@submit.prevent中的.prevent修饰符表示提交事件不再重载页面-->
         <div class="form-mobile">
           <label>
@@ -24,47 +24,53 @@
           </label>
         </div>
         <div class="form-next">
-          <button class="next" type="submit" @click="goNext">
+          <button class="next" @click="goNext">
             下一步
           </button>
         </div>
       </form>
+      <setpass v-if="setPass"></setpass>
     </div>
   </div>
 </template>
 
 <script>
-  import API from '@/common/API/api'
+//  import API from '@/common/API/api'
+  import setpass from './setPass.vue'
   export default {
     name: 'register',
     data () {
       return {
         mobile: '',
-        identify: ''
+        identify: '',
+        setPass: false
       }
+    },
+    components: {
+      setpass
     },
     methods: {
       goNext () {
-        this.$router.push('/setpass')
-        fetch(API.register, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            mobile: this.mobile,
-            identify: this.identify
-          })
-        }).then((res) => res.json())
-          .then((json) => {
-            console.log(json)
-            if (json.code === 1234) {
-              this.$router.push('/setpass')
-            } else if (json.code === 123) {
-              console('验证码错误')
-              this.identify = ''
-            }
-          })
+        this.setPass = true
+//        fetch(API.register, {
+//          method: 'POST',
+//          headers: {
+//            'Content-Type': 'application/json'
+//          },
+//          body: JSON.stringify({
+//            mobile: this.mobile,
+//            identify: this.identify
+//          })
+//        }).then((res) => res.json())
+//          .then((json) => {
+//            console.log(json)
+//            if (json.code === 1234) {
+//              this.$router.push('/setpass')
+//            } else if (json.code === 123) {
+//              console('验证码错误')
+//              this.identify = ''
+//            }
+//          })
       }
     }
   }
