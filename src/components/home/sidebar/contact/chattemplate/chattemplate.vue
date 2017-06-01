@@ -169,9 +169,12 @@
         this.createTemp = false
         this.newMessage = true
       },
+//      添加模板
       addTemplate (templateName) {
         this.tempNames.push({
           isActive: false,
+          renameButton: false,
+          renameTemp: false,
           id: this.tempNames.length + 1,
           templa: templateName
         })

@@ -9,11 +9,13 @@
     <div class="tab">
       <div class="send-group">
         <!--<Button type="text" size="large">群组发送</Button>-->
-        <input class="button-group" type="button" value="群组发送" @click="change('Chatgroup')"/>
+        <input class="button-group"
+               :class="{active: isSelect}" type="button" value="群组发送" @click="changeChatgroup"/>
       </div>
       <div class="send-template">
         <!--<Button type="text" size="large">模板群发</Button>-->
-        <input class="button-group" type="button" value="模板群发" @click="change('Chattemplate')"/>
+        <input class="button-group"
+               :class="{active: isSelected}" type="button" value="模板群发" @click="changeChattemplate"/>
       </div>
     </div>
     <div class="search">
@@ -32,7 +34,9 @@
       return {
         hidFlag: true,
         modalDelete: false,
-        currentView: 'Chatgroup'
+        currentView: 'Chatgroup',
+        isSelect: false,
+        isSelected: false
       }
     },
     components: {
@@ -55,8 +59,15 @@
       beginChat: function (i) {
         this.$bus.$emit('chat', i)
       },
-      change: function (v) {
-        this.currentView = v
+      changeChatgroup () {
+        this.currentView = 'Chatgroup'
+        this.isSelect = true
+        this.isSelected = false
+      },
+      changeChattemplate () {
+        this.currentView = 'Chattemplate'
+        this.isSelected = true
+        this.isSelect = false
       }
     }
   }
@@ -116,6 +127,12 @@ ul {list-style: none;}
   color: white;
   font-size: 20px;
 }
+.active {
+  color: #CDE7E9;
+}
+.button-group:hover {
+  color: #CDE7E9;
+}
 .send-template {
   padding-left: 30px;
 }
@@ -135,6 +152,7 @@ ul {list-style: none;}
   line-height: 37px;
   font-size: 18px;
   color: #fff;
+  border-radius: 5px;
 }
 .tab {
   height: 34px;

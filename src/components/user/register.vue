@@ -34,7 +34,7 @@
 </template>
 
 <script>
-//  import API from '@/common/API/api'
+  import API from '@/common/API/api'
   export default {
     name: 'register',
     data () {
@@ -46,25 +46,25 @@
     methods: {
       goNext () {
         this.$router.push('/setpass')
-//        fetch(API.register, {
-//          method: 'POST',
-//          headers: {
-//            'Content-Type': 'application/json'
-//          },
-//          body: JSON.stringify({
-//            mobile: this.mobile,
-//            identify: this.identify
-//          })
-//        }).then((res) => res.json())
-//          .then((json) => {
-//            console.log(json)
-//            if (json.code === 1234) {
-//              this.$router.push('/setpass')
-//            } else if (json.code === 123) {
-//              console('验证码错误'）
-//                this.identify = ''
-//            }
-//          })
+        fetch(API.register, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            mobile: this.mobile,
+            identify: this.identify
+          })
+        }).then((res) => res.json())
+          .then((json) => {
+            console.log(json)
+            if (json.code === 1234) {
+              this.$router.push('/setpass')
+            } else if (json.code === 123) {
+              console('验证码错误')
+              this.identify = ''
+            }
+          })
       }
     }
   }
