@@ -182,6 +182,9 @@
           this.formItem.newGroupName = ''
           this.showOrHide = false
         }
+      },
+      getThis: function (index) {
+        this.$bus.emit('hello', this.chats[index].name)
       }
     }
   }
