@@ -18,7 +18,7 @@
                  v-model="changeTemplateName"
                  @keyup.enter="changeTemplate(index)"/>
           <!--绑定回车事件修改模板名称-->
-          <span v-else>{{tempName.templa}}</span>
+          <span v-else class="li-span">{{tempName.templa}}</span>
           <transition name="fade">
             <button v-show="tempName.renameButton" class="delete-tmp"
                     @click.stop="deleteTemp(index)">删除</button>
@@ -203,18 +203,33 @@
 
   .rename, .delete-tmp {
     font-size: 14px;
-    color: #BDBDBD;
+    color: #7D88AC;
     border: none;
     outline: none;
     cursor: pointer;
     background: none;
+    height: 47px;
+    line-height: 47px;
+    position: absolute;
     font-family: PingFangSC-Regular;
   }
 
+  .rename {
+    margin-left: -50px;
+  }
+  .delete-tmp {
+    margin-left: 10px;
+  }
   .rename:hover, .delete-tmp:hover{
-    color: #CDE7E9;
+    color: #49526A;
   }
 
+  .li-span {
+    display: inline-block;
+    width: 80px;
+    height: 47px;
+    overflow: hidden;
+  }
   .template-ul {
     overflow: auto;
     height: 200px;
@@ -229,6 +244,7 @@
     line-height: 47px;
     border-bottom: 1px solid #596179;
     cursor: pointer;
+    position: relative;
   }
 
   .template-li:hover, .template-li:target, .active {
