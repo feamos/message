@@ -1,8 +1,11 @@
 <template>
     <div class="chat">
-        <ul>
+        <ul class="chat-list">
             <li v-for="(chat,index) in chats" @click="addclass()">{{chat.name}}</li>
         </ul>
+      <div class="chat-footer">
+
+      </div>
     </div>
 </template>
 
@@ -77,14 +80,19 @@ export default {
 
 <style scoped>
 * {padding: 0;margin: 0;}
-ul {list-style: none;}
+ul {
+  list-style: none;
+  height:300px;
+  background-color: yellow;
+  overflow-y: scroll;
+}
 .fl {
     float: left;
 }
 .chat {
     clear:both;
-    overflow: auto;
-    overflow-x: hidden;
+    /*overflow: auto;*/
+    /*overflow-x: hidden;*/
     height: 500px;
 }
 @media (max-height: 800px), (max-width: 1000px){
@@ -103,4 +111,8 @@ ul li {
 ::-webkit-scrollbar-thumb{-webkit-border-radius: 3px;background-color: #58595e;}
 ::-webkit-scrollbar-thumb:hover {background-color:#58595e}
 
+  .chat-footer{
+    height:50px;
+    background-color: red;
+  }
 </style>
