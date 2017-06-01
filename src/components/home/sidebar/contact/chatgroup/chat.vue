@@ -2,13 +2,13 @@
   <div class="chat-container">
     <div class="chat">
       <ul>
-        <li v-for="(chat,index) in chats">
-          <div class="checkbox" v-if="select" v-on:click="selectThis(index)"
-               v-bind:class="{'class-b':chat.isSelected }"></div>
-          <span v-on:click="getThis(index)">{{chat.name}}</span>
+        <li v-for="(chat,index) in chats" v-on:click="getThis(index)">
+          <div class="checkbox" v-if="select"
+               v-bind:class="{'class-b':chat.isSelected }" v-on:click="selectThis(index)"></div>
+          <span>{{chat.name}}</span>
         </li>
       </ul>
-      <div class="chat-footer">
+      <div class="chat-footer" >
         <span v-on:click="confirms">{{createName}}</span><span class="second-span">|</span><span
         v-on:click="deleteItem">{{deleteName}}</span>
       </div>
@@ -198,7 +198,7 @@
 
   ul {
     list-style: none;
-    height: 300px;
+    height: 450px;
     /*background-color: yellow;*/
     overflow-y: scroll;
   }
@@ -229,6 +229,9 @@
   @media (max-height: 800px), (max-width: 1000px) {
     .chat {
       height: 340px;
+    }
+    ul {
+      height: 300px;
     }
   }
 
