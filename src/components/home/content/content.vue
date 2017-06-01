@@ -3,6 +3,7 @@
     <div class="head">
       <div class="title">
         <span href="javascript:;" @click="list1 = !list1">{{ chat.name }}</span>
+        <img src="../../../assets/setups.png" v-if="showSetupPhoto" class="SetupPhoto">
         <div class="mobile" v-if="list1">
           <img src="./imgs/add.png" alt="">
           <li v-for="mobile in chat.mobiles">{{mobile}}</li>
@@ -60,6 +61,7 @@
         message: '',
         importExcel: false,
         tem: false,
+        showSetupPhoto: false,
         chat: {
           name: '发起聊天'
         }
@@ -74,10 +76,11 @@
         this.chat = i
       })
     },
-    created: function () {
+    created: function () {             // 这里接受从chat.vue中传递过来的被选中的群组的名称，并替换默认chat.name的值(by lee)
       var that = this
       this.$bus.on('hello', function (groupName) {
         that.chat.name = groupName
+        that.showSetupPhoto = true
       })
     },
     methods: {
@@ -148,7 +151,9 @@
     margin-left: 5px;
     margin-bottom: 5px;
   }
-
+  .head .title{
+    position: relative;
+  }
   .head .title span {
     font-family: PingFangSC-Regular;
     font-size: 36px;
@@ -275,4 +280,10 @@
       height: 80px;
     }
   }
+ .SetupPhoto{
+   position: absolute;
+   top:50%;
+   margin-top:-17px;
+   cursor:pointer;
+ }
 </style>
