@@ -34,8 +34,9 @@
                 @addTemplate="addTemplate"></createtemp>
     <!--绑定子组件模板命名模态框的关闭-->
     <div class="newde" :class="{hide:hideFlag}">
-      <div class="checkAll" @click="selectAll()"><label class="All"
-                                                        :class="{check:checkbtn,select:!checkbtn}"></label><span>全选</span>
+      <div class="checkAll" @click="selectAll()">
+        <label class="All"
+               :class="{check:checkbtn,select:!checkbtn}"></label><span>全选</span>
       </div>
       <ul>
         <li @click="cancelAll()">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</li>
@@ -104,8 +105,11 @@
       this.$bus.$on('sendTemp', (msg) => {
         this.sendTemp = msg
       })
+      this.addTemplate
     },
     mounted () {
+      this.hoverInTemplate
+      this.hoverOutTemplate
     },
     methods: {
       beginChat: function (i) {
@@ -169,6 +173,7 @@
         this.createTemp = false
         this.newMessage = true
       },
+//      添加模板
       addTemplate (templateName) {
         this.tempNames.push({
           isActive: false,

@@ -191,20 +191,13 @@
     padding-right: 50px;
   }
   .rename-input {
-    width: 54px;
-    border: none;
-    outline: none;
-    line-height: 47px;
+    width: 74px;
     font-size: 14px;
-    color: #BDBDBD;
-  }
-
-  .temp-head {
-    display: flex;
-    justify-content: space-between;
-    height: 47px;
-    line-height: 47px;
-    border-bottom: .5px solid #596179;
+    height: 37px;
+    border: none;
+    border-bottom: solid 1px #596179;
+    outline: none;
+    border-radius: 5px;
   }
 
   .rename, .delete-tmp {
