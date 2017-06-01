@@ -154,7 +154,7 @@
         if (this.createName === '确定') {
           if (this.hasSelected(arrObject)) {
             for (let index = 0; index <= arrObject.length - 1; index++) {
-              if (arrObject[index].isSelected === true) {
+              while (arrObject[index].isSelected === true) {
                 arrObject.splice(index, 1)
               }
             }
