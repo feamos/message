@@ -15,7 +15,7 @@
     <div class="newde" :class="{hide:!hideFlag}" v-if="hideFlag">
       <ul>
         <li @click="newMsg">新建消息</li>
-        <li @click="hideFlag = false">删除消息</li>
+        <li @click="judgetempl">删除消息</li>
         <br style="clear:both">
       </ul>
     </div>
@@ -34,8 +34,8 @@
                 @addTemplate="addTemplate"></createtemp>
     <!--绑定子组件模板命名模态框的关闭-->
     <div class="newde" :class="{hide:hideFlag}">
-      <div class="checkAll" @click="selectAll()"><label class="All"
-                                                        :class="{check:checkbtn,select:!checkbtn}"></label><span>全选</span>
+      <div class="checkAll" @click="selectAll()">
+        <label class="All" :class="{check:checkbtn,select:!checkbtn}"></label><span>全选</span>
       </div>
       <ul>
         <li @click="cancelAll()">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</li>
@@ -228,6 +228,15 @@
           value.renameTemp = false
         })
         this.tempNames[index].renameTemp = true
+      },
+//      删除时判断模板群发是否为空
+      judgetempl () {
+//        if (!this.chats[0]) {
+//          alert('模板为空！')
+//        } else {
+//          this.hideFlag = false
+//        }
+        this.$Message.success('这是一条成功的提示')
       }
     }
   }
