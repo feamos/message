@@ -105,10 +105,9 @@
       this.$bus.$on('sendTemp', (msg) => {
         this.sendTemp = msg
       })
-      this.addTemplate
     },
-    mounted () {
-      this.hoverInTemplate
+    update () {
+      this.hoverInTemplate(this.tempNames.length)
       this.hoverOutTemplate
     },
     methods: {
@@ -177,6 +176,8 @@
       addTemplate (templateName) {
         this.tempNames.push({
           isActive: false,
+          renameButton: false,
+          renameTemp: false,
           id: this.tempNames.length + 1,
           templa: templateName
         })
