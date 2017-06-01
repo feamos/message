@@ -1,16 +1,32 @@
 <template>
-  <div class="chat">
-    <ul>
-      <li v-for="(chat,index) in chats">
-        <div class="checkbox" v-if="select" v-on:click="selectThis(index)"
-             v-bind:class="{'class-b':chat.isSelected }"></div>
-        <span v-on:click="getThis(index)">{{chat.name}}</span>
-      </li>
-    </ul>
-    <div class="chat-footer">
-      <span v-on:click="confirms">{{createName}}</span><span class="second-span">|</span><span v-on:click="deleteItem">{{deleteName}}</span>
+  <div class="chat-container">
+    <div class="chat">
+      <ul>
+        <li v-for="(chat,index) in chats">
+          <div class="checkbox" v-if="select" v-on:click="selectThis(index)"
+               v-bind:class="{'class-b':chat.isSelected }"></div>
+          <span v-on:click="getThis(index)">{{chat.name}}</span>
+        </li>
+      </ul>
+      <div class="chat-footer">
+        <span v-on:click="confirms">{{createName}}</span><span class="second-span">|</span><span
+        v-on:click="deleteItem">{{deleteName}}</span>
+      </div>
+      <div class="create-modal" v-if="showOrHide">
+        <div class="input-groupName">
+          <Form :model="formItem">
+            <Form-item>
+              <Input v-model="formItem.newGroupName" placeholder="请输入群名称" class="input-groupName-input"></Input>
+            </Form-item>
+          </Form>
+        </div>
+        <div class="confirm-giveUp">
+          <span v-on:click="cancelThis">取消</span><span class="second-span">|</span><span
+          v-on:click="createNewGroup">确定</span>
+        </div>
+      </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -22,38 +38,87 @@
         isSelected: false,
         deleteName: '删除群',
         createName: '新建群',
+        showOrHide: true,
+        formItem: {
+          newGroupName: ''
+        },
         chats: [
           {
-            name: 'Jack',
-            isSelected: false
+            name: '我们的家',
+            isSelected: false,
+            person: [
+              {
+                name: '张三',
+                phoneNumber: 1232332323,
+                isSelected: false
+              }
+            ]
           },
           {
-            name: 'Jack',
-            isSelected: false
+            name: '中国篮球迷',
+            isSelected: false,
+            person: [
+              {
+                name: '张三',
+                phoneNumber: 1232332323,
+                isSelected: false
+              }
+            ]
           },
           {
-            name: 'Jack',
-            isSelected: false
+            name: '世界旅游爱好者',
+            isSelected: false,
+            person: [
+              {
+                name: '张三',
+                phoneNumber: 1232332323,
+                isSelected: false
+              }
+            ]
           },
           {
-            name: 'Jack',
-            isSelected: false
+            name: '东北大学it',
+            isSelected: false,
+            person: [
+              {
+                name: '张三',
+                phoneNumber: 1232332323,
+                isSelected: false
+              }
+            ]
           },
           {
-            name: 'Jack',
-            isSelected: false
+            name: '不洗碗工作室',
+            isSelected: false,
+            person: [
+              {
+                name: '张三',
+                phoneNumber: 1232332323,
+                isSelected: false
+              }
+            ]
           },
           {
-            name: 'Jack',
-            isSelected: false
+            name: '纽约',
+            isSelected: false,
+            person: [
+              {
+                name: '张三',
+                phoneNumber: 1232332323,
+                isSelected: false
+              }
+            ]
           },
           {
-            name: 'Jack',
-            isSelected: false
-          },
-          {
-            name: 'Jack',
-            isSelected: false
+            name: '六一儿童节',
+            isSelected: false,
+            person: [
+              {
+                name: '张三',
+                phoneNumber: 1232332323,
+                isSelected: false
+              }
+            ]
           }
         ]
       }
@@ -102,6 +167,21 @@
             this.showOrHide = false
           }
         }
+      },
+      cancelThis: function () {
+        this.showOrHide = false
+      },
+      createNewGroup: function () {
+        let that = this
+        if (that.formItem.newGroupName !== '') {
+          let newName = {
+            name: that.formItem.newGroupName,
+            isSelected: false
+          }
+          this.chats.push(newName)
+          this.formItem.newGroupName = ''
+          this.showOrHide = false
+        }
       }
     }
   }
@@ -130,6 +210,7 @@
     font-size: 18px;
     cursor: pointer;
     position: relative;
+    overflow-y: hidden;
   }
 
   ul li:hover {
@@ -206,4 +287,56 @@
   .second-span {
     margin: 0 55px;
   }
+  .create-modal {
+    width: 320px;
+    height: 150px;
+    background-color: #596179;
+    box-shadow: 5px 5px 2px #888888;
+    position: fixed;
+    margin: auto;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    border-radius: 5px;
+  }
+  .input-groupName {
+    height: 70px;
+    /*background-color: khaki;*/
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position: relative;
+  }
+
+  .input-groupName Form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -15px;
+    margin-left: -133px;
+  }
+
+  .input-groupName-input {
+    width: 260px;
+  }
+  .confirm-giveUp {
+    height: 80px;
+    /*background-color: saddlebrown;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 18px;
+    color: white;
+  }
+
+  .confirm-giveUp span {
+    cursor: pointer;
+  }
+
+  .second-span {
+    margin: 0 30px;
+  }
+
 </style>
