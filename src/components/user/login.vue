@@ -211,8 +211,8 @@
   }
 
   .form-alias input, .form-password input {
-    width: 400px;
-    height: 50px;
+    width: 300px;
+    height: 45px;
     margin: 25px;
     outline: none;
     padding-left: 7px;
@@ -224,7 +224,7 @@
     height: 40px;
     border-radius: 10px;
     cursor: pointer;
-    background-color: #bbe1e3;
+    background-color: rgb(142, 185, 228);;
     color: white;
     margin-right: 20px;
     margin-left: 100px;

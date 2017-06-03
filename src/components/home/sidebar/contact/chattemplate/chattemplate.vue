@@ -159,17 +159,23 @@
           this.deltemp()
         }
       },
-//      新建模板并关闭当前新建消息对话框
+      /**
+       * 新建模板并关闭当前新建消息对话框
+       * **/
       createTemplates () {
         this.createTemp = true
         this.newMessage = false
       },
-//      取消新建模板的模态框
+      /**
+      *  取消新建模板的模态框
+      **/
       closeCreateTemp () {
         this.createTemp = false
         this.newMessage = true
       },
-//      添加模板
+      /**
+       *添加模板
+       **/
       addTemplate (templateName) {
         this.tempNames.push({
           isActive: false,
@@ -185,7 +191,10 @@
         })
         this.tempNames[index].isActive = true
       },
-//      修改模板名称
+      /**
+       * @param changeTemplateName：修改模板名称
+       * @param index：选择的li
+       */
       changeTempName (changeTemplateName, index) {
         console.log(changeTemplateName)
         this.tempNames.forEach((value) => {
@@ -193,7 +202,10 @@
         })
         this.tempNames[index].templa = changeTemplateName
       },
-//      删除选中的模板
+      /**
+       * 删除选中的模板
+       * @param index
+       */
       deleteTempName (index) {
         console.log(index + 'index')
         this.tempNames.forEach((value, i) => {
@@ -202,7 +214,9 @@
           }
         })
       },
-      //      添加模板
+      /**
+       *       添加模板
+       */
       addTemp () {
         var obj = {
           name: this.sendTemp.templa,
@@ -214,14 +228,19 @@
         this.chats.unshift(obj)
         this.newMessage = false
       },
-      //      鼠标悬停触发显示重命名事件
+      /**
+       * 鼠标悬停触发显示重命名事件
+       * @param index
+       */
       hoverInTemplate (index) {
         this.tempNames.forEach((value) => {
           value.renameButton = false
         })
         this.tempNames[index].renameButton = true
       },
-//      鼠标离开隐藏重命名和删除事件
+      /**
+       *鼠标离开隐藏重命名和删除事件
+       */
       hoverOutTemplate () {
         this.tempNames.forEach((value) => {
           value.renameButton = false
@@ -233,7 +252,9 @@
         })
         this.tempNames[index].renameTemp = true
       },
-//      删除时判断模板群发是否为空
+      /**
+       * 删除时判断模板群发是否为空
+        */
       judgetempl () {
 //        if (!this.chats[0]) {
 //          alert('模板为空！')

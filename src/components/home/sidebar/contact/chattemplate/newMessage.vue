@@ -60,10 +60,8 @@
         renameTemp: false,
         createTemp: false,
         showDeleteTemp: false,
-        item: Number,
-//        显示二次确定删除模板
-        changeTemplateName: ''
-//        修改模板名称
+        item: Number, //        显示二次确定删除模板
+        changeTemplateName: ''//        修改模板名称
       }
     },
     components: {
@@ -71,7 +69,10 @@
     },
     props: ['tempNames'],
     methods: {
-//      删除弹出二次确定框
+      /**
+       * 删除弹出二次确定框
+       * @param index
+       */
       deleteTemp (index) {
         this.showDeleteTemp = true
         this.item = index
@@ -86,11 +87,14 @@
         this.$emit('selectLi', index)
         this.sendTemp(temp)
       },
+      /**
+       *修改模板名称
+       * @param index
+       */
       changeTemplate (index) {
         console.log(index)
         this.$emit('changeTempName', this.changeTemplateName, index)
       },
-      //      修改模板名称
       sendTemp (i) {
         this.$bus.$emit('sendTemp', i)
         this.addTemp = true

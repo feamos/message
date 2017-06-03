@@ -8,12 +8,10 @@
     </div>
     <div class="tab">
       <div class="send-group">
-        <!--<Button type="text" size="large">群组发送</Button>-->
         <input class="button-group"
                :class="{active: isSelect}" type="button" value="群组发送" @click="changeChatgroup"/>
       </div>
       <div class="send-template">
-        <!--<Button type="text" size="large">模板群发</Button>-->
         <input class="button-group"
                :class="{active: isSelected}" type="button" value="模板群发" @click="changeChattemplate"/>
       </div>

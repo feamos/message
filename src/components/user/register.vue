@@ -1,76 +1,174 @@
 <template>
   <div class="register">
-    <div class="contain">
-      <h1 class="title">快 速 注 册</h1>
-      <form method="post" @submit.prevent="">
-        <!--@submit.prevent中的.prevent修饰符表示提交事件不再重载页面-->
-        <div class="form-mobile">
-          <label>
-            <input
-              v-model.trim="mobile"
-              type="text"
-              name="email"
-              placeholder="输入手机号">
-            <!--  placeholder 属性提供可描述输入字段预期值的提示信息（hint）。
-                  该提示会在输入字段为空时显示，并会在字段获得焦点时消失。-->
-          </label>
+    <template v-if="isGoNext">
+      <!--点击下一步后显示该组件框-->
+      <transition name="modal">
+        <div class="set-pass-contain">
+          <div class="modal-header">
+            <slot name="header">
+              <h1 class="title">设 置 密 码</h1>
+            </slot>
+          </div>
+          <div class="modal-body">
+            <slot name="body">
+              <div class="input-body">
+                <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="80">
+                  <Form-item label="密码" prop="passwd">
+                    <Input type="password" class="form-input"
+                           v-model="formCustom.passwd"
+                           placeholder="请输入密码"></Input>
+                  </Form-item>
+                  <Form-item label="确认密码" prop="passwdCheck">
+                    <Input type="password" class="form-input"
+                           v-model="formCustom.passwdCheck"
+                           placeholder="确认密码"></Input>
+                  </Form-item>
+                  <Form-item class="form-login">
+                    <button class="tologin" type="submit" @click="toLogin">
+                      登录
+                    </button>
+                  </Form-item>
+                </Form>
+              </div>
+            </slot>
+          </div>
         </div>
-        <div class="form-identify">
-          <label>
-            <input
-              v-model.trim="identify" type="text"
-              placeholder="输入验证码">
-            <button class="get-idencode">获取验证码</button>
-          </label>
+      </transition>
+    </template>
+    <template v-else>
+      <transition name="modal">
+        <div class="regist-contain">
+          <div class="modal-header">
+            <slot name="header">
+              <h1 class="title">快 速 注 册</h1>
+            </slot>
+          </div>
+          <div class="modal-body">
+            <slot name="body">
+              <div class="input-body">
+                <Form ref="formCustom" :model="formCustom" :rules="ruleCustom"
+                      :label-width="80">
+                  <Form-item label="手机号" prop="mobile" class="form-mobile">
+                    <Input type="text" class="form-input"
+                           v-model="formCustom.mobile"
+                           placeholder="请输入手机号"></Input>
+                  </Form-item>
+                  <Form-item label="验证码" prop="identify" class="form-mobile">
+                    <Input type="password" class="form-identify"
+                           v-model="formCustom.identify"
+                           placeholder="输入验证码"></Input>
+                    <button class="get-idencode">获取验证码</button>
+                  </Form-item>
+                  <Form-item>
+                    <div class="form-next">
+                      <button class="next" @click="goNext">
+                        下一步
+                      </button>
+                    </div>
+                  </Form-item>
+                </Form>
+              </div>
+            </slot>
+          </div>
         </div>
-        <div class="form-next">
-          <button class="next" @click="goNext">
-            下一步
-          </button>
-        </div>
-      </form>
-      <setpass v-if="setPass"></setpass>
-    </div>
+      </transition>
+    </template>
   </div>
 </template>
 
 <script>
-//  import API from '@/common/API/api'
-  import setpass from './setPass.vue'
+  import API from '@/common/API/api'
   export default {
     name: 'register',
     data () {
-      return {
-        mobile: '',
-        identify: '',
-        setPass: false
+      const validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'))
+        } else {
+          if (this.formCustom.passwdCheck !== '') {
+            // 对第二个密码框单独验证
+            this.$refs.formCustom.validateField('passwdCheck')
+          }
+          callback()
+        }
       }
-    },
-    components: {
-      setpass
+      const validatePassCheck = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'))
+        } else if (value !== this.formCustom.passwd) {
+          callback(new Error('两次输入密码不一致!'))
+        } else {
+          callback()
+        }
+      }
+      const validateMobile = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入手机号'))
+        }
+      }
+      const validateIdenty = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入验证码'))
+        }
+      }
+      return {
+        formCustom: {
+          passwd: '',
+          passwdCheck: '',
+          mobile: '',
+          identify: ''
+        },
+        ruleCustom: {
+          passwd: [
+            {validator: validatePass, trigger: 'blur'}
+          ],
+          passwdCheck: [
+            {validator: validatePassCheck, trigger: 'blur'}
+          ],
+          mobile: [
+            {
+              validator: validateMobile, trigger: 'blur'
+            }
+          ],
+          identify: [
+            {
+              validator: validateIdenty, trigger: 'blur'
+            }
+          ]
+        },
+        isGoNext: false  //  注册页面，为true时显示设置密码
+      }
     },
     methods: {
       goNext () {
-        this.setPass = true
-//        fetch(API.register, {
-//          method: 'POST',
-//          headers: {
-//            'Content-Type': 'application/json'
-//          },
-//          body: JSON.stringify({
-//            mobile: this.mobile,
-//            identify: this.identify
-//          })
-//        }).then((res) => res.json())
-//          .then((json) => {
-//            console.log(json)
-//            if (json.code === 1234) {
-//              this.$router.push('/setpass')
-//            } else if (json.code === 123) {
-//              console('验证码错误')
-//              this.identify = ''
-//            }
-//          })123
+        this.$nextTick(function () {
+          if (this.formCustom.mobile === '') {
+            console.log('请输入手机号')
+          } else {
+            this.isGoNext = true
+            console.log(this.formCustom.mobile)
+          }
+        })
+      },
+      toLogin () {
+        let submitRegister = {
+          mobile: this.formCustom.mobile,
+          password: this.formCustom.passwd
+        }
+        fetch(API.register, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(submitRegister)
+        }).then((res) => res.json())
+          .then((json) => {
+            console.log(json)
+            if (json.code === 0) {
+              this.$router.push('/login')
+              window.localStorage.setItem('token', json.data.token)
+            }
+          })
       }
     }
   }
@@ -87,7 +185,7 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: fixed;
-    z-index: 9998;
+    z-index: 98;
     top: 0;
     left: 0;
     width: 100%;
@@ -98,14 +196,33 @@
     transition: opacity .3s ease;
   }
 
-  .contain {
-    z-index: 9999;
+  .regist-contain {
+    z-index: 99;
+    display: table-cell;
+    vertical-align: middle;
+    top: 30%;
+    left: 35%;
+    position: fixed;
+    width: 450px;
+    height: 320px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, .6);
+  }
+
+  .set-pass-contain {
+    z-index: 99;
     display: table-cell;
     vertical-align: middle;
     position: fixed;
     margin: 0 auto;
+    top: 30%;
+    left: 35%;
     width: 450px;
-    height: 360px;
+    height: 300px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: white;
@@ -123,43 +240,27 @@
     font-size: 40px;
   }
 
-  form input::placeholder {
+  .form-input::placeholder {
     color: #ccc;
   }
 
-  form input {
-    /*指定对象为内联块元素*/
-    display: inline-block;
-    height: 3.5rem;
-    padding: 0 0.8rem;
-    box-sizing: border-box;
-    font-size: 1.5rem;
-    background: #fff;
-    border: 0.1rem solid #ccc;
-    border-radius: 5px;
-    outline: 0;
-  }
-
-  .form-mobile input {
-    width: 80%;
-    margin: 5% 10%;
-  }
-
-  .form-identify input {
-    width: 38%;
-    margin-left: 10%;
+  .form-input {
+    width: 300px;
   }
 
   .form-identify {
-    height: 3.5rem;
+    width: 120px;
+  }
+
+  .form-mobile {
     line-height: 3.5rem;
   }
 
   .get-idencode {
-    width: 37%;
-    margin-left: 4%;
-    height: 3.3rem;
-    line-height: 3.5rem;
+    width: 35%;
+    margin-left: 10%;
+    height: 3rem;
+    line-height: 3rem;
     font-size: 1.5rem;
     color: white;
     background-color: #a9cdcf;
@@ -169,10 +270,27 @@
 
   .form-next {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 
   .next {
+    width: 40%;
+    height: 3.3rem;
+    font-size: 1.5rem;
+    color: white;
+    background-color: #a9cdcf;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: -80px;
+  }
+
+  .form-login {
+    text-align: center;
+    margin-top: 1.8rem;
+    margin-left: -80px;
+  }
+
+  .tologin {
     width: 40%;
     height: 3.3rem;
     font-size: 1.5rem;
