@@ -26,8 +26,7 @@
     methods: {
       sureRename () {
         console.log(this.templateName)
-        this.$emit('addTemplate', this.templateName)
-  //        将模板名称传值到父组件
+        this.$emit('addTemplate', this.templateName)//        将模板名称传值到父组件
         this.$emit('closeCreate')
       }
     }

@@ -16,9 +16,7 @@
           <label>
             新密码
             <input
-              v-model.trim="pass"
-              type="password">
-            <!--  placeholder 属性提供可描述输入字段预期值的提示信息（hint）。
+              v-model.trim="pass" type="password"><!--  placeholder 属性提供可描述输入字段预期值的提示信息（hint）。
                   该提示会在输入字段为空时显示，并会在字段获得焦点时消失。-->
           </label>
         </div>
