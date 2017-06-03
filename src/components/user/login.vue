@@ -100,8 +100,7 @@
           fetch(API.login, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
-              'token': localStorage.getItem('token')
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               mobile: this.mobile,

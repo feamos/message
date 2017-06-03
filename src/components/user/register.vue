@@ -150,29 +150,25 @@
           }
         })
       },
-      toLogin (name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            let submitRegister = {
-              mobile: this.formCustom.mobile,
-              password: this.formCustom.passwd
+      toLogin () {
+        let submitRegister = {
+          mobile: this.formCustom.mobile,
+          password: this.formCustom.passwd
+        }
+        fetch(API.register, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(submitRegister)
+        }).then((res) => res.json())
+          .then((json) => {
+            console.log(json)
+            if (json.code === 0) {
+              this.$router.push('/login')
+              window.localStorage.setItem('token', json.data.token)
             }
-            fetch(API.register, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(submitRegister)
-            }).then((res) => res.json())
-              .then((json) => {
-                console.log(json)
-                if (json.code === 0) {
-                  this.$router.push('/login')
-                  window.localStorage.setItem('token', json.data.token)
-                }
-              })
-          }
-        })
+          })
       }
     }
   }
