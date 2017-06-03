@@ -88,7 +88,7 @@
         })
       },
       signIn () {
-        const PASSWD_ERR = 20003
+        const PASSWD_ERR = 20002
         const MOBILE_ERR = 20001
         const SUCCESS = 0
         if (!this.mobile) {
@@ -100,8 +100,7 @@
           fetch(API.login, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
-              'token': localStorage.getItem('token') || ''
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               mobile: this.mobile,
@@ -112,6 +111,7 @@
               console.log(json)
               if (json.code === SUCCESS) {
                 this.$Message.info('登录成功')
+                localStorage.setItem('token', json.data.token)
                 this.$router.push('/home')
               }
               if (json.code === PASSWD_ERR) {

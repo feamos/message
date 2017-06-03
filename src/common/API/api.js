@@ -4,5 +4,6 @@ const userApiMaker = (path) => {
 }
 export default {
   login: userApiMaker('login'),
-  register: userApiMaker('register')
+  register: userApiMaker('register'),
+  logout: userApiMaker('logout')
 }

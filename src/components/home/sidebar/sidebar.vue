@@ -16,6 +16,7 @@
 </template>
 <script>
     import contact from './contact/contact'
+    import API from '@/common/API/api'
     export default {
       name: 'sidebar',
       data () {
@@ -33,7 +34,20 @@
         },
         signOut () {
           this.$nextTick(() => {
-            this.$router.push('login')
+            fetch(API.logout, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+              }
+            }).then((res) => res.json())
+              .then((json) => {
+                console.log(json)
+                if (json.code === 0) {
+                  localStorage.clear()
+                  this.$router.push('login')
+                }
+              })
           })
         }
       },
