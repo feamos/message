@@ -233,6 +233,9 @@
     width: 80px;
     height: 47px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space:nowrap;
   }
   .template-ul {
     overflow: auto;
