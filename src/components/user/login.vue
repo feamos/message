@@ -110,12 +110,13 @@
             .then((json) => {
               console.log(json)
               if (json.code === SUCCESS) {
-                this.$Message.info('登录成功')
+                console.log('登录成功！')
                 localStorage.setItem('token', json.data.token)
+                localStorage.setItem('mobile', json.data.user.mobile)
                 this.$router.push('/home')
               }
               if (json.code === PASSWD_ERR) {
-                this.$Message.info('用户名或密码错误')
+                console.log('密码错误！')
                 this.pass = ''
               }
               if (json.code === MOBILE_ERR) {

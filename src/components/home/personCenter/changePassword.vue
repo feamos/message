@@ -1,7 +1,7 @@
 <template>
   <div class="change-pass">
     <div class="contain">
-      <form method="post" @submit.prevent="onSubmit()">
+      <form method="post" @submit.prevent="">
         <!--@submit.prevent中的.prevent修饰符表示提交事件不再重载页面-->
         <div class="form-password">
           <label>
@@ -31,7 +31,7 @@
             <button class="cancel-change-button" @click="$emit('closeChange')">
               取消
             </button>
-            <button class="ok-change-button">确定</button>
+            <button class="ok-change-button" @click="changePass">确定</button>
         </div>
       </form>
     </div>
@@ -39,12 +39,41 @@
 </template>
 
 <script>
+  import API from '@/common/API/api'
   export default {
     data () {
       return {
         oldpass: '',
         pass: '',
         ensurepass: ''
+      }
+    },
+    methods: {
+      changePass () {
+        console.log('1')
+        if (this.pass === this.ensurepass) {
+          fetch(API.password, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'token': localStorage.getItem('token')
+            },
+            body: JSON.stringify({
+              'password': this.oldpass,
+              'newPassword': this.ensurepass
+            })
+          }).then((res) => res.json())
+            .then((json) => {
+              console.log('')
+              if (json.code === 0) {
+                console.log('密码修改成功！')
+                localStorage.clear()
+                this.$router.push('/login')
+              } else {
+                console.log('初始密码错误！')
+              }
+            })
+        }
       }
     }
   }

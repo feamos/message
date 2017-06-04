@@ -151,6 +151,7 @@
         })
       },
       toLogin () {
+        const MOBILE_EXSIST = 20003
         let submitRegister = {
           mobile: this.formCustom.mobile,
           password: this.formCustom.passwd
@@ -167,6 +168,8 @@
             if (json.code === 0) {
               this.$router.push('/login')
               window.localStorage.setItem('token', json.data.token)
+            } else if (json.code === MOBILE_EXSIST) {
+              console.log('手机号存在！')
             }
           })
       }
