@@ -30,6 +30,11 @@
           //   获取昵称,如果返回昵称为空就设电话号码为初始用户名
         }
       },
+      updated: function () {
+        this.$bus.on('nickname', (msg) => {
+          this.nickname = msg
+        })
+      },
       methods: {
         selectSet () {
           this.select = !this.select

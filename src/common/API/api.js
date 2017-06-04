@@ -8,5 +8,6 @@ export default {
   register: userApiMaker('register'),
   logout: userApiMaker('logout'),
   info: userApiMaker('info'),
-  password: userApiMaker('password')
+  password: userApiMaker('password'),
+  nickname: userApiMaker('nickname')
 }

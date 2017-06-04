@@ -7,7 +7,7 @@
       <img class="user-img" src="../content/imgs/user.jpg"/>
     </div>
     <div v-if="editName" class="user-name-container">
-      <Input v-model="nickname" placeholder="修改昵称" class="nickname-input"></Input>
+      <span @click="clickinput"><Input v-model="nickname" :placeholder="nicknull" class="nickname-input" :class="{nick: nickbool}" ></Input></span>
       <button class="change-nick-button" @click="changeNikeName">确定</button>
     </div>
     <div v-else class="user-name-container">
@@ -37,6 +37,8 @@
         userMobile: localStorage.getItem('mobile'),
         userEmail: '暂定@163.com',
         changePass: false, // 修改密码模块
+        nickbool: false,
+        nicknull: '修改昵称',
         editName: false, //  编辑昵称，为true时变为输入框可修改
         nickname: localStorage.getItem('nickname') === null ? localStorage.getItem('mobile') : localStorage.getItem('nickname')
         //   获取昵称,如果返回昵称为空就设电话号码为初始用户名
@@ -52,30 +54,37 @@
       editNikeName () {
         this.editName = true
       },
+      clickinput () {
+        this.nickbool = false
+        this.nicknull = '修改昵称'
+        this.nickname = ''
+      },
       /**
        * 修改昵称
        */
       changeNikeName () {
-        this.editName = false
-        let userId = localStorage.getItem('userId')
-        let token = localStorage.getItem('token')
-        console.log(userId)
-        fetch(API.user + '/' + userId + '/nickname', {
-          method: 'PUT',
-          headers: {
-            'token': token,
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify({
-            'nickname': this.nickname
+        if (this.nickname === '') {
+          console.log('昵称不能为空！')
+          this.nickbool = true
+          this.nicknull = '昵称不能为空'
+        } else {
+          this.editName = false
+          fetch(API.nickname, {
+            method: 'PUT',
+            headers: {
+              'token': localStorage.getItem('token'),
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+              'nickname': this.nickname
+            })
+          }).then((res) => {
+            return res.json()
+          }).then((json) => {
+            this.$bus.$emit('nickname', this.nickname)
           })
-        }).then((res) => {
-          return res.json()
-        }).then((json) => {
-          console.log(json)
-          localStorage.setItem('nickname', this.nickname)
-        })
+        }
       }
     }
   }
@@ -132,7 +141,12 @@
   .nickname-input {
     width: 150px;
   }
-
+  .nick {
+    border: 1px solid red;
+    border-radius: 5px;
+    outline: none;
+    color: red;
+  }
   .change-nick-button {
     font-size: 15px;
     color: #FFFFFF;

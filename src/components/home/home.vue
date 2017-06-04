@@ -38,7 +38,6 @@
        *个人信息显示页，获取个人信息
        **/
       PersonalShow () {
-        console.log('1')
         fetch(API.info, {
           method: 'GET',
           headers: {
@@ -52,7 +51,6 @@
               localStorage.setItem('mobile', json.data.user.mobile)
               localStorage.setItem('userId', json.data.user.id)
               localStorage.setItem('nickname', json.data.user.nickname)
-              console.log('2')
             }
           })
         this.showPerson = true
