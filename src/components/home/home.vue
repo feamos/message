@@ -46,6 +46,7 @@
             console.log(json)
             if (json.code === 0) {
               localStorage.setItem('mobile', json.data.user.mobile)
+              localStorage.setItem('userId', json.data.user.id)
               console.log('2')
             }
           })

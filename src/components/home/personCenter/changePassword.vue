@@ -1,7 +1,7 @@
 <template>
   <div class="change-pass">
     <div class="contain">
-      <form method="post" @submit.prevent="onSubmit()">
+      <form method="post" @submit.prevent="">
         <!--@submit.prevent中的.prevent修饰符表示提交事件不再重载页面-->
         <div class="form-password">
           <label>

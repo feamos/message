@@ -6,5 +6,6 @@ export default {
   login: userApiMaker('login'),
   register: userApiMaker('register'),
   logout: userApiMaker('logout'),
-  info: userApiMaker('info')
+  info: userApiMaker('info'),
+  user: _APIHOST_
 }
