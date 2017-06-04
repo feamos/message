@@ -54,6 +54,7 @@
             }
           })
         this.showPerson = true
+        this.showTemplateGroup = false
       },
       /**
        * 切换右边显示栏，

@@ -90,17 +90,18 @@
         color: #fff;
     }
     .head {
+      padding-top: 30px;
       height: 157px;
-      line-height: 157px;
+      /*line-height: 157px;*/
       /*margin-top: 50px;*/
     }
     .head span {
       font-size: 20px;
       /*line-height: 157px;*/
-      /*overflow: hidden;*/
-      /*text-overflow: ellipsis;*/
-      /*-o-text-overflow: ellipsis;*/
-      /*white-space:nowrap;*/
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      white-space:nowrap;
       width:100px;
       height:24px;
       display:inline-block;
