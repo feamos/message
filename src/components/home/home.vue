@@ -17,6 +17,7 @@
   import sidebar from './sidebar/sidebar'
   import rightcontent from './content/content'
   import personal from './personCenter/personCenter.vue'
+  import API from '@/common/API/api'
   export default {
     name: 'app',
     data () {
@@ -33,6 +34,21 @@
     },
     methods: {
       PersonalShow () {
+        console.log('1')
+        fetch(API.info, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'aplication/json',
+            'token': localStorage.getItem('token')
+          }
+        }).then((res) => res.json())
+          .then((json) => {
+            console.log(json)
+            if (json.code === 0) {
+              localStorage.setItem('mobile', json.data.user.mobile)
+              console.log('2')
+            }
+          })
         this.showPerson = true
       }
     }

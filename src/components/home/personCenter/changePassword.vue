@@ -7,7 +7,7 @@
           <label>
             旧密码
             <input
-              v-model.trim="pass"
+              v-model.trim="oldpass"
               type="password"
               name="email">
           </label>
@@ -42,7 +42,9 @@
   export default {
     data () {
       return {
-
+        oldpass: '',
+        pass: '',
+        ensurepass: ''
       }
     }
   }

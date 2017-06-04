@@ -30,7 +30,7 @@
     data () {
       return {
         userName: '1777627637@qq.com',
-        userMobile: '1876732564165',
+        userMobile: localStorage.getItem('mobile'),
         userEmail: 'hfakuiuvif@163.com',
         changePass: false
       }
