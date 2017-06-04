@@ -38,7 +38,8 @@
         userEmail: '暂定@163.com',
         changePass: false, // 修改密码模块
         editName: false, //  编辑昵称，为true时变为输入框可修改
-        nickname: localStorage.getItem('mobile') //  初始昵称为手机号
+        nickname: localStorage.getItem('nickname') === null ? localStorage.getItem('mobile') : localStorage.getItem('nickname')
+        //   获取昵称,如果返回昵称为空就设电话号码为初始用户名
       }
     },
     components: {
@@ -51,6 +52,9 @@
       editNikeName () {
         this.editName = true
       },
+      /**
+       * 修改昵称
+       */
       changeNikeName () {
         this.editName = false
         let userId = localStorage.getItem('userId')

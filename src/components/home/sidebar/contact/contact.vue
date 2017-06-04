@@ -19,7 +19,7 @@
     <div class="search">
       <input class="search-input" placeholder="搜索">
     </div>
-    <component v-bind:is="currentView"></component>
+    <component v-bind:is="currentView" @changeRight="changeRight"></component>
   </div>
 
 </template>
@@ -66,6 +66,12 @@
         this.currentView = 'Chattemplate'
         this.isSelected = true
         this.isSelect = false
+      },
+      changeRight () {
+        /**
+         * 往上触发父组件sidebar的事件以切换右边显示栏
+         */
+        this.$emit('changeRightSideBar')
       }
     }
   }
