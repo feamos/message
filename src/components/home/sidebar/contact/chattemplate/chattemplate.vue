@@ -59,7 +59,7 @@
         confirmDlete: false,
         checkbtn: false,
         hideFlag: true,
-        newMessage: false,
+        newMessage: false,  //  新建消息的弹出框，选择模板
         createTemp: false,
         tempNames: [
           {
@@ -110,6 +110,12 @@
     methods: {
       beginChat: function (i) {
         this.$bus.$emit('responseChat', i)
+        /**
+         *如果此时已经显示了个人信息的页面，需要切换右边显示栏为模板显示部分，触发上层切换事件，
+         * 一直往上触发直到home父组件
+         * 首先触发父组件contact
+         */
+        this.$emit('changeRight')
       },
       deltemp: function () {
         this.confirmDlete = false
@@ -119,6 +125,9 @@
         })
         this.cancelAll()
       },
+      /**
+       *新建消息
+       **/
       newMsg () {
         this.newMessage = !this.newMessage
       },
@@ -167,8 +176,8 @@
         this.newMessage = false
       },
       /**
-      *  取消新建模板的模态框
-      **/
+       *  取消新建模板的模态框
+       **/
       closeCreateTemp () {
         this.createTemp = false
         this.newMessage = true
@@ -254,13 +263,14 @@
       },
       /**
        * 删除时判断模板群发是否为空
-        */
+       */
       judgetempl () {
-//        if (!this.chats[0]) {
-//          alert('模板为空！')
-//        } else {
-//          this.hideFlag = false
-//        }
+        if (!this.chats[0]) {
+          alert('模板为空！')
+        } else {
+          this.hideFlag = false
+        }
+        console.log('这是一条成功的提示')
         this.$Message.success('这是一条成功的提示')
       }
     }

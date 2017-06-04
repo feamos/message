@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="head">
           <img class="head-img" src="./imgs/cat.jpg" width="80px" height="80px">
-          <span>用户名</span>
+          <span class="user-name">{{nickname}}</span>
           <img class="set-img" src="./imgs/set.png" @click="selectSet">
         </div>
         <div v-if="select" class="head-bt" id="bt">
@@ -11,7 +11,7 @@
             <li @click="signOut">注销登录</li>
           </ul>
         </div>
-        <contact></contact>
+        <contact @changeRightSideBar="changeRightSideBar"></contact>
     </div>
 </template>
 <script>
@@ -25,7 +25,9 @@
           select: false,
           chat: 'chat',
           contact: 'contact',
-          currentview: 'chat'
+          currentview: 'chat',
+          nickname: localStorage.getItem('nickname') === null ? localStorage.getItem('mobile') : localStorage.getItem('nickname')
+          //   获取昵称,如果返回昵称为空就设电话号码为初始用户名
         }
       },
       methods: {
@@ -49,6 +51,13 @@
                 }
               })
           })
+        },
+        changeRightSideBar () {
+          /**
+           * 触发父组件home中的事件切换右边显示栏
+           */
+          this.$emit('changeRightBar')
+          console.log('第二层')
         }
       },
       components: {
@@ -68,11 +77,6 @@
     }
     br {clear: both;}
 
-    .head-img {
-      z-index: 999;
-      margin-left: 32px;
-      margin-right: 24px;
-    }
     .sidebar {
       width: 320px;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -82,20 +86,34 @@
     }
     .head {
       height: 157px;
+      line-height: 157px;
+      /*margin-top: 50px;*/
     }
     .head span {
-      line-height: 157px;
       font-size: 20px;
-      margin-right: 44px;
+      /*line-height: 157px;*/
+      /*overflow: hidden;*/
+      /*text-overflow: ellipsis;*/
+      /*-o-text-overflow: ellipsis;*/
+      /*white-space:nowrap;*/
+      width:100px;
+      height:24px;
+      display:inline-block;
+      /*color: white;*/
     }
     .head img {
         vertical-align: middle;
         line-height: 157px;
     }
 
+    .head-img {
+      margin-left: 20px;
+      margin-right: 14px;
+    }
     .set-img {
       width: 36px;
       height: 23px;
+      margin-left: 20px;
       position: relative;
       cursor: pointer;
     }
