@@ -1,7 +1,7 @@
 <template>
   <div class="chat" id="chat">
     <ul>
-      <li v-for="(chat, index) in chats" @click="beginChat(chat)">
+      <li v-for="(chat, index) in tempChats" @click="beginChat(chat)">
         <div
           id="select"
           :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"
@@ -63,7 +63,7 @@
         newMessage: false,  //  新建消息的弹出框，选择模板
         createTemp: false,
         tempNames: [],
-        chats: []
+        tempChats: []
       }
     },
     components: {
@@ -93,8 +93,8 @@
       },
       deltemp: function () {
         this.confirmDlete = false
-        let chats = this.chats
-        this.chats = chats.filter((item) => {
+        let tempChats = this.tempChats
+        this.tempChats = tempChats.filter((item) => {
           return item.checkFlag === false
         })
         this.cancelAll()
@@ -120,25 +120,26 @@
                 item.renameButton = false
                 item.renameTemp = false
               })
-              this.tempNames = json.data.templates
+              this.tempNames = json.data.templates.reverse() //  reverse将数组反转显示，让最新数据显示在最上面
               console.log(this.tempNames)
+              localStorage.setItem('templateInfos', json.data.templates)
             }
           })
       },
       selectAll: function () {
         if (this.checkbtn) {
-          this.chats.forEach(function (item) {
+          this.tempChats.forEach(function (item) {
             item.checkFlag = false
           })
         } else {
-          this.chats.forEach(function (item) {
+          this.tempChats.forEach(function (item) {
             if (!item.checkFlag) {
               item.checkFlag = true
             }
           })
         }
         this.checkbtn = !this.checkbtn
-        this.chats.forEach(function (item) {
+        this.tempChats.forEach(function (item) {
           if (!item.checkFlag) {
             item.checkFlag = false
           }
@@ -147,7 +148,7 @@
       cancelAll: function () {
         this.hideFlag = true
         this.checkbtn = false
-        this.chats.forEach(function (item) {
+        this.tempChats.forEach(function (item) {
           item.checkFlag = false
         })
       },
@@ -177,7 +178,7 @@
         this.newMessage = true
       },
       /**
-       *添加模板
+       *创建模板（需要输入名称保存的那个）
        **/
       addTemplate (templateName) {
         fetch(API.create, {
@@ -195,6 +196,7 @@
             console.log(json)
             if (json.code === 0) {
               console.log('创建成功！')
+              localStorage.setItem('tid', json.data.template.id) //  保存创建的这个模板的id
             }
           })
       },
@@ -217,13 +219,28 @@
       },
       /**
        * 删除选中的模板
-       * @param index
+       * @param item指模板名称
        */
-      deleteTempName (index) {
-        console.log(index + 'index')
-        this.tempNames.forEach((value, i) => {
-          if (i === index) {
-            this.tempNames.splice(index, 1)
+      deleteTempName (item) {
+        let token = localStorage.getItem('token')
+        this.tempNames.forEach((value) => {
+          if (value.tempName === item) { //  遍历获取的模板信息，如果获取的名称与选中的名称相等，则返回该模板的id
+            let tid = value.id
+            console.log('选中的id：' + tid)
+            fetch(API.template + '/' + tid + '/delete', {
+              method: 'DELETE',
+              headers: {
+                'token': token,
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+              }
+            }).then((res) => {
+              return res.json()
+            }).then((json) => {
+              if (json.code === 0) {
+                console.log('删除成功！！！')
+              }
+            })
           }
         })
       },
@@ -238,7 +255,7 @@
           checkFlag: false
         }
         console.log(obj.name)
-        this.chats.unshift(obj)
+        this.tempChats.unshift(obj)
         this.newMessage = false
       },
       /**
@@ -259,6 +276,9 @@
           value.renameButton = false
         })
       },
+      /**
+       *模板重命名
+       * */
       renameInput (index) {
         this.tempNames.forEach((value) => {
           value.renameTemp = false
@@ -269,7 +289,7 @@
        * 删除时判断模板群发是否为空
        */
       judgetempl () {
-        if (!this.chats[0]) {
+        if (!this.tempChats[0]) {
           alert('模板为空！')
         } else {
           this.hideFlag = false
@@ -290,13 +310,14 @@
   ul {
     list-style: none;
   }
+
   ul p {
     overflow: hidden;
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
-    white-space:nowrap;
-    width:300px;
-    display:inline-block;
+    white-space: nowrap;
+    width: 300px;
+    display: inline-block;
   }
 
   .fl {

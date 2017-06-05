@@ -65,7 +65,6 @@
            * 触发父组件home中的事件切换右边显示栏
            */
           this.$emit('changeRightBar')
-          console.log('第二层')
         }
       },
       components: {

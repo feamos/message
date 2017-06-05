@@ -1,5 +1,9 @@
 const _APIHOST_ = 'http://192.168.1.217:8080'
 
+const APIHOSTUSER = 'http://192.168.1.217:8080/user'
+
+const APIHOSTTEMP = 'http://192.168.1.217:8080/template'
+
 const userApiMaker = (path) => {
   return `${_APIHOST_}/user/${path}`
 }
@@ -14,5 +18,7 @@ export default {
   password: userApiMaker('password'),
   nickname: userApiMaker('nickname'),
   infos: templateApiMaker('infos'),
-  create: templateApiMaker('create')
+  create: templateApiMaker('create'),
+  user: APIHOSTUSER,
+  template: APIHOSTTEMP
 }
