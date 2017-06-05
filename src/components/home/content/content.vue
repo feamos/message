@@ -21,7 +21,7 @@
     </div>
     <div class="bottom">
       <div class="bottom-btn">
-        <img src="./imgs/{}.png" alt="">
+        <img src="./imgs/{}.png" alt="" @click="addstring()">
         <img
           src="./imgs/table.png"
           @click="importExcel = true"

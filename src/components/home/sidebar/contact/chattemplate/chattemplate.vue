@@ -51,6 +51,7 @@
   import newmessage from './newMessage.vue'
   import confirm from './comfirmdelete'
   import createtemp from './createTemplate.vue'
+  import API from '@/common/API/api'
   export default {
     name: 'app',
     data () {
@@ -61,34 +62,7 @@
         hideFlag: true,
         newMessage: false,  //  新建消息的弹出框，选择模板
         createTemp: false,
-        tempNames: [
-          {
-            isActive: false,
-            renameButton: false,
-            //        控制重命名按钮的显示
-            renameTemp: false,
-//            控制按下重命名按钮的显示隐藏
-            id: 1,
-            templa: '班会通知',
-            tempStr: '{1}同学,请于5月12日下午2点到工学馆集合'
-          },
-          {
-            isActive: false,
-            renameButton: false,
-            renameTemp: false,
-            id: 2,
-            templa: '比赛通知',
-            tempStr: '{1}同学,请于6月12日下午2点到工学馆集合'
-          },
-          {
-            isActive: false,
-            renameButton: false,
-            renameTemp: false,
-            id: 3,
-            templa: '运动会通知',
-            tempStr: '{1}同学,请于7月12日下午2点到工学馆集合'
-          }
-        ],
+        tempNames: [],
         chats: []
       }
     },
@@ -130,6 +104,26 @@
        **/
       newMsg () {
         this.newMessage = !this.newMessage
+        fetch(API.infos, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
+          }
+        }).then((res) => res.json())
+          .then((json) => {
+            console.log(json)
+            console.log('获取模板信息')
+            if (json.code === 0) {
+              json.data.templates.forEach((item) => {
+                item.isActive = false
+                item.renameButton = false
+                item.renameTemp = false
+              })
+              this.tempNames = json.data.templates
+              console.log(this.tempNames)
+            }
+          })
       },
       selectAll: function () {
         if (this.checkbtn) {
@@ -186,13 +180,23 @@
        *添加模板
        **/
       addTemplate (templateName) {
-        this.tempNames.push({
-          isActive: false,
-          renameButton: false,
-          renameTemp: false,
-          id: this.tempNames.length + 1,
-          templa: templateName
-        })
+        fetch(API.create, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            'tempName': templateName,
+            'content': '这只是个例子'
+          })
+        }).then((res) => res.json())
+          .then((json) => {
+            console.log(json)
+            if (json.code === 0) {
+              console.log('创建成功！')
+            }
+          })
       },
       selectLi (index) {
         this.tempNames.forEach((value) => {
@@ -228,7 +232,7 @@
        */
       addTemp () {
         var obj = {
-          name: this.sendTemp.templa,
+          name: this.sendTemp.tempName,
           template: this.sendTemp.tempStr,
           chengyuan: [],
           checkFlag: false

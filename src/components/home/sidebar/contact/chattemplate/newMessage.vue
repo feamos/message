@@ -18,7 +18,7 @@
                  v-model="changeTemplateName"
                  @keyup.enter="changeTemplate(index)"/>
           <!--绑定回车事件修改模板名称-->
-          <span v-else class="li-span">{{tempName.templa}}</span>
+          <span v-else class="li-span">{{tempName.tempName}}</span>
           <transition name="fade">
             <button v-show="tempName.renameButton" class="delete-tmp"
                     @click.stop="deleteTemp(index)">删除</button>
@@ -133,7 +133,7 @@
     left: 30%;
     margin: 0 auto;
     width: 200px;
-    height: 250px;
+    max-height: 250px;
     border-radius: 10px;
     justify-content: center;
     align-items: center;
@@ -236,7 +236,7 @@
   }
   .template-ul {
     overflow: auto;
-    height: 200px;
+    max-height: 200px;
   }
 
   .template-li, .template-li:link {

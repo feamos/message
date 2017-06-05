@@ -53,6 +53,9 @@
                 if (json.code === 0) {
                   localStorage.clear()
                   this.$router.push('login')
+                } else if (json.code === 30002) {
+                  console.log('登录过期，请重新登录！')
+                  this.$router.push('login')
                 }
               })
           })
