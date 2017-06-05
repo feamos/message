@@ -122,6 +122,11 @@
   .head span {
     cursor: pointer;
     width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space:nowrap;
+    display:inline-block;
   }
 
   .head img {

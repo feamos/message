@@ -290,6 +290,14 @@
   ul {
     list-style: none;
   }
+  ul p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space:nowrap;
+    width:300px;
+    display:inline-block;
+  }
 
   .fl {
     float: left;
