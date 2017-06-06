@@ -24,7 +24,8 @@
         <img src="./imgs/{}.png" alt="" @click="addstring()">
         <img src="./imgs/table.png" @click="importExcel = true" alt="">
         <img src="./imgs/format.png" @click="tem = true" style="width: 40px;height: 28px;" alt="">
-        <img src="./imgs/save.png" style="width:20px; height:20px">
+        <img src="./imgs/save.png" style="width:20px; height:20px"
+             @click="saveContent(chat.template, chat.id)">
       </div>
       <div>
         <textarea id="editArea" v-model='chat.template'></textarea>
@@ -41,6 +42,7 @@
 <script>
   import excel from './importExcel.vue'
   import tem from './template.vue'
+  import API from '@/common/API/api'
   export default {
     name: 'app',
     data () {
@@ -86,6 +88,32 @@
       sendMessage (msg) {
         msg.push(this.message)
         this.message = ''
+      },
+      /**
+       * 编辑内容并保存
+       * @param content为编辑的内容
+       * id为选中的模板的id
+       */
+      saveContent (content, id) {
+        let token = localStorage.getItem('token')
+        console.log('修改内容为： ' + content)
+        fetch(API.template + '/' + id + '/content', {
+          method: 'PUT',
+          headers: {
+            'token': token,
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            'content': content
+          })
+        }).then((res) => {
+          return res.json()
+        }).then((json) => {
+          if (json.code === 0) {
+            console.log(json)
+          }
+        })
       }
     }
   }
