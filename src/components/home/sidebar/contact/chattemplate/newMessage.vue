@@ -11,14 +11,33 @@
             @mouseleave="$emit('hoverOuttemplate', index)">
           <transition name="fade">
             <button v-show="tempName.renameButton" class="rename"
-                    @click.stop="$emit('renameInput', index)">重命名
+                    @click.stop="$emit('renameInput', index)">编辑
             </button>
           </transition>
-          <input class="rename-input" v-if="tempName.renameTemp" @click.stop=""
-                 type="text" placeholder="修改"
-                 v-model="changeTemplateName"
-                 @keyup.enter="changeTemplate(tempName.tempName)" />
-          <!--绑定回车事件修改模板名称-->
+          <!--修改模板-->
+          <div v-if="tempName.renameTemp" class="edit-contain" @click.stop="">
+              <div class="edit">
+                <span> 修 改 模 板 </span>
+                <div class="contain-head">
+                  模板名称
+                  <input class="create-input" type="text"
+                         v-model="tempName.tempName">
+                </div>
+                <div class="contain-body">
+                  模板内容
+                  <Input class="content-text" type="textarea"
+                         :rows="3" v-model="tempName.content"></Input>
+                </div>
+                <div class="edit-buttons">
+                  <button class="cancel-edit-button" @click="tempName.renameTemp=false">
+                    取消
+                  </button>
+                  <button class="ok-edit-button"
+                          @click="changeTemplate(tempName.tempName, tempName.id, tempName.content)">
+                    确定</button>
+                </div>
+            </div>
+          </div>
           <span v-else class="li-span">{{tempName.tempName}}</span>
           <transition name="fade">
             <button v-show="tempName.renameButton" class="delete-tmp"
@@ -65,7 +84,8 @@
         createTemp: false,
         showDeleteTemp: false,
         item: Number, //        显示二次确定删除模板
-        changeTemplateName: ''//        修改模板名称
+        changeTemplateName: '', //        修改模板名称
+        changeContent: ''  //  修改的内容
       }
     },
     components: {
@@ -98,11 +118,11 @@
        *修改模板名称
        * @param tempName需要修改的名称
        */
-      changeTemplate (tempName) {
+      changeTemplate (tempName, changeId, contents) {
         console.log('要修改的名称： ' + tempName)
-        let tid = localStorage.getItem('tid')
-        console.log('重命名的id：' + tid)
-        this.$emit('changeTempName', this.changeTemplateName, tid)
+        console.log('准备修改的id： ' + changeId)
+        console.log('要修改的content：' + contents)
+        this.$emit('changeTempName', tempName, changeId, contents)
         //  传递的值分别为修改后的名称，以及选中的模板id
       },
       sendTemp (temp) {
@@ -159,7 +179,6 @@
 
   .sure-delete-temp {
     z-index: 120;
-    background: white;
     position: fixed;
     top: 0;
     left: 0;
@@ -167,7 +186,6 @@
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: rgba(51, 51, 51, .2);
     justify-content: center;
     align-items: center;
   }
@@ -183,7 +201,49 @@
     border-radius: 10px;
   }
 
-  .buttons {
+  .edit-contain {
+    z-index: 130;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .edit {
+    z-index: 1;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0 auto;
+    width: 440px;
+    height: 340px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    color: #596179;
+    background: #FFFFFF;
+    border: .5px solid #596179;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.50);
+  }
+
+  .edit span {
+    font-size: 28px;
+  }
+  .contain-head, .contain-body {
+    font-size: 24px;
+    color: #596179;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  .edit-buttons {
+    margin-top: 50px;
+  }
+  .buttons, .edit-buttons {
     display: flex;
     justify-content: space-between;
   }
@@ -198,11 +258,11 @@
     outline: none;
   }
 
-  .cancel-change-button:hover, .ok-change-button:hover {
+  .cancel-change-button:hover, .ok-change-button:hover, .ok-edit-button:hover, .cancel-edit-button:hover {
     color: #A9CDCF;
   }
 
-  .cancel-change-button {
+  .cancel-change-button, .cancel-edit-button {
     border-right: 1px solid rgba(89, 97, 121, 0.38);
     width: 160px;
     margin-left: 10px;
@@ -212,17 +272,37 @@
     width: 160px;
     padding-right: 50px;
   }
-
-  .rename-input {
-    width: 74px;
-    font-size: 14px;
-    height: 37px;
+  .cancel-edit-button, .ok-edit-button {
     border: none;
-    border-bottom: solid 1px #596179;
+    cursor: pointer;
+    font-size: 24px;
+    color: #596179;
+    background: none;
     outline: none;
-    border-radius: 5px;
   }
 
+  .cancel-edit-button {
+    border-right: 1px solid rgba(89, 97, 121, 0.38);
+    width: 210px;
+    margin-left: 10px;
+  }
+
+  .ok-edit-button {
+    width: 210px;
+    padding-right: 50px;
+  }
+
+  .create-input {
+    width: 240px;
+    border: none;
+    outline: none;
+    margin-left: 20px;
+    border-bottom: 1px solid #596179;
+  }
+  .content-text {
+    width: 240px;
+    margin-left: 20px;
+  }
   .rename, .delete-tmp {
     font-size: 14px;
     color: #7D88AC;

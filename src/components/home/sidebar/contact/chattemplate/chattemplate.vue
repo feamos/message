@@ -208,7 +208,7 @@
       /**
        *创建模板（需要输入名称保存的那个）
        **/
-      addTemplate (templateName) {
+      addTemplate (templateName, templateContent) {
         fetch(API.create, {
           method: 'POST',
           headers: {
@@ -217,14 +217,14 @@
           },
           body: JSON.stringify({
             'tempName': templateName,
-            'content': '这只是个例子'
+            'content': templateContent
           })
         }).then((res) => res.json())
           .then((json) => {
             console.log(json)
             if (json.code === 0) {
               console.log('创建成功！')
-              localStorage.setItem('tid', json.data.template.id) //  保存创建的这个模板的id
+//              localStorage.setItem('tid', json.data.template.id) //  保存创建的这个模板的id
               this.newMessage = false //  关闭模板列表窗口以刷新
             }
           })
@@ -240,14 +240,15 @@
        * @param tid 传递的模板id值
        * @param changeTemplate 修改的名称
        */
-      changeTempName (changeTemplateName, tid) {
+      changeTempName (changeTemplateName, changeId, contents) {
         console.log('修改后的名称：' + changeTemplateName)
-        console.log('要修改的id号： ' + tid)
+        console.log('要修改的id号： ' + changeId)
+        console.log('确认修改后的内容：' + contents)
         let token = localStorage.getItem('token')
         this.tempNames.forEach((value) => {
           value.renameTemp = false  //  关闭input显示
         })
-        fetch(API.template + '/' + tid + '/name', {
+        fetch(API.template + '/' + changeId + '/info', {
           method: 'PUT',
           headers: {
             'token': token,
@@ -255,13 +256,14 @@
             'Content-type': 'application/json'
           },
           body: JSON.stringify({
-            'tempName': changeTemplateName
+            'tempName': changeTemplateName,
+            'content': contents
           })
         }).then((res) => {
           return res.json()
         }).then((json) => {
           if (json.code === 0) {
-            console.log('重命名成功！')
+            console.log('修改成功！')
             this.newMessage = false //  关闭模板列表窗口以刷新
           }
           console.log(json)
