@@ -11,7 +11,7 @@
             @mouseleave="$emit('hoverOuttemplate', index)">
           <transition name="fade">
             <button v-show="tempName.renameButton" class="rename"
-                    @click.stop="$emit('renameInput',tempName.tempName, index)">重命名
+                    @click.stop="$emit('renameInput', index)">重命名
             </button>
           </transition>
           <input class="rename-input" v-if="tempName.renameTemp" @click.stop=""
@@ -101,8 +101,9 @@
       changeTemplate (tempName) {
         console.log('要修改的名称： ' + tempName)
         let tid = localStorage.getItem('tid')
-        console.log('重命名：' + tid)
-        this.$emit('changeTempName', this.changeTemplateName, tempName)
+        console.log('重命名的id：' + tid)
+        this.$emit('changeTempName', this.changeTemplateName, tid)
+        //  传递的值分别为修改后的名称，以及选中的模板id
       },
       sendTemp (i) {
         this.$bus.$emit('sendTemp', i)
@@ -259,6 +260,7 @@
   .template-ul {
     overflow: auto;
     max-height: 200px;
+    min-height: 200px;
   }
 
   .template-li, .template-li:link {

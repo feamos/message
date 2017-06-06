@@ -4,7 +4,7 @@
       <li v-for="(chat, index) in tempChats" @click="beginChat(chat)">
         <div
           id="select"
-          :class="{check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag}"
+          :class="{ check:chat.checkFlag,select:!chat.checkFlag,hide:hideFlag }"
           @click="chat.checkFlag=!chat.checkFlag">
           <!--hide:隐藏复选框  check/select:选中和非选中-->
         </div>
@@ -197,6 +197,7 @@
             if (json.code === 0) {
               console.log('创建成功！')
               localStorage.setItem('tid', json.data.template.id) //  保存创建的这个模板的id
+              this.newMessage = false //  关闭模板列表窗口以刷新
             }
           })
       },
@@ -204,18 +205,39 @@
         this.tempNames.forEach((value) => {
           value.isActive = false
         })
-        this.tempNames[index].isActive = true
+        this.tempNames[index].isActive = true  //  被选中的状态
       },
       /**
-       * @param changeTemplateName：修改模板名称
-       * @param index：选择的li
+       * @param 修改模板名称
+       * @param tid 传递的模板id值
+       * @param changeTemplate 修改的名称
        */
-      changeTempName (changeTemplateName, index) {
-        console.log(changeTemplateName)
+      changeTempName (changeTemplateName, tid) {
+        console.log('修改后的名称：' + changeTemplateName)
+        console.log('要修改的id号： ' + tid)
+        let token = localStorage.getItem('token')
         this.tempNames.forEach((value) => {
-          value.renameTemp = false
+          value.renameTemp = false  //  关闭input显示
         })
-        this.tempNames[index].templa = changeTemplateName
+        fetch(API.template + '/' + tid + '/name', {
+          method: 'PUT',
+          headers: {
+            'token': token,
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            'tempName': changeTemplateName
+          })
+        }).then((res) => {
+          return res.json()
+        }).then((json) => {
+          if (json.code === 0) {
+            console.log('重命名成功！')
+            this.newMessage = false //  关闭模板列表窗口以刷新
+          }
+          console.log(json)
+        })
       },
       /**
        * 删除选中的模板
@@ -239,6 +261,7 @@
             }).then((json) => {
               if (json.code === 0) {
                 console.log('删除成功！！！')
+                this.newMessage = false //  关闭模板列表窗口以刷新
               }
             })
           }
@@ -283,7 +306,8 @@
         this.tempNames.forEach((value) => {
           value.renameTemp = false
         })
-        this.tempNames[index].renameTemp = true
+        this.tempNames[index].renameTemp = true  //  显示选中的该模板的可编辑状态,input在下一个组件newMessage
+        console.log('重命名：' + this.tempNames[index].tempName) //  测试该模板被选中
       },
       /**
        * 删除时判断模板群发是否为空
