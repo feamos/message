@@ -22,24 +22,12 @@
     <div class="bottom">
       <div class="bottom-btn">
         <img src="./imgs/{}.png" alt="" @click="addstring()">
-        <img
-          src="./imgs/table.png"
-          @click="importExcel = true"
-          alt=""
-        >
-        <img
-          src="./imgs/format.png"
-          @click="tem = true"
-          style="width: 40px;height: 28px;"
-          alt=""
-        >
+        <img src="./imgs/table.png" @click="importExcel = true" alt="">
+        <img src="./imgs/format.png" @click="tem = true" style="width: 40px;height: 28px;" alt="">
+        <img src="./imgs/save.png" style="width:20px; height:20px">
       </div>
       <div>
-                <textarea
-                  id="editArea"
-                  v-model='chat.template'
-                >
-                </textarea>
+        <textarea id="editArea" v-model='chat.template'></textarea>
       </div>
       <div class="send">
         <span @click="checkMessage(chat.template)">发送</span>
@@ -63,7 +51,10 @@
         tem: false,
         showSetupPhoto: false,
         chat: {
-          name: '发起聊天'
+          name: '发起聊天',
+          template: '',
+          chengyuan: [],  //  成员
+          checkFlag: false
         }
       }
     },
@@ -74,6 +65,8 @@
     mounted: function () {
       this.$bus.on('responseChat', (i) => {
         this.chat = i
+        this.chat.name = i.tempName  //  把获取的模板名称替换到数组定义的名称
+        this.chat.template = i.content  //  获取到的模板内容
       })
     },
     created: function () {             // 这里接受从chat.vue中传递过来的被选中的群组的名称，并替换默认chat.name的值(by lee)
@@ -87,6 +80,7 @@
       checkMessage (msg) {
         if (this.message) {
           this.sendMessage(msg)
+          console.log('message: ' + this.message)
         }
       },
       sendMessage (msg) {

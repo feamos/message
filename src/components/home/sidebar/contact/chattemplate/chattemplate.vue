@@ -77,13 +77,41 @@
       })
       this.$bus.$on('sendTemp', (msg) => {
         this.sendTemp = msg
+        console.log('sendTemp:' + msg)
       })
     },
     mounted () {
     },
     methods: {
+      /**
+       *选中消息列表，显示会话内容及标题
+       **/
       beginChat: function (i) {
-        this.$bus.$emit('responseChat', i)
+//        this.$bus.$emit('responseChat', i)
+        let token = localStorage.getItem('token')
+        this.tempNames.forEach((value) => {
+          if (value.tempName === i.name) { //  遍历获取的模板信息，如果获取的名称与选中的名称相等，则返回该模板的id
+            let tid = value.id
+            console.log('选中的id：' + tid)
+            fetch(API.template + '/' + tid + '/info', {
+              method: 'GET',
+              headers: {
+                'token': token,
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+              }
+            }).then((res) => {
+              return res.json()
+            }).then((json) => {
+              if (json.code === 0) {
+                console.log('content:' + json.data.template.content)
+                this.$bus.$emit('responseChat', json.data.template)  //  将获取到的模板传递响应显示在对话框
+//                下一个组件是content
+                console.log('获取到的模板:' + json.data.template)
+              }
+            })
+          }
+        })
         /**
          *如果此时已经显示了个人信息的页面，需要切换右边显示栏为模板显示部分，触发上层切换事件，
          * 一直往上触发直到home父组件

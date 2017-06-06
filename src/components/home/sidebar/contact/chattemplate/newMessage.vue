@@ -92,7 +92,7 @@
       },
       selectShowTemplate (index, temp) {
         this.$emit('selectLi', index)
-        this.sendTemp(temp)
+        this.sendTemp(temp)  //  传递的是添加到模板的值
       },
       /**
        *修改模板名称
@@ -105,8 +105,9 @@
         this.$emit('changeTempName', this.changeTemplateName, tid)
         //  传递的值分别为修改后的名称，以及选中的模板id
       },
-      sendTemp (i) {
-        this.$bus.$emit('sendTemp', i)
+      sendTemp (temp) {
+        this.$bus.$emit('sendTemp', temp)
+        console.log('提交的数据：' + temp.tempName)
         this.addTemp = true
       }
     }
