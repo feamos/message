@@ -25,7 +25,7 @@
         <img src="./imgs/table.png" @click="importExcel = true" alt="">
         <img src="./imgs/format.png" @click="tem = true" style="width: 40px;height: 28px;" alt="">
         <img src="./imgs/save.png" style="width:20px; height:20px"
-             @click="saveContent(chat.template, chat.id)">
+             @click="saveContent(chat.template, chat.id, chat.name)">
       </div>
       <div>
         <textarea id="editArea" v-model='chat.template'></textarea>
@@ -94,10 +94,10 @@
        * @param content为编辑的内容
        * id为选中的模板的id
        */
-      saveContent (content, id) {
+      saveContent (content, id, name) {
         let token = localStorage.getItem('token')
         console.log('修改内容为： ' + content)
-        fetch(API.template + '/' + id + '/content', {
+        fetch(API.template + '/' + id + '/info', {
           method: 'PUT',
           headers: {
             'token': token,
@@ -105,6 +105,7 @@
             'Content-type': 'application/json'
           },
           body: JSON.stringify({
+            'tempName': name,
             'content': content
           })
         }).then((res) => {
@@ -113,6 +114,7 @@
           if (json.code === 0) {
             console.log(json)
           }
+          console.log(json)
         })
       }
     }

@@ -124,6 +124,7 @@
         console.log('要修改的content：' + contents)
         this.$emit('changeTempName', tempName, changeId, contents)
         //  传递的值分别为修改后的名称，以及选中的模板id
+        this.renameTemp = false
       },
       sendTemp (temp) {
         this.$bus.$emit('sendTemp', temp)

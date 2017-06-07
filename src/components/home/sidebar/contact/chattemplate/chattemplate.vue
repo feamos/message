@@ -224,7 +224,7 @@
             console.log(json)
             if (json.code === 0) {
               console.log('创建成功！')
-//              localStorage.setItem('tid', json.data.template.id) //  保存创建的这个模板的id
+              localStorage.setItem('tid', json.data.template.id) //  保存创建的这个模板的id
               this.newMessage = false //  关闭模板列表窗口以刷新
             }
           })
