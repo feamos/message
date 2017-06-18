@@ -33,13 +33,13 @@
         <img src="./imgs/table.png" @click="importExcel = true" alt="">
         <img src="./imgs/format.png" @click="tem = true" style="width: 40px;height: 28px;" alt="">
         <img src="./imgs/save.png" style="width:20px; height:20px"
-             @click="saveContent(chat.template, chat.id, chat.name)">
+             @click="saveContent(templateContent, chat.id, chat.name)">
       </div>
       <div>
-        <textarea id="editArea" v-model='chat.template'></textarea>
+        <textarea id="editArea" v-model='templateContent'></textarea>
       </div>
       <div class="send">
-        <span @click="checkMessage(chat.template)">发送</span>
+        <span @click="checkMessage(templateContent)">发送</span>
       </div>
     </div>
     <excel v-if="importExcel" @cancel="importExcel = false"></excel>
@@ -61,6 +61,7 @@
         tem: false,
         saveContents: false, //  保存成功弹出框
         showSetupPhoto: false,
+        templateContent: '',
         chat: {
           name: '发起聊天',
           template: '',
@@ -77,7 +78,9 @@
       this.$bus.on('responseChat', (i) => {
         this.chat = i
         this.chat.name = i.tempName  //  把获取的模板名称替换到数组定义的名称
-        this.chat.template = i.content  //  获取到的模板内容
+//        this.chat.template = i.content  //  获取到的模板内容
+        this.templateContent = i.content
+        console.log('内容：' + this.templateContent)
       })
     },
     created: function () {             // 这里接受从chat.vue中传递过来的被选中的群组的名称，并替换默认chat.name的值(by lee)
@@ -100,7 +103,7 @@
       },
       addString () {
         let textContent = document.getElementById('editArea').value
-        let value = this.chat.template
+        let value = this.templateContent
         let isBrack = /\{[0-9]}/g  //  定义正则是否存在花括号{}
         isBrack.test(textContent)  //  进行花括号的匹配
         let count = 0
@@ -110,7 +113,7 @@
           isBrack.test(textContent)
         }
         value += '{' + count + '}'
-        this.chat.template = value
+        this.templateContent = value
       },
       /**
        * 编辑内容并保存
