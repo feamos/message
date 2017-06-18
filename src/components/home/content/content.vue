@@ -100,7 +100,7 @@
       },
       addString () {
         let textContent = document.getElementById('editArea').value
-        console.log('text:' + textContent)
+        let value = this.chat.template
         let isBrack = /\{[0-9]}/g  //  定义正则是否存在花括号{}
         isBrack.test(textContent)  //  进行花括号的匹配
         let count = 0
@@ -109,8 +109,8 @@
           count++
           isBrack.test(textContent)
         }
-        console.log('count:' + count)
-        this.chat.template = document.getElementById('editArea').value + '{' + count + '}'
+        value += '{' + count + '}'
+        this.chat.template = value
       },
       /**
        * 编辑内容并保存
