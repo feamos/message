@@ -7,11 +7,15 @@ import VueBus from 'vue-bus'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import Animate from 'animate.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+
+Vue.config.productionTip = false
 
 Vue.use(Animate)
 Vue.use(iView)
-Vue.config.productionTip = false
 Vue.use(VueBus)
+Vue.use(ElementUI)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
