@@ -39,16 +39,33 @@
         <textarea id="editArea" v-model='templateContent'></textarea>
       </div>
       <div class="send">
-        <span @click="checkMessage(templateContent)">发送</span>
+        <span @click="checkMessage(templateContent, chat.id)">发送</span>
       </div>
     </div>
-    <excel v-if="importExcel" @cancel="importExcel = false"></excel>
+    <!--以下是上传文件的部分-->
+    <div v-if="importExcel" class="upload-back" @click="importExcel = false">
+      <div class="upload-contain" @click.stop="">
+        <div class="upload-file">
+          <el-upload
+            class="upload-demo"
+            drag
+            :action="uploadUrl()"
+            :headers="uploadToken()"
+            :on-success="uploadSuccess"
+            :on-change="handleChange"
+            :file-list="fileList">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传excel文件</div>
+          </el-upload>
+        </div>
+      </div>
+    </div>
     <tem v-if="tem" @cancel="tem = false"></tem>
   </div>
 </template>
 
 <script>
-  import excel from './importExcel.vue'
   import tem from './template.vue'
   import API from '@/common/API/api'
   export default {
@@ -56,12 +73,13 @@
     data () {
       return {
         list1: false,
-        message: '',
-        importExcel: false,
+        importExcel: false, //  上传表格
         tem: false,
         saveContents: false, //  保存成功弹出框
         showSetupPhoto: false,
         templateContent: '',
+        fileList: [],
+        urlId: '',  //  上传的文件所属模板ｉｄ
         chat: {
           name: '发起聊天',
           template: '',
@@ -71,10 +89,9 @@
       }
     },
     components: {
-      excel,
       tem
     },
-    mounted: function () {
+    mounted () {
       this.$bus.on('responseChat', (i) => {
         this.chat = i
         this.chat.name = i.tempName  //  把获取的模板名称替换到数组定义的名称
@@ -83,7 +100,7 @@
         console.log('内容：' + this.templateContent)
       })
     },
-    created: function () {             // 这里接受从chat.vue中传递过来的被选中的群组的名称，并替换默认chat.name的值(by lee)
+    created () {             // 这里接受从chat.vue中传递过来的被选中的群组的名称，并替换默认chat.name的值(by lee)
       var that = this
       this.$bus.on('hello', function (groupName) {
         that.chat.name = groupName
@@ -91,15 +108,35 @@
       })
     },
     methods: {
-      checkMessage (msg) {
-        if (this.message) {
-          this.sendMessage(msg)
-          console.log('message: ' + this.message)
+      checkMessage (msg, id) {
+        if (msg) {
+          console.log('message: ' + msg)
+          console.log('id号:' + id)
+          this.importExcel = true
+//          this.sendMessage(msg, id)
+          this.urlId = id
         }
       },
-      sendMessage (msg) {
-        msg.push(this.message)
-        this.message = ''
+      handleChange (file, fileList) {
+        this.fileList = fileList.slice(-3)
+        console.log('文件' + file)
+      },
+      uploadUrl () {
+        console.log(this.urlId)
+        return API.template + '/' + this.urlId + '/send'
+      },
+      uploadToken () {
+        let token = localStorage.getItem('token')
+        let header = {
+          'token': token
+        }
+        return header
+      },
+      uploadSuccess (response, file, fileList) {
+        this.importExcel = false
+        this.$message('发送成功！！！')
+        console.log('response' + response)
+        console.log('发送成功！！！')
       },
       addString () {
         let textContent = document.getElementById('editArea').value
@@ -378,5 +415,40 @@
     font-family: PingFangSC-Regular;
     font-size: 20px;
     color: #596179;
+  }
+
+  .upload-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: rgba(51, 51, 51, .1);
+    justify-content: center;
+    align-items: center;
+    transition: opacity .3s ease;
+  }
+
+  .upload-contain {
+    display: flex;
+    vertical-align: middle;
+    margin:0 auto;
+    padding: 0 20px;
+    height: 360px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, .6);
+    font-family: PingFangSC-Regular;
+  }
+  .upload-file {
+    position: relative;
+  }
+  .upload-button {
+    position: absolute;
+    margin-top: 150px;
   }
 </style>

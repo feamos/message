@@ -94,6 +94,7 @@
           if (value.tempName === i.name) { //  遍历获取的模板信息，如果获取的名称与选中的名称相等，则返回该模板的id
             let tid = value.id
             console.log('选中的id：' + tid)
+            console.log(token)
             fetch(API.template + '/' + tid + '/info', {
               method: 'GET',
               headers: {
