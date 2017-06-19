@@ -11,11 +11,16 @@
       </div>
     </div>
     <div class="middle">
-      <div class="message-wrap" v-for="message in chat.messages">
-        <div class="midd-message">
-          {{message}}
-          <img src="./imgs/user.jpg" width="80px" height="80px" alt="">
-        </div>
+      <div class="message-wrap">
+        <el-card class="message-card">
+          <div v-for="item in messages" class="message-list">
+            {{item.message}}
+          </div>
+        </el-card>
+        <!--<div class="midd-message">-->
+        <!--{{message}}-->
+        <!--&lt;!&ndash;<img src="./imgs/user.jpg" width="80px" height="80px" alt="">&ndash;&gt;-->
+        <!--</div>-->
         <br class="clfl">
       </div>
       <!--保存成功之后弹出保存成功对话框-->
@@ -77,6 +82,9 @@
         tem: false,
         saveContents: false, //  保存成功弹出框
         showSetupPhoto: false,
+        messages: [{
+          message: ''
+        }],
         templateContent: '',
         fileList: [],
         urlId: '',  //  上传的文件所属模板ｉｄ
@@ -97,7 +105,8 @@
         this.chat.name = i.tempName  //  把获取的模板名称替换到数组定义的名称
 //        this.chat.template = i.content  //  获取到的模板内容
         this.templateContent = i.content
-        console.log('内容：' + this.templateContent)
+        this.urlId = i.id
+        console.log('显示的urlId:' + this.urlId)
       })
     },
     created () {             // 这里接受从chat.vue中传递过来的被选中的群组的名称，并替换默认chat.name的值(by lee)
@@ -125,6 +134,9 @@
         console.log(this.urlId)
         return API.template + '/' + this.urlId + '/send'
       },
+      /**
+       *文件上传时需要token
+       **/
       uploadToken () {
         let token = localStorage.getItem('token')
         let header = {
@@ -132,12 +144,48 @@
         }
         return header
       },
-      uploadSuccess (response, file, fileList) {
+      /**
+       *文件上传成功后执行的事件
+       **/
+      uploadSuccess (response) {
         this.importExcel = false
         this.$message('发送成功！！！')
-        console.log('response' + response)
-        console.log('发送成功！！！')
+        console.log('code:' + response.code)
+        console.log('uuid:' + response.data.uuid)
+        localStorage.setItem('uuid', response.data.uuid)
+        this.getMessage()
       },
+      /**
+       *获取消息历史记录列表
+       **/
+      getMessage () {
+        let uuid = localStorage.getItem('uuid')
+        let token = localStorage.getItem('token')
+        if (token) {
+          fetch(API.loginfo + 'uuid=' + uuid, {
+            method: 'GET',
+            headers: {
+              'token': token,
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            }
+          }).then((res) => {
+            return res.json()
+          }).then((json) => {
+            if (json.code === 0) {
+              this.messages = json.data.logs
+//              json.data.logs.forEach(function (value) {
+//                console.log('mess:' + value.message)
+//              })
+              console.log(json.data.logs)
+            }
+            console.log(json)
+          })
+        }
+      },
+      /**
+       *添加花括号{}的事件
+       **/
       addString () {
         let textContent = document.getElementById('editArea').value
         let value = this.templateContent
@@ -262,9 +310,11 @@
   .middle {
     height: 480px;
     border-bottom: 1px solid #d6d6d6;
-    padding: 0 10px;
-    padding-top: 20px;
-    overflow: auto;
+    /*padding: 0 10px;*/
+    /*padding-top: 20px;*/
+    display: table;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .message-wrap {
@@ -275,27 +325,40 @@
     margin: 10px 0;
   }
 
-  .middle .midd-message {
-    display: inline-block;
-    padding: 0 10px;
-    position: relative;
-    max-width: 360px;
-    line-height: 2.5;
-    font-size: 12px;
-    text-align: left;
-    word-break: break-all;
-    /*自动换行，允许在单词内换行*/
-    background-color: #fafafa;
-    float: right;
-    margin-right: 23%;
-    background: #A9CDCF;
-    border-radius: 10px;
+  /*.middle .midd-message {*/
+  /*display: inline-block;*/
+  /*padding: 0 10px;*/
+  /*position: relative;*/
+  /*max-width: 360px;*/
+  /*line-height: 2.5;*/
+  /*font-size: 12px;*/
+  /*text-align: left;*/
+  /*word-break: break-all;*/
+  /*!*自动换行，允许在单词内换行*!*/
+  /*background-color: #fafafa;*/
+  /*!*float: right;*!*/
+  /*margin-right: 23%;*/
+  /*background: #A9CDCF;*/
+  /*border-radius: 10px;*/
+  /*}*/
+
+  /*.middle .midd-message img {*/
+  /*position: absolute;*/
+  /*right: -100px;*/
+  /*top: 0px;*/
+  /*}*/
+
+  .message-card {
+    width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
   }
 
-  .middle .midd-message img {
-    position: absolute;
-    right: -100px;
-    top: 0px;
+  .message-list {
+    font-size: 20px;
+    margin: 20px 0;
   }
 
   .bottom {
@@ -433,7 +496,7 @@
   .upload-contain {
     display: flex;
     vertical-align: middle;
-    margin:0 auto;
+    margin: 0 auto;
     padding: 0 20px;
     height: 360px;
     border: 1px solid #ccc;
@@ -444,9 +507,11 @@
     box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, .6);
     font-family: PingFangSC-Regular;
   }
+
   .upload-file {
     position: relative;
   }
+
   .upload-button {
     position: absolute;
     margin-top: 150px;

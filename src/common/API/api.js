@@ -10,6 +10,9 @@ const userApiMaker = (path) => {
 const templateApiMaker = (path) => {
   return `${_APIHOST_}/template/${path}`
 }
+const logApiMaker = (path) => {
+  return `${_APIHOST_}/log/${path}`
+}
 export default {
   login: userApiMaker('login'),
   register: userApiMaker('register'),
@@ -20,5 +23,6 @@ export default {
   infos: templateApiMaker('infos'),
   create: templateApiMaker('create'),
   user: APIHOSTUSER,
-  template: APIHOSTTEMP
+  template: APIHOSTTEMP,
+  loginfo: logApiMaker('info?')
 }
